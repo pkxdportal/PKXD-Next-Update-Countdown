@@ -67,6 +67,9 @@ const translations = {
     changeVoteText: "Need to change your vote? Contact PK XD PORTAL.",
     currentLeader: "Current leader:",
     teamActivated: "activated",
+    voteVolts: "⚡ Vote Volts",
+    voteFlame: "🔥 Vote Flame",
+    voteLeaf: "🍃 Vote Leaf",
 
     teams: {
       volts: {
@@ -127,21 +130,24 @@ const translations = {
     changeVoteText: "Нужно изменить голос? Свяжись с PK XD PORTAL.",
     currentLeader: "Лидер сейчас:",
     teamActivated: "активирована",
+    voteVolts: "⚡ Голосовать за Молнию",
+    voteFlame: "🔥 Голосовать за Пламя",
+    voteLeaf: "🍃 Голосовать за Листья",
 
     teams: {
       volts: {
         icon: "⚡",
-        title: "КОМАНДА VOLTS",
+        title: "КОМАНДА МОЛНИИ",
         text: "ЧИСТАЯ ЭНЕРГИЯ МОЛНИИ! Я полон радости и энергии!"
       },
       flame: {
         icon: "🔥",
-        title: "КОМАНДА FLAME",
+        title: "КОМАНДА ПЛАМЕНИ",
         text: "ИНТЕНСИВНОСТЬ ПЛАМЕНИ! Я тёплый и яростный!"
       },
       leaf: {
         icon: "🍃",
-        title: "КОМАНДА LEAF",
+        title: "КОМАНДА ЛИСТЬЕВ",
         text: "СИЛА ВНУТРИ КАЖДОГО ЛИСТА! Я праведный и сильный, как природа!"
       }
     }
@@ -150,7 +156,7 @@ const translations = {
   de: {
     eventDate: "11. JUNI 2026 • 15:00 BERLIN",
     titleTop: "Bis",
-    titleMain: "Schwerelosigkeit",
+    titleMain: "Zero Gravity",
     days: "Tage",
     hours: "Stunden",
     minutes: "Minuten",
@@ -161,7 +167,7 @@ const translations = {
     feedbackChannel: "PK XD PORTAL YouTube",
     musicOn: "🔊 Musik",
     musicOff: "🔇 Musik ausschalten",
-    started: "🚀 Schwerelosigkeit hat begonnen",
+    started: "🚀 Zero Gravity hat begonnen",
     fanCountdown: "Fan-Countdown für PK XD",
     disclaimer: "Dies ist ein von Fans erstellter Countdown. PK XD ist ein Spiel von Afterverse. Diese Website ist nicht offiziell und steht nicht in Verbindung mit Afterverse.",
     feedbackText: "Für Website-Verbesserungen oder weitere Sprachen schreibe hier:",
@@ -177,7 +183,7 @@ const translations = {
     progressLeft: "Übrig",
     progressText: "Fortschritt bis zum Event",
     shareCopied: "Link kopiert!",
-    teamEnergyTitle: "SCHWERELOSIGKEIT TEAM-ABSTIMMUNG 2026",
+    teamEnergyTitle: "Zero Gravity TEAM-ABSTIMMUNG 2026",
     noTeamSelected: "Wähle dein Team, um seine Energie zu aktivieren.",
     chooseTeamBtn: "Team wählen",
     selectedTeamPrefix: "Dein Team:",
@@ -187,6 +193,9 @@ const translations = {
     changeVoteText: "Du musst deine Stimme ändern? Kontaktiere PK XD PORTAL.",
     currentLeader: "Aktueller Favorit:",
     teamActivated: "aktiviert",
+    voteVolts: "⚡ Stimme für Volts",
+    voteFlame: "🔥 Stimme für Flame",
+    voteLeaf: "🍃 Stimme für Leaf",
 
     teams: {
       volts: {
@@ -247,6 +256,9 @@ const translations = {
     changeVoteText: "Besoin de changer ton vote ? Contacte PK XD PORTAL.",
     currentLeader: "Équipe en tête :",
     teamActivated: "activée",
+    voteVolts: "⚡ Voter pour Volts",
+    voteFlame: "🔥 Voter pour Flame",
+    voteLeaf: "🍃 Voter pour Leaf",
 
     teams: {
       volts: {
@@ -307,6 +319,9 @@ const translations = {
     changeVoteText: "Chcesz zmienić głos? Skontaktuj się z PK XD PORTAL.",
     currentLeader: "Aktualny lider:",
     teamActivated: "aktywowana",
+    voteVolts: "⚡ Głosuj na Volts",
+    voteFlame: "🔥 Głosuj na Flame",
+    voteLeaf: "🍃 Głosuj na Leaf",
 
     teams: {
       volts: {
@@ -367,6 +382,9 @@ const translations = {
     changeVoteText: "Precisa mudar seu voto? Entre em contato com PK XD PORTAL.",
     currentLeader: "Líder atual:",
     teamActivated: "ativado",
+    voteVolts: "⚡ Votar no Volts",
+    voteFlame: "🔥 Votar no Flame",
+    voteLeaf: "🍃 Votar no Leaf",
 
     teams: {
       volts: {
@@ -427,6 +445,9 @@ const translations = {
     changeVoteText: "Oyunu değiştirmek mi istiyorsun? PK XD PORTAL ile iletişime geç.",
     currentLeader: "Şu an lider:",
     teamActivated: "etkinleştirildi",
+    voteVolts: "⚡ Volts için oy ver",
+    voteFlame: "🔥 Flame için oy ver",
+    voteLeaf: "🍃 Leaf için oy ver",
 
     teams: {
       volts: {
@@ -487,6 +508,9 @@ const translations = {
     changeVoteText: "Perlu mengubah vote? Hubungi PK XD PORTAL.",
     currentLeader: "Pemimpin saat ini:",
     teamActivated: "diaktifkan",
+    voteVolts: "⚡ Pilih Volts",
+    voteFlame: "🔥 Pilih Flame",
+    voteLeaf: "🍃 Pilih Leaf",
 
     teams: {
       volts: {
@@ -547,6 +571,9 @@ const translations = {
     changeVoteText: "¿Necesitas cambiar tu voto? Contacta con PK XD PORTAL.",
     currentLeader: "Líder actual:",
     teamActivated: "activado",
+    voteVolts: "⚡ Votar por Volts",
+    voteFlame: "🔥 Votar por Flame",
+    voteLeaf: "🍃 Votar por Leaf",
 
     teams: {
       volts: {
@@ -607,6 +634,9 @@ const translations = {
     changeVoteText: "अपना वोट बदलना है? PK XD PORTAL से संपर्क करें।",
     currentLeader: "मौजूदा लीडर:",
     teamActivated: "सक्रिय",
+    voteVolts: "⚡ Volts को वोट दें",
+    voteFlame: "🔥 Flame को वोट दें",
+    voteLeaf: "🍃 Leaf को वोट दें",
 
     teams: {
       volts: {
