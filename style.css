@@ -132,7 +132,7 @@ body.selected-leaf .team-glow {
   text-align: center;
   padding: 72px 70px 48px;
   border-radius: 42px;
-  background: rgba(3, 7, 22, 0.58);
+  background: rgba(3, 7, 22, 0.25);
   border: 1px solid rgba(255, 255, 255, 0.18);
   box-shadow:
     0 0 90px rgba(0, 80, 255, 0.26),
