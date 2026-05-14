@@ -734,6 +734,8 @@ const commentName = document.getElementById("commentName");
 const commentText = document.getElementById("commentText");
 const commentCounter = document.getElementById("commentCounter");
 const commentSubmitBtn = document.getElementById("commentSubmitBtn");
+const ratingStars = document.querySelectorAll(".rating-star");
+let selectedRating = 5;
 
 function getText(key) {
   return translations[currentLang]?.[key] || translations.en[key] || key;
@@ -1298,11 +1300,14 @@ async function renderComments() {
         comment.date ||
         "";
 
+      const rating = Number(comment.rating || 0);
+      const stars = rating > 0 ? "★".repeat(rating) + "☆".repeat(5 - rating) : "";
+
       return `
         <div class="comm-message">
           <div class="comm-top">
             <strong>${escapeHtml(name)}</strong>
-            <span>${formatCommentTime(createdAt)}</span>
+            <span>${escapeHtml(stars)} ${formatCommentTime(createdAt)}</span>
           </div>
           <p>${escapeHtml(message)}</p>
         </div>
@@ -1333,7 +1338,8 @@ async function addComment(name, text) {
       },
       body: JSON.stringify({
         name: cleanName,
-        message: cleanText
+        message: cleanText,
+        rating: selectedRating
       })
     });
 
@@ -1351,6 +1357,22 @@ async function addComment(name, text) {
     }, 1200);
   }
 }
+
+function updateRatingStars() {
+  ratingStars.forEach((star) => {
+    const value = Number(star.dataset.rating);
+    star.classList.toggle("active", value <= selectedRating);
+  });
+}
+
+ratingStars.forEach((star) => {
+  star.addEventListener("click", () => {
+    selectedRating = Number(star.dataset.rating) || 5;
+    updateRatingStars();
+  });
+});
+
+updateRatingStars();
 
 document.querySelectorAll(".theories-grid").forEach((element) => {
   element.classList.add("theory-grid");
