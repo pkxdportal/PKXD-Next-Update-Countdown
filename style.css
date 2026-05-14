@@ -1568,6 +1568,36 @@ body.selected-leaf .progress-fill {
   transform: scale(0.96);
 }
 
+.comment-counter {
+  grid-column: 2 / 3;
+  margin-top: -4px;
+  padding: 0 6px;
+  text-align: right;
+  color: rgba(220,232,255,0.58);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.3px;
+}
+
+.comment-counter span {
+  transition:
+    color 0.22s ease,
+    text-shadow 0.22s ease,
+    transform 0.22s ease;
+}
+
+.comment-counter span.warning {
+  color: #ffb36b;
+  text-shadow: 0 0 12px rgba(255,179,107,0.48);
+}
+
+.comment-counter span.limit {
+  color: #ff5da8;
+  text-shadow:
+    0 0 12px rgba(255,93,168,0.65),
+    0 0 22px rgba(238,107,243,0.35);
+}
+
 .comments-note {
   margin: 10px 0 0;
   color: rgba(220,232,255,0.56);
@@ -2475,15 +2505,22 @@ body.near-1 .hero {
     grid-template-columns: 1fr;
   }
 
+  .comment-counter {
+  grid-column: auto;
+  text-align: right;
+  padding-right: 4px;
+  margin-top: -2px;
+}
+
   #commentName,
   #commentText {
     height: 46px;
   }
 
-#commentSubmitBtn {
-  width: 100%;
-  border-radius: 999px;
-}
+  #commentSubmitBtn {
+    width: 100%;
+    border-radius: 999px;
+  }
 
   .comm-top {
     align-items: flex-start;
