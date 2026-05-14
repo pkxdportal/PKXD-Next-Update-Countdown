@@ -9,6 +9,7 @@ let currentPopupTeam = null;
 let selectedTeam = localStorage.getItem("selectedTeam") || null;
 let totalVotes = 0;
 let isSendingComment = false;
+let previewTheme = localStorage.getItem("previewTheme") || "default";
 
 const COMMENT_MAX_LENGTH = 300;
 
@@ -707,6 +708,7 @@ const downloadToggle = document.getElementById("downloadToggle");
 const downloadMenu = document.getElementById("downloadMenu");
 
 const shareBtn = document.getElementById("shareBtn");
+const themeToggle = document.getElementById("themeToggle");
 
 const countdownModeBtn = document.getElementById("countdownModeBtn");
 const progressModeBtn = document.getElementById("progressModeBtn");
@@ -942,14 +944,39 @@ function applySelectedTeamTheme() {
     button.classList.remove("selected");
   });
 
-  if (!selectedTeam) return;
+  if (selectedTeam) {
+    const selectedButton = document.querySelector(`.team-btn[data-team="${selectedTeam}"]`);
 
-  document.body.classList.add("selected-" + selectedTeam);
+    if (selectedButton) {
+      selectedButton.classList.add("selected");
+    }
+  }
 
-  const selectedButton = document.querySelector(`.team-btn[data-team="${selectedTeam}"]`);
+  applyPreviewTheme();
+}
 
-  if (selectedButton) {
-    selectedButton.classList.add("selected");
+function applyPreviewTheme() {
+  document.body.classList.remove(
+    "selected-volts",
+    "selected-flame",
+    "selected-leaf"
+  );
+
+  if (previewTheme !== "default") {
+    document.body.classList.add("selected-" + previewTheme);
+  } else if (selectedTeam) {
+    document.body.classList.add("selected-" + selectedTeam);
+  }
+
+  if (themeToggle) {
+    const icons = {
+      default: "🌀",
+      volts: "⚡",
+      flame: "🔥",
+      leaf: "🍃"
+    };
+
+    themeToggle.textContent = icons[previewTheme] || "🌀";
   }
 }
 
@@ -1484,6 +1511,19 @@ if (progressModeBtn) {
 if (theoriesModeBtn) {
   theoriesModeBtn.addEventListener("click", () => {
     setMode("theories");
+  });
+}
+
+if (themeToggle) {
+  themeToggle.addEventListener("click", () => {
+    const themes = ["default", "volts", "flame", "leaf"];
+    const currentIndex = themes.indexOf(previewTheme);
+    const nextIndex = (currentIndex + 1) % themes.length;
+
+    previewTheme = themes[nextIndex];
+    localStorage.setItem("previewTheme", previewTheme);
+
+    applyPreviewTheme();
   });
 }
 
