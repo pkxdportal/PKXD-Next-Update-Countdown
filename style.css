@@ -32,7 +32,7 @@ body {
     radial-gradient(circle at 80% 65%, rgba(255, 183, 60, 0.16), transparent 25%),
     url("bag.png") center / cover no-repeat;
   filter: brightness(0.82) saturate(1.65);
-  transition: filter 0.5s ease;
+  transition: filter 0.5s ease, background-image 0.5s ease;
 }
 
 .background::after {
@@ -159,10 +159,15 @@ body.selected-leaf .team-glow {
   }
 }
 
-/* Selected team premium theme */
+/* =========================
+   SELECTED TEAM THEME
+========================= */
 
 body.selected-volts .hero {
   border-color: rgba(139, 227, 255, 0.32);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(0, 130, 255, 0.12), transparent 45%),
+    rgba(3, 7, 22, 0.28);
   box-shadow:
     0 0 110px rgba(0, 130, 255, 0.38),
     0 0 160px rgba(139, 227, 255, 0.18),
@@ -171,6 +176,9 @@ body.selected-volts .hero {
 
 body.selected-flame .hero {
   border-color: rgba(255, 150, 80, 0.32);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 80, 35, 0.12), transparent 45%),
+    rgba(3, 7, 22, 0.28);
   box-shadow:
     0 0 110px rgba(255, 70, 40, 0.36),
     0 0 160px rgba(255, 183, 60, 0.18),
@@ -179,6 +187,9 @@ body.selected-flame .hero {
 
 body.selected-leaf .hero {
   border-color: rgba(120, 255, 140, 0.32);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(50, 255, 110, 0.11), transparent 45%),
+    rgba(3, 7, 22, 0.28);
   box-shadow:
     0 0 110px rgba(40, 255, 100, 0.32),
     0 0 160px rgba(160, 255, 120, 0.16),
@@ -273,7 +284,9 @@ body.selected-leaf .hero {
   outline-offset: 4px;
 }
 
-/* Menus */
+/* =========================
+   MENUS
+========================= */
 
 .language-menu,
 .download-menu {
@@ -556,6 +569,25 @@ body.selected-leaf .hero {
   }
 }
 
+/* selected team focus for signs */
+
+body.selected-volts .sign-flame,
+body.selected-volts .sign-leaf,
+body.selected-flame .sign-volt,
+body.selected-flame .sign-leaf,
+body.selected-leaf .sign-volt,
+body.selected-leaf .sign-flame {
+  opacity: 0.24;
+  filter: grayscale(0.8) blur(0.4px);
+}
+
+body.selected-volts .sign-volt,
+body.selected-flame .sign-flame,
+body.selected-leaf .sign-leaf {
+  opacity: 1;
+  scale: 1.08;
+}
+
 /* =========================
    TITLE
 ========================= */
@@ -814,10 +846,11 @@ h1 span {
 }
 
 /* =========================
-   PROGRESS / PORTAL CHARGE
+   PANELS
 ========================= */
 
-.progress-panel {
+.progress-panel,
+.theories-panel {
   display: none;
   margin: 38px auto 0;
   max-width: 780px;
@@ -832,7 +865,8 @@ h1 span {
     inset 0 0 30px rgba(255,255,255,0.04);
 }
 
-.progress-panel.active {
+.progress-panel.active,
+.theories-panel.active {
   display: block;
   animation: panelReveal 0.35s ease forwards;
 }
@@ -848,6 +882,10 @@ h1 span {
     transform: translateY(0) scale(1);
   }
 }
+
+/* =========================
+   PROGRESS / PORTAL CHARGE
+========================= */
 
 .progress-info {
   display: flex;
@@ -909,6 +947,162 @@ body.selected-leaf .progress-fill {
   color: rgba(220,232,255,0.78);
   font-size: 14px;
   font-weight: 800;
+}
+
+/* =========================
+   THEORIES
+========================= */
+
+.theories-head {
+  margin-bottom: 22px;
+}
+
+.theories-head h2,
+.theories-panel h2 {
+  margin: 0;
+  font-size: clamp(22px, 3vw, 34px);
+  line-height: 1.05;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: white;
+  text-shadow:
+    0 0 18px rgba(139,227,255,0.45),
+    0 0 34px rgba(238,107,243,0.24);
+}
+
+.theories-head p,
+.theories-subtitle {
+  margin: 10px auto 0;
+  max-width: 620px;
+  color: rgba(220,232,255,0.75);
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.45;
+}
+
+.theory-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.theory-card {
+  position: relative;
+  overflow: hidden;
+  padding: 18px;
+  border-radius: 22px;
+  text-align: left;
+  background:
+    radial-gradient(circle at 0% 0%, rgba(139,227,255,0.12), transparent 42%),
+    rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.13);
+  box-shadow:
+    0 0 24px rgba(139,227,255,0.08),
+    inset 0 0 18px rgba(255,255,255,0.025);
+  transition:
+    transform 0.24s ease,
+    border-color 0.24s ease,
+    box-shadow 0.24s ease,
+    background 0.24s ease;
+}
+
+.theory-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(139,227,255,0.26);
+  background:
+    radial-gradient(circle at 0% 0%, rgba(139,227,255,0.18), transparent 44%),
+    rgba(255,255,255,0.075);
+  box-shadow:
+    0 0 32px rgba(139,227,255,0.16),
+    inset 0 0 20px rgba(255,255,255,0.03);
+}
+
+.theory-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  margin-bottom: 12px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.13);
+  box-shadow: 0 0 18px rgba(139,227,255,0.14);
+  font-size: 22px;
+}
+
+.theory-card h3 {
+  margin: 0 0 8px;
+  color: white;
+  font-size: 16px;
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.theory-card p {
+  margin: 0;
+  color: rgba(220,232,255,0.74);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.watch-more {
+  margin: 22px auto 0;
+  padding: 18px;
+  border-radius: 24px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.075), rgba(255,255,255,0.04));
+  border: 1px solid rgba(255,255,255,0.13);
+  box-shadow:
+    0 0 28px rgba(139,227,255,0.10),
+    inset 0 0 20px rgba(255,255,255,0.025);
+}
+
+.watch-more h3 {
+  margin: 0 0 8px;
+  color: white;
+  font-size: 20px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.watch-more p {
+  margin: 0 auto 14px;
+  max-width: 620px;
+  color: rgba(220,232,255,0.74);
+  font-size: 13px;
+  font-weight: 750;
+  line-height: 1.45;
+}
+
+.watch-links {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.watch-links a {
+  display: inline-block;
+  padding: 10px 15px;
+  border-radius: 999px;
+  color: #050816;
+  background: linear-gradient(90deg, #8be3ff, #ee6bf3, #72ff87);
+  text-decoration: none;
+  font-weight: 900;
+  font-size: 13px;
+  box-shadow: 0 0 22px rgba(139,227,255,0.22);
+  transition:
+    transform 0.24s ease,
+    filter 0.24s ease,
+    box-shadow 0.24s ease;
+}
+
+.watch-links a:hover {
+  transform: translateY(-2px) scale(1.03);
+  filter: brightness(1.12);
+  box-shadow: 0 0 30px rgba(139,227,255,0.32);
 }
 
 /* =========================
@@ -1088,6 +1282,51 @@ body.selected-leaf .progress-fill {
 .energy-row.leaf .energy-fill {
   background: linear-gradient(90deg, #21ff73, #b8ff6a);
   box-shadow: 0 0 18px rgba(40,255,100,0.55);
+}
+
+/* =========================
+   VOTE META
+========================= */
+
+.vote-meta {
+  margin: 18px auto 0;
+  max-width: 720px;
+  display: grid;
+  gap: 8px;
+  text-align: center;
+}
+
+.vote-status,
+.total-votes,
+.vote-change-link {
+  margin: 0;
+  color: rgba(220, 232, 255, 0.74);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+}
+
+.total-votes {
+  color: rgba(255,255,255,0.86);
+  text-shadow: 0 0 14px rgba(139,227,255,0.28);
+}
+
+.vote-leader {
+  margin: 0;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 900;
+  text-shadow:
+    0 0 14px rgba(139, 227, 255, 0.55),
+    0 0 26px rgba(238, 107, 243, 0.28);
+}
+
+.vote-change-link {
+  width: fit-content;
+  margin: 2px auto 0;
+  color: #8be3ff;
+  opacity: 0.86;
+  cursor: default;
 }
 
 /* =========================
@@ -1326,6 +1565,73 @@ body.selected-leaf .progress-fill {
 }
 
 /* =========================
+   TOAST
+========================= */
+
+.team-activated-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 34px;
+  z-index: 200;
+  max-width: calc(100% - 32px);
+  padding: 14px 22px;
+  border-radius: 999px;
+  background: rgba(5, 8, 22, 0.88);
+  border: 1px solid rgba(255,255,255,0.18);
+  backdrop-filter: blur(18px);
+  color: white;
+  font-size: 15px;
+  font-weight: 900;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  box-shadow:
+    0 0 34px rgba(139,227,255,0.25),
+    inset 0 0 18px rgba(255,255,255,0.05);
+  opacity: 0;
+  transform: translate(-50%, 22px) scale(0.94);
+  pointer-events: none;
+  transition: 0.28s ease;
+}
+
+.team-activated-toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0) scale(1);
+  animation: teamToastPulse 1.8s ease forwards;
+}
+
+.team-activated-toast.volts {
+  box-shadow:
+    0 0 38px rgba(0, 150, 255, 0.55),
+    0 0 80px rgba(139, 227, 255, 0.24);
+}
+
+.team-activated-toast.flame {
+  box-shadow:
+    0 0 38px rgba(255, 60, 95, 0.58),
+    0 0 80px rgba(255, 120, 80, 0.24);
+}
+
+.team-activated-toast.leaf {
+  box-shadow:
+    0 0 38px rgba(70, 255, 120, 0.52),
+    0 0 80px rgba(90, 255, 180, 0.22);
+}
+
+@keyframes teamToastPulse {
+  0% {
+    filter: brightness(1);
+  }
+
+  35% {
+    filter: brightness(1.28);
+  }
+
+  100% {
+    filter: brightness(1);
+  }
+}
+
+/* =========================
    EVENT ATMOSPHERE
 ========================= */
 
@@ -1541,11 +1847,14 @@ body.near-1 .hero {
 
   .mode-switch {
     margin-top: 24px;
+    max-width: 100%;
+    overflow-x: auto;
   }
 
   .mode-btn {
     font-size: 12px;
     padding: 9px 13px;
+    white-space: nowrap;
   }
 
   .timer {
@@ -1565,6 +1874,7 @@ body.near-1 .hero {
   }
 
   .progress-panel,
+  .theories-panel,
   .team-energy {
     padding: 20px 14px;
     border-radius: 24px;
@@ -1602,6 +1912,42 @@ body.near-1 .hero {
     font-size: 13px;
   }
 
+  .theory-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .theory-card {
+    padding: 15px;
+    border-radius: 19px;
+  }
+
+  .theory-card h3 {
+    font-size: 15px;
+  }
+
+  .theory-card p {
+    font-size: 12px;
+  }
+
+  .watch-more {
+    padding: 15px;
+    border-radius: 20px;
+  }
+
+  .watch-more h3 {
+    font-size: 17px;
+  }
+
+  .watch-more p {
+    font-size: 12px;
+  }
+
+  .watch-links a {
+    font-size: 12px;
+    padding: 9px 13px;
+  }
+
   .music-btn {
     font-size: 13px;
     padding: 10px 16px;
@@ -1622,6 +1968,16 @@ body.near-1 .hero {
     padding: 15px 14px;
   }
 
+  .vote-status,
+  .vote-change-link,
+  .total-votes {
+    font-size: 11px;
+  }
+
+  .vote-leader {
+    font-size: 13px;
+  }
+
   .team-popup {
     bottom: 20px;
     padding: 30px 22px 24px;
@@ -1633,6 +1989,12 @@ body.near-1 .hero {
 
   .team-popup p {
     font-size: 16px;
+  }
+
+  .team-activated-toast {
+    bottom: 22px;
+    font-size: 12px;
+    padding: 12px 16px;
   }
 }
 
@@ -1718,122 +2080,5 @@ body.near-1 .hero {
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
     transition-duration: 0.001ms !important;
-  }
-}
-
-.vote-meta {
-  margin: 18px auto 0;
-  max-width: 720px;
-  display: grid;
-  gap: 8px;
-  text-align: center;
-}
-
-.vote-status {
-  margin: 0;
-  color: rgba(220, 232, 255, 0.74);
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 0.3px;
-}
-
-.vote-leader {
-  margin: 0;
-  color: #ffffff;
-  font-size: 14px;
-  font-weight: 900;
-  text-shadow:
-    0 0 14px rgba(139, 227, 255, 0.55),
-    0 0 26px rgba(238, 107, 243, 0.28);
-}
-
-.vote-change-link {
-  width: fit-content;
-  margin: 2px auto 0;
-  color: #8be3ff;
-  font-size: 12px;
-  font-weight: 900;
-  text-decoration: none;
-  opacity: 0.86;
-  cursor: default;
-}
-
-.team-activated-toast {
-  position: fixed;
-  left: 50%;
-  bottom: 34px;
-  z-index: 200;
-  max-width: calc(100% - 32px);
-  padding: 14px 22px;
-  border-radius: 999px;
-  background: rgba(5, 8, 22, 0.88);
-  border: 1px solid rgba(255,255,255,0.18);
-  backdrop-filter: blur(18px);
-  color: white;
-  font-size: 15px;
-  font-weight: 900;
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
-  box-shadow:
-    0 0 34px rgba(139,227,255,0.25),
-    inset 0 0 18px rgba(255,255,255,0.05);
-  opacity: 0;
-  transform: translate(-50%, 22px) scale(0.94);
-  pointer-events: none;
-  transition: 0.28s ease;
-}
-
-.team-activated-toast.show {
-  opacity: 1;
-  transform: translate(-50%, 0) scale(1);
-  animation: teamToastPulse 1.8s ease forwards;
-}
-
-.team-activated-toast.volts {
-  box-shadow:
-    0 0 38px rgba(0, 150, 255, 0.55),
-    0 0 80px rgba(139, 227, 255, 0.24);
-}
-
-.team-activated-toast.flame {
-  box-shadow:
-    0 0 38px rgba(255, 60, 95, 0.58),
-    0 0 80px rgba(255, 120, 80, 0.24);
-}
-
-.team-activated-toast.leaf {
-  box-shadow:
-    0 0 38px rgba(70, 255, 120, 0.52),
-    0 0 80px rgba(90, 255, 180, 0.22);
-}
-
-@keyframes teamToastPulse {
-  0% {
-    filter: brightness(1);
-  }
-
-  35% {
-    filter: brightness(1.28);
-  }
-
-  100% {
-    filter: brightness(1);
-  }
-}
-
-@media (max-width: 760px) {
-  .vote-status,
-  .vote-change-link {
-    font-size: 11px;
-  }
-
-  .vote-leader {
-    font-size: 13px;
-  }
-
-  .team-activated-toast {
-    bottom: 22px;
-    font-size: 12px;
-    padding: 12px 16px;
   }
 }
