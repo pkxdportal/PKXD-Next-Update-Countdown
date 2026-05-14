@@ -13,7 +13,7 @@ let isSendingComment = false;
 const COMMENT_MAX_LENGTH = 300;
 
 const COMMENTS_API_URL =
-  "https://script.google.com/macros/s/AKfycbwrHPXsWqy71GDFN-WmbhBbWwQo3WU_duQr1AjXuW9oTKp8s5m6VgtSizytMVYEgX3G/exec";
+  "https://script.google.com/macros/s/AKfycbxKLaibwuYzPyCl7O1GogdhAdOs6gyGmKjzpPFKE7E6jsljNrGwZGCLRULNDQ21wXev/exec";
 
 const GOOGLE_SHEET_CSV_URL =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vQSWxR6NP3qLfM_-Fi_qoRjpgEA0qiUCUTze8P3XHmNea9ROrpIGMp2kKxd_5FaqZvNi3j28G1-nmlQ/pub?gid=747099020&single=true&output=csv";
