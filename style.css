@@ -483,6 +483,10 @@ body.selected-leaf .hero {
     0 0 25px rgba(0, 120, 255, 0.42),
     0 0 45px rgba(255, 0, 160, 0.28),
     0 0 55px rgba(0, 255, 90, 0.26);
+  transition:
+    border-color 0.45s ease,
+    box-shadow 0.45s ease,
+    opacity 0.45s ease;
 }
 
 .orbit-line {
@@ -495,6 +499,10 @@ body.selected-leaf .hero {
   transform: translateX(-50%);
   pointer-events: none;
   opacity: 0.9;
+  transition:
+    border-color 0.45s ease,
+    opacity 0.45s ease,
+    box-shadow 0.45s ease;
 }
 
 .orbit-blue {
@@ -530,6 +538,16 @@ body.selected-leaf .hero {
     drop-shadow(0 0 12px rgba(255,255,255,0.62))
     drop-shadow(0 0 26px currentColor);
   animation: floatSign 4.8s ease-in-out infinite;
+  transition:
+    opacity 0.45s ease,
+    filter 0.45s ease,
+    left 0.45s ease,
+    right 0.45s ease,
+    top 0.45s ease,
+    width 0.45s ease,
+    height 0.45s ease,
+    transform 0.45s ease,
+    scale 0.45s ease;
 }
 
 .sign-volt {
@@ -577,15 +595,91 @@ body.selected-flame .sign-volt,
 body.selected-flame .sign-leaf,
 body.selected-leaf .sign-volt,
 body.selected-leaf .sign-flame {
-  opacity: 0.24;
-  filter: grayscale(0.8) blur(0.4px);
+  opacity: 0;
+  filter: grayscale(1) blur(1px);
+  scale: 0.72;
 }
 
 body.selected-volts .sign-volt,
 body.selected-flame .sign-flame,
 body.selected-leaf .sign-leaf {
+  left: 50%;
+  right: auto;
+  top: 4px;
+  width: 158px;
+  height: 158px;
+  transform: translateX(-50%);
   opacity: 1;
   scale: 1.08;
+  z-index: 5;
+}
+
+/* selected team orbit colors */
+
+body.selected-volts .signs-orbit::before {
+  border-color: rgba(80, 190, 255, 0.42);
+  box-shadow:
+    0 0 28px rgba(0, 150, 255, 0.62),
+    0 0 58px rgba(139, 227, 255, 0.34);
+}
+
+body.selected-volts .orbit-blue {
+  border-top-color: rgba(0, 150, 255, 0.95);
+  box-shadow: 0 -4px 18px rgba(0, 150, 255, 0.45);
+}
+
+body.selected-volts .orbit-red {
+  border-right-color: rgba(139, 227, 255, 0.85);
+  box-shadow: 4px 0 18px rgba(139, 227, 255, 0.35);
+}
+
+body.selected-volts .orbit-green {
+  border-bottom-color: rgba(40, 185, 255, 0.9);
+  box-shadow: 0 4px 18px rgba(40, 185, 255, 0.35);
+}
+
+body.selected-flame .signs-orbit::before {
+  border-color: rgba(255, 110, 70, 0.44);
+  box-shadow:
+    0 0 28px rgba(255, 70, 40, 0.62),
+    0 0 58px rgba(255, 183, 60, 0.32);
+}
+
+body.selected-flame .orbit-blue {
+  border-top-color: rgba(255, 72, 52, 0.95);
+  box-shadow: 0 -4px 18px rgba(255, 72, 52, 0.42);
+}
+
+body.selected-flame .orbit-red {
+  border-right-color: rgba(255, 183, 60, 0.9);
+  box-shadow: 4px 0 18px rgba(255, 183, 60, 0.34);
+}
+
+body.selected-flame .orbit-green {
+  border-bottom-color: rgba(255, 96, 70, 0.88);
+  box-shadow: 0 4px 18px rgba(255, 96, 70, 0.34);
+}
+
+body.selected-leaf .signs-orbit::before {
+  border-color: rgba(95, 255, 135, 0.42);
+  box-shadow:
+    0 0 28px rgba(40, 255, 100, 0.56),
+    0 0 58px rgba(160, 255, 120, 0.28);
+}
+
+body.selected-leaf .orbit-blue {
+  border-top-color: rgba(40, 255, 110, 0.92);
+  box-shadow: 0 -4px 18px rgba(40, 255, 110, 0.34);
+}
+
+body.selected-leaf .orbit-red {
+  border-right-color: rgba(185, 255, 105, 0.86);
+  box-shadow: 4px 0 18px rgba(185, 255, 105, 0.28);
+}
+
+body.selected-leaf .orbit-green {
+  border-bottom-color: rgba(70, 255, 135, 0.95);
+  box-shadow: 0 4px 18px rgba(70, 255, 135, 0.34);
 }
 
 /* =========================
@@ -954,7 +1048,7 @@ body.selected-leaf .progress-fill {
 ========================= */
 
 .theories-head {
-  margin-bottom: 22px;
+  margin-bottom: 24px;
 }
 
 .theories-head h2,
@@ -983,14 +1077,14 @@ body.selected-leaf .progress-fill {
 .theory-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
+  gap: 20px;
 }
 
 .theory-card {
   position: relative;
   overflow: hidden;
-  padding: 18px;
-  border-radius: 22px;
+  padding: 20px;
+  border-radius: 24px;
   text-align: left;
   background:
     radial-gradient(circle at 0% 0%, rgba(139,227,255,0.12), transparent 42%),
@@ -1046,41 +1140,51 @@ body.selected-leaf .progress-fill {
   line-height: 1.45;
 }
 
+/* =========================
+   WATCH MORE / VIDEOS
+========================= */
+
 .watch-more {
-  margin: 22px auto 0;
-  padding: 18px;
-  border-radius: 24px;
+  margin: 34px auto 0;
+  max-width: 980px;
+  padding: 28px;
+  border-radius: 30px;
   background:
-    linear-gradient(180deg, rgba(255,255,255,0.075), rgba(255,255,255,0.04));
-  border: 1px solid rgba(255,255,255,0.13);
+    radial-gradient(circle at 50% 0%, rgba(139,227,255,0.10), transparent 46%),
+    rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.14);
   box-shadow:
-    0 0 28px rgba(139,227,255,0.10),
-    inset 0 0 20px rgba(255,255,255,0.025);
+    0 0 40px rgba(139,227,255,0.12),
+    inset 0 0 26px rgba(255,255,255,0.03);
 }
 
+.watch-more h2,
 .watch-more h3 {
-  margin: 0 0 8px;
+  margin: 0;
   color: white;
-  font-size: 20px;
+  font-size: clamp(24px, 3vw, 36px);
   font-weight: 900;
+  text-align: center;
   text-transform: uppercase;
-  letter-spacing: 0.6px;
+  letter-spacing: 0.7px;
 }
 
 .watch-more p {
-  margin: 0 auto 14px;
-  max-width: 620px;
-  color: rgba(220,232,255,0.74);
-  font-size: 13px;
+  margin: 14px auto 0;
+  max-width: 720px;
+  text-align: center;
+  color: rgba(220,232,255,0.78);
+  font-size: 14px;
   font-weight: 750;
   line-height: 1.45;
 }
 
 .watch-links {
+  margin-top: 22px;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 14px;
 }
 
 .watch-links a {
@@ -1103,6 +1207,62 @@ body.selected-leaf .progress-fill {
   transform: translateY(-2px) scale(1.03);
   filter: brightness(1.12);
   box-shadow: 0 0 30px rgba(139,227,255,0.32);
+}
+
+.video-sections {
+  margin-top: 28px;
+  display: grid;
+  gap: 28px;
+}
+
+.video-group h4 {
+  margin: 0 0 14px;
+  color: #dce8ff;
+  font-size: 18px;
+  font-weight: 900;
+  text-align: left;
+}
+
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.video-card {
+  display: block;
+  overflow: hidden;
+  border-radius: 18px;
+  text-decoration: none;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: 0 0 20px rgba(139,227,255,0.10);
+  transition:
+    transform 0.24s ease,
+    box-shadow 0.24s ease,
+    background 0.24s ease;
+}
+
+.video-card:hover {
+  transform: translateY(-4px);
+  background: rgba(255,255,255,0.09);
+  box-shadow: 0 0 28px rgba(139,227,255,0.18);
+}
+
+.video-card img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.video-card-title {
+  display: block;
+  padding: 12px;
+  color: white;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.35;
 }
 
 /* =========================
@@ -1829,6 +1989,16 @@ body.near-1 .hero {
     right: 36px;
   }
 
+  body.selected-volts .sign-volt,
+  body.selected-flame .sign-flame,
+  body.selected-leaf .sign-leaf {
+    top: 4px;
+    width: 108px;
+    height: 108px;
+    transform: translateX(-50%);
+    scale: 1.1;
+  }
+
   h1 {
     font-size: 32px;
     line-height: 1.05;
@@ -1914,12 +2084,12 @@ body.near-1 .hero {
 
   .theory-grid {
     grid-template-columns: 1fr;
-    gap: 12px;
+    gap: 16px;
   }
 
   .theory-card {
-    padding: 15px;
-    border-radius: 19px;
+    padding: 16px;
+    border-radius: 20px;
   }
 
   .theory-card h3 {
@@ -1931,12 +2101,13 @@ body.near-1 .hero {
   }
 
   .watch-more {
-    padding: 15px;
-    border-radius: 20px;
+    padding: 20px 14px;
+    border-radius: 24px;
   }
 
+  .watch-more h2,
   .watch-more h3 {
-    font-size: 17px;
+    font-size: 20px;
   }
 
   .watch-more p {
@@ -1946,6 +2117,18 @@ body.near-1 .hero {
   .watch-links a {
     font-size: 12px;
     padding: 9px 13px;
+  }
+
+  .video-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .video-group h4 {
+    font-size: 16px;
+  }
+
+  .video-card-title {
+    font-size: 13px;
   }
 
   .music-btn {
@@ -2038,6 +2221,16 @@ body.near-1 .hero {
 
   .sign-leaf {
     right: 24px;
+  }
+
+  body.selected-volts .sign-volt,
+  body.selected-flame .sign-flame,
+  body.selected-leaf .sign-leaf {
+    top: 2px;
+    width: 94px;
+    height: 94px;
+    transform: translateX(-50%);
+    scale: 1.08;
   }
 
   h1 {
