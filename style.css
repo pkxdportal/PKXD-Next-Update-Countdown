@@ -266,6 +266,7 @@ body.selected-leaf .hero {
 .lang-toggle:hover,
 .download-toggle:hover,
 .share-toggle:hover,
+.theme-toggle:hover,
 .music-top-toggle:hover {
   transform: translateY(-2px) scale(1.06);
   background: rgba(10, 16, 40, 0.9);
@@ -289,6 +290,7 @@ body.selected-leaf .hero {
 .lang-toggle:focus-visible,
 .download-toggle:focus-visible,
 .share-toggle:focus-visible,
+.theme-toggle:focus-visible,
 .music-top-toggle:focus-visible,
 .team-btn:focus-visible,
 .mode-btn:focus-visible,
@@ -2320,6 +2322,7 @@ body.near-1 .hero {
   .lang-toggle,
   .download-toggle,
   .share-toggle,
+  .theme-toggle,
   .music-top-toggle {
     width: 42px;
     height: 42px;
