@@ -33,37 +33,37 @@ const GOOGLE_FORM_PREFILLED_URLS = {
 
 const PORTAL_VIDEOS = [
   {
-    title: "PK XD PORTAL: Zero Gravity Countdown",
-    videoId: "PASTE_PORTAL_VIDEO_ID_1",
-    url: "https://www.youtube.com/@pkxdportal"
+    title: "WELCOME TO PK XD PORTAL",
+    videoId: "EeKDuwUQBumjEq5B",
+    url: "https://youtu.be/sZszBFUDbt0?si=EeKDuwUQBumjEq5B"
   },
   {
-    title: "PK XD PORTAL: Zero Gravity Theory",
-    videoId: "PASTE_PORTAL_VIDEO_ID_2",
-    url: "https://www.youtube.com/@pkxdportal"
+    title: "⚡ PK XD Zero Gravity Countdown Has Started 🔥",
+    videoId: "QGCXKXqoG852Sw6p",
+    url: "https://youtube.com/shorts/cSBDn6gM2Fc?si=QGCXKXqoG852Sw6p"
   },
   {
-    title: "PK XD PORTAL: Zero Gravity Update",
-    videoId: "PASTE_PORTAL_VIDEO_ID_3",
-    url: "https://www.youtube.com/@pkxdportal"
+    title: "Who Will Win Zero Gravity 2026? 👀🔥⚡🍃",
+    videoId: "lFu3fKhWuJ8_ozTt",
+    url: "https://youtube.com/shorts/8-JdJ_r6qZQ?si=lFu3fKhWuJ8_ozTt"
   }
 ];
 
 const COMMUNITY_VIDEOS = [
   {
-    title: "Community Video: PK XD Zero Gravity",
-    videoId: "PASTE_COMMUNITY_VIDEO_ID_1",
-    url: "https://www.youtube.com/results?search_query=PK+XD+Zero+Gravity"
+    title: "ALL THE ZERO GRAVITY UPDATE IN PKXD 🤯✨",
+    videoId: "_Wlo4SiU6v4rJy-X",
+    url: "https://youtu.be/PW3GhuICSv4?si=_Wlo4SiU6v4rJy-X"
   },
   {
-    title: "Community Video: Zero Gravity Update",
-    videoId: "PASTE_COMMUNITY_VIDEO_ID_2",
-    url: "https://www.youtube.com/results?search_query=PK+XD+Zero+Gravity"
+    title: "NOVA ATUALIZAÇÃO GRAVIDADE ZERO 2026 NO PK XD",
+    videoId: "T4Bbawm1pr5v6wSK",
+    url: "https://youtu.be/iGo3KxKexBc?si=T4Bbawm1pr5v6wSK"
   },
   {
-    title: "Community Video: PK XD New Update",
-    videoId: "PASTE_COMMUNITY_VIDEO_ID_3",
-    url: "https://www.youtube.com/results?search_query=PK+XD+Zero+Gravity"
+    title: "😦🌠NEW UPDATE ALL SECRETS : zero gravity 2026 PK XD || new surprise spoiler & details",
+    videoId: "Jq641GJAISLzoAaS",
+    url: "https://youtu.be/Jt2Ob6PaDxc?si=Jq641GJAISLzoAaS"
   }
 ];
 
