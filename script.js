@@ -1319,6 +1319,7 @@ async function renderComments() {
 async function addComment(name, text) {
   const cleanName = String(name || "").trim().slice(0, 18);
   const cleanText = String(text || "").trim().slice(0, COMMENT_MAX_LENGTH);
+  const cleanRating = Number(selectedRating || 0);
 
   if (!cleanName || !cleanText || isSendingComment) return;
 
@@ -1339,11 +1340,13 @@ async function addComment(name, text) {
       body: JSON.stringify({
         name: cleanName,
         message: cleanText,
-        rating: selectedRating
+        rating: cleanRating
       })
     });
 
-    window.setTimeout(renderComments, 1200);
+    window.setTimeout(() => {
+      renderComments();
+    }, 1800);
   } catch (error) {
     console.warn("Comment could not be sent:", error);
   } finally {
