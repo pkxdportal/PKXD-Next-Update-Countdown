@@ -404,13 +404,17 @@
             required
           ></textarea>
 
-          <div class="comment-counter">
-            <span id="commentCounter">0 / 300</span>
-          </div>
+          <div class="rating-box" aria-label="Rating">
+            <button type="button" class="rating-star active" data-rating="1">★</button>
+            <button type="button" class="rating-star active" data-rating="2">★</button>
+            <button type="button" class="rating-star active" data-rating="3">★</button>
+            <button type="button" class="rating-star active" data-rating="4">★</button>
+            <button type="button" class="rating-star active" data-rating="5">★</button>
+         </div>
 
-          <button type="submit" id="commentSubmitBtn" aria-label="Send comment">
-            ➤
-          </button>
+            <button type="submit" id="commentSubmitBtn" aria-label="Send comment">
+             ➤
+            </button>
         </form>
 
         <p class="comments-note" data-i18n="commentsLocalNote">
