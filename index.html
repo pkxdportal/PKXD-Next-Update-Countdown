@@ -6,7 +6,7 @@
 
   <title>Zero Gravity Countdown</title>
 
-  <link rel="stylesheet" href="style.css?v=17" />
+  <link rel="stylesheet" href="style.css?v=18" />
 </head>
 
 <body>
@@ -85,7 +85,7 @@
   <main class="scene">
     <section class="hero">
       <div class="pkxd-badge">
-        <img src="PKXD.png?v=17" alt="PK XD" />
+        <img src="PKXD.png?v=18" alt="PK XD" />
         <span data-i18n="fanCountdown">Fan countdown for PK XD</span>
       </div>
 
@@ -115,6 +115,10 @@
 
         <button type="button" id="progressModeBtn" class="mode-btn" data-i18n="progressMode">
           Progress
+        </button>
+
+        <button type="button" id="theoriesModeBtn" class="mode-btn" data-i18n="theoriesMode">
+          Theories
         </button>
       </div>
 
@@ -154,6 +158,65 @@
         <p id="progressText" class="progress-text"></p>
       </div>
 
+      <div id="theoriesPanel" class="theories-panel">
+        <div class="theories-head">
+          <h2 data-i18n="theoriesTitle">ZERO GRAVITY THEORIES</h2>
+          <p data-i18n="theoriesSubtitle">
+            Fan theories by PK XD PORTAL. Nothing here is official.
+          </p>
+        </div>
+
+        <div class="theories-grid">
+          <div class="theory-card">
+            <div class="theory-icon">🌌</div>
+            <h3 data-i18n="theoryGravityTitle">New gravity mechanics</h3>
+            <p data-i18n="theoryGravityText">
+              Players may float, jump higher or move differently during the event.
+            </p>
+          </div>
+
+          <div class="theory-card">
+            <div class="theory-icon">🛸</div>
+            <h3 data-i18n="theoryItemsTitle">Space-style items</h3>
+            <p data-i18n="theoryItemsText">
+              The update could bring space outfits, effects, pets or vehicles.
+            </p>
+          </div>
+
+          <div class="theory-card">
+            <div class="theory-icon">⚡</div>
+            <h3 data-i18n="theoryTeamsTitle">Team energy</h3>
+            <p data-i18n="theoryTeamsText">
+              Volts, Flame and Leaf may be connected to the event theme.
+            </p>
+          </div>
+
+          <div class="theory-card">
+            <div class="theory-icon">🎮</div>
+            <h3 data-i18n="theoryGamesTitle">New mini-games</h3>
+            <p data-i18n="theoryGamesText">
+              The event may include flying, floating or low-gravity challenges.
+            </p>
+          </div>
+
+          <div class="theory-card">
+            <div class="theory-icon">🏝️</div>
+            <h3 data-i18n="theoryMapTitle">Map changes</h3>
+            <p data-i18n="theoryMapText">
+              The island may receive temporary Zero Gravity decorations.
+            </p>
+          </div>
+
+          <div class="theory-card">
+            <div class="theory-icon">🎁</div>
+            <h3 data-i18n="theoryRewardsTitle">Special rewards</h3>
+            <p data-i18n="theoryRewardsText">
+              There may be limited rewards connected to the event.
+            </p>
+          </div>
+        </div>
+      </div>
+
       <div class="hashtags">
         <button type="button" class="team-btn volts" data-team="volts" data-i18n="voteVolts">
           ⚡ Vote Volts
@@ -171,8 +234,13 @@
       <div id="teamEnergy" class="team-energy">
         <div class="team-energy-head">
           <h2 data-i18n="teamEnergyTitle">ZERO GRAVITY TEAM VOTE 2026</h2>
+
           <p id="selectedTeamText" data-i18n="noTeamSelected">
             Choose your team to activate its energy.
+          </p>
+
+          <p class="total-votes" id="totalVotesText">
+            Total votes: 0
           </p>
         </div>
 
@@ -220,6 +288,34 @@
           <p class="vote-change-link" data-i18n="changeVoteText">
             Need to change your vote? Contact PK XD PORTAL.
           </p>
+        </div>
+      </div>
+
+      <div class="watch-more">
+        <h2 data-i18n="watchMoreTitle">Watch More</h2>
+
+        <p data-i18n="watchMoreText">
+          Follow PK XD PORTAL updates and explore community videos about Zero Gravity.
+        </p>
+
+        <div class="watch-links">
+          <a
+            href="https://www.youtube.com/@pkxdportal"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-i18n="portalVideosBtn"
+          >
+            PK XD PORTAL Videos
+          </a>
+
+          <a
+            href="https://www.youtube.com/results?search_query=PK+XD+Zero+Gravity"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-i18n="zeroGravityVideosBtn"
+          >
+            Zero Gravity Videos
+          </a>
         </div>
       </div>
 
@@ -310,6 +406,6 @@
     TEAM ACTIVATED
   </div>
 
-  <script src="script.js?v=17"></script>
+  <script src="script.js?v=18"></script>
 </body>
 </html>
