@@ -6,7 +6,7 @@
 
   <title>Zero Gravity Countdown</title>
 
-  <link rel="stylesheet" href="style.css?v=20" />
+  <link rel="stylesheet" href="style.css?v=21" />
 </head>
 
 <body>
@@ -93,7 +93,7 @@
   <main class="scene">
     <section class="hero">
       <div class="pkxd-badge">
-        <img src="PKXD.png?v=20" alt="PK XD" />
+        <img src="PKXD.png?v=21" alt="PK XD" />
         <span data-i18n="fanCountdown">Fan countdown for PK XD</span>
       </div>
 
@@ -373,33 +373,45 @@
       </div>
 
       <div class="community-comms">
-        <div class="community-comms-head">
-          <span>💬</span>
-          <h2 data-i18n="communityCommsTitle">Community Comms</h2>
+        <div class="comms-head">
+          <div class="comms-icon">💬</div>
+
+          <h3 data-i18n="communityCommsTitle">
+            Community Comms
+          </h3>
+
+          <p data-i18n="communityCommsText">
+            Write a message for the Zero Gravity community.
+          </p>
         </div>
 
-        <div class="comm-list">
-          <div class="comm-message">
-            <div class="comm-top">
-              <strong>Nova_ve7q</strong>
-              <span>42m ago</span>
-            </div>
-            <p>Volts team let’s go ⚡</p>
-          </div>
+        <div id="commentsList" class="comments-list"></div>
 
-          <div class="comm-message">
-            <div class="comm-top">
-              <strong>StarDust_28e5</strong>
-              <span>108m ago</span>
-            </div>
-            <p>TEAM FLAME ALWAYS 🔥❤️‍🔥</p>
-          </div>
-        </div>
+        <form id="commentForm" class="comment-form">
+          <input
+            type="text"
+            id="commentName"
+            maxlength="18"
+            placeholder="Your name"
+            autocomplete="off"
+            required
+          />
 
-        <div class="comm-input">
-          <span data-i18n="commPlaceholder">Transmit your message to the community...</span>
-          <button type="button">➤</button>
-        </div>
+          <textarea
+            id="commentText"
+            maxlength="120"
+            placeholder="Transmit your message to the community..."
+            required
+          ></textarea>
+
+          <button type="submit" id="commentSubmitBtn" aria-label="Send comment">
+            ➤
+          </button>
+        </form>
+
+        <p class="comments-note" data-i18n="commentsLocalNote">
+          Messages are saved only on this device for now.
+        </p>
       </div>
 
       <div class="portal-credit">
@@ -483,6 +495,6 @@
     TEAM ACTIVATED
   </div>
 
-  <script src="script.js?v=20"></script>
+  <script src="script.js?v=21"></script>
 </body>
 </html>
