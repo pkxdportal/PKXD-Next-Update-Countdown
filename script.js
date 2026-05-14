@@ -8,6 +8,9 @@ let countdownInterval = null;
 let currentPopupTeam = null;
 let selectedTeam = localStorage.getItem("selectedTeam") || null;
 let totalVotes = 0;
+let isSendingComment = false;
+
+const COMMENT_MAX_LENGTH = 300;
 
 const COMMENTS_API_URL =
   "https://script.google.com/macros/s/AKfycbwrHPXsWqy71GDFN-WmbhBbWwQo3WU_duQr1AjXuW9oTKp8s5m6VgtSizytMVYEgX3G/exec";
@@ -729,6 +732,8 @@ const commentsList = document.getElementById("commentsList");
 const commentForm = document.getElementById("commentForm");
 const commentName = document.getElementById("commentName");
 const commentText = document.getElementById("commentText");
+const commentCounter = document.getElementById("commentCounter");
+const commentSubmitBtn = document.getElementById("commentSubmitBtn");
 
 function getText(key) {
   return translations[currentLang]?.[key] || translations.en[key] || key;
@@ -850,6 +855,7 @@ function setLanguage(lang) {
   updateProgress();
   updateTeamEnergy();
   updateChooseButton();
+  updateCommentCounter();
   renderVideoHub();
   renderComments();
 
@@ -1214,6 +1220,18 @@ function updateMusicButton() {
   musicToggle.setAttribute("aria-label", isPlaying ? "Turn music off" : "Turn music on");
 }
 
+function updateCommentCounter() {
+  if (!commentText || !commentCounter) return;
+
+  const length = commentText.value.length;
+  const left = Math.max(0, COMMENT_MAX_LENGTH - length);
+
+  commentCounter.textContent = `${length} / ${COMMENT_MAX_LENGTH}`;
+
+  commentCounter.classList.toggle("warning", left <= 60 && left > 0);
+  commentCounter.classList.toggle("limit", left === 0);
+}
+
 async function getStoredComments() {
   try {
     const response = await fetch(COMMENTS_API_URL + "?cache=" + Date.now());
@@ -1269,13 +1287,16 @@ async function renderComments() {
   }
 
   commentsList.innerHTML = comments
-    .slice()
-    .reverse()
     .slice(0, 30)
     .map((comment) => {
       const name = comment.name || "Player";
       const message = comment.message || comment.text || "";
-      const createdAt = comment.createdAt || comment.timestamp || comment.date || "";
+      const createdAt =
+        comment.time ||
+        comment.createdAt ||
+        comment.timestamp ||
+        comment.date ||
+        "";
 
       return `
         <div class="comm-message">
@@ -1292,16 +1313,23 @@ async function renderComments() {
 
 async function addComment(name, text) {
   const cleanName = String(name || "").trim().slice(0, 18);
-  const cleanText = String(text || "").trim().slice(0, 120);
+  const cleanText = String(text || "").trim().slice(0, COMMENT_MAX_LENGTH);
 
-  if (!cleanName || !cleanText) return;
+  if (!cleanName || !cleanText || isSendingComment) return;
+
+  isSendingComment = true;
+
+  if (commentSubmitBtn) {
+    commentSubmitBtn.disabled = true;
+    commentSubmitBtn.textContent = "…";
+  }
 
   try {
     await fetch(COMMENTS_API_URL, {
       method: "POST",
       mode: "no-cors",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "text/plain;charset=utf-8"
       },
       body: JSON.stringify({
         name: cleanName,
@@ -1312,6 +1340,15 @@ async function addComment(name, text) {
     window.setTimeout(renderComments, 1200);
   } catch (error) {
     console.warn("Comment could not be sent:", error);
+  } finally {
+    window.setTimeout(() => {
+      isSendingComment = false;
+
+      if (commentSubmitBtn) {
+        commentSubmitBtn.disabled = false;
+        commentSubmitBtn.textContent = "➤";
+      }
+    }, 1200);
   }
 }
 
@@ -1446,6 +1483,14 @@ if (shareBtn) {
   });
 }
 
+if (commentText) {
+  commentText.setAttribute("maxlength", String(COMMENT_MAX_LENGTH));
+
+  commentText.addEventListener("input", () => {
+    updateCommentCounter();
+  });
+}
+
 if (commentForm && commentName && commentText) {
   commentForm.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -1453,6 +1498,7 @@ if (commentForm && commentName && commentText) {
     await addComment(commentName.value, commentText.value);
 
     commentText.value = "";
+    updateCommentCounter();
     commentText.focus();
   });
 }
@@ -1466,6 +1512,7 @@ renderVideoHub();
 renderComments();
 loadTeamEnergyFromSheet();
 updateCountdown();
+updateCommentCounter();
 setMode("countdown");
 
 countdownInterval = setInterval(updateCountdown, 1000);
