@@ -1407,6 +1407,61 @@ body.selected-leaf .progress-fill {
   line-height: 1.45;
 }
 
+.community-rating {
+  margin: 18px auto 20px;
+  padding: 18px 20px;
+  max-width: 520px;
+  border-radius: 24px;
+  text-align: center;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 204, 77, 0.16), transparent 55%),
+    rgba(5, 8, 22, 0.58);
+  border: 1px solid rgba(255,255,255,0.14);
+  box-shadow:
+    0 0 28px rgba(255,204,77,0.12),
+    inset 0 0 22px rgba(255,255,255,0.03);
+}
+
+.community-rating-title {
+  margin-bottom: 8px;
+  color: rgba(220,232,255,0.72);
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1.1px;
+}
+
+.community-rating-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+#averageStars {
+  color: #ffcc4d;
+  font-size: 28px;
+  letter-spacing: 2px;
+  text-shadow:
+    0 0 12px rgba(255,204,77,0.75),
+    0 0 28px rgba(255,179,107,0.35);
+}
+
+#averageRating {
+  color: white;
+  font-size: 18px;
+  font-weight: 900;
+  text-shadow: 0 0 14px rgba(139,227,255,0.35);
+}
+
+.rating-count {
+  margin-top: 8px;
+  color: rgba(220,232,255,0.56);
+  font-size: 12px;
+  font-weight: 800;
+}
+
 .comments-list,
 #commentsList {
   margin-top: 20px;
@@ -2612,6 +2667,19 @@ body.near-1 .hero {
   .comment-form,
   #commentForm {
     grid-template-columns: 1fr;
+  }
+
+  .community-rating {
+  padding: 16px 14px;
+  border-radius: 22px;
+  }
+
+  #averageStars {
+  font-size: 24px;
+  }
+
+  #averageRating {
+  font-size: 16px;
   }
 
   .rating-box {
