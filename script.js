@@ -143,6 +143,10 @@ const commentSubmitBtn = document.getElementById("commentSubmitBtn");
 const ratingStars = document.querySelectorAll(".rating-star");
 let selectedRating = 5;
 
+const averageStars = document.getElementById("averageStars");
+const averageRating = document.getElementById("averageRating");
+const ratingCount = document.getElementById("ratingCount");
+
 function getText(key) {
   return translations[currentLang]?.[key] || translations.en[key] || key;
 }
@@ -686,6 +690,31 @@ async function getStoredComments() {
   }
 }
 
+function updateAverageRating(comments) {
+  if (!averageStars || !averageRating || !ratingCount) return;
+
+  const ratings = comments
+    .map((comment) => Number(comment.rating || 0))
+    .filter((rating) => rating >= 1 && rating <= 5);
+
+  if (!ratings.length) {
+    averageStars.textContent = "☆☆☆☆☆";
+    averageRating.textContent = "0.0 / 5";
+    ratingCount.textContent = "Based on 0 messages";
+    return;
+  }
+
+  const sum = ratings.reduce((total, rating) => total + rating, 0);
+  const average = sum / ratings.length;
+  const rounded = Math.round(average);
+
+  averageStars.textContent =
+    "★".repeat(rounded) + "☆".repeat(5 - rounded);
+
+  averageRating.textContent = `${average.toFixed(1)} / 5`;
+  ratingCount.textContent = `Based on ${ratings.length} messages`;
+}
+
 function formatCommentTime(timestamp) {
   const time = new Date(timestamp).getTime();
 
@@ -709,6 +738,8 @@ async function renderComments() {
   if (!commentsList) return;
 
   const comments = await getStoredComments();
+
+  updateAverageRating(comments);
 
   if (!comments.length) {
     commentsList.innerHTML = `
