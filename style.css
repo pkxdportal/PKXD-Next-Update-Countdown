@@ -1350,10 +1350,12 @@ body.selected-leaf .progress-fill {
 
 .community-comms {
   margin: 34px auto 0;
+  width: 100%;
   max-width: 920px;
   padding: 28px;
   border-radius: 30px;
   text-align: left;
+  overflow: hidden;
   background:
     radial-gradient(circle at 50% 0%, rgba(139,227,255,0.13), transparent 45%),
     rgba(255,255,255,0.065);
@@ -1561,8 +1563,10 @@ body.selected-leaf .progress-fill {
 .comment-form,
 #commentForm {
   margin-top: 18px;
+  width: 100%;
+  max-width: 100%;
   display: grid;
-  grid-template-columns: 130px minmax(300px, 1fr) 190px 54px;
+  grid-template-columns: minmax(105px, 0.75fr) minmax(160px, 1.45fr) minmax(138px, 0.85fr) 52px;
   gap: 12px;
   align-items: center;
   padding: 14px;
@@ -1574,6 +1578,7 @@ body.selected-leaf .progress-fill {
   box-shadow:
     inset 0 0 22px rgba(0,0,0,0.22),
     0 0 24px rgba(139,227,255,0.08);
+  overflow: hidden;
 }
 
 #commentName,
@@ -1632,6 +1637,8 @@ body.selected-leaf .progress-fill {
 #commentSubmitBtn {
   width: 48px;
   height: 48px;
+  min-width: 48px;
+  justify-self: center;
   border: none;
   border-radius: 50%;
   cursor: pointer;
@@ -1661,12 +1668,14 @@ body.selected-leaf .progress-fill {
 }
 
 .rating-box {
+  width: 100%;
+  min-width: 0;
   height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 3px;
-  padding: 0 12px;
+  padding: 0 10px;
   border-radius: 999px;
   background:
     radial-gradient(circle at 50% 0%, rgba(255, 179, 107, 0.14), transparent 60%),
@@ -2387,6 +2396,40 @@ body.near-1 .hero {
    MOBILE
 ========================= */
 
+
+@media (max-width: 1250px) {
+  .comment-form,
+  #commentForm {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr) 52px;
+  }
+
+  #commentName {
+    grid-column: 1 / 2;
+  }
+
+  #commentText {
+    grid-column: 2 / 4;
+  }
+
+  .rating-box {
+    grid-column: 1 / 3;
+    grid-row: 2;
+    justify-self: stretch;
+  }
+
+  #commentSubmitBtn {
+    grid-column: 3 / 4;
+    grid-row: 2;
+  }
+
+  .comment-counter {
+    grid-column: 2 / 4;
+    grid-row: 3;
+    text-align: right;
+    margin-top: -4px;
+  }
+}
+
 @media (max-width: 760px) {
   .scene {
     min-height: auto;
@@ -2682,6 +2725,16 @@ body.near-1 .hero {
   .comment-form,
   #commentForm {
     grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  #commentName,
+  #commentText,
+  .rating-box,
+  #commentSubmitBtn,
+  .comment-counter {
+    grid-column: auto;
+    grid-row: auto;
   }
 
   .community-rating {
@@ -2877,193 +2930,5 @@ body.near-1 .hero {
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
     transition-duration: 0.001ms !important;
-  }
-}
-
-/* =========================================================
-   FINAL FIX: COMMUNITY FORM DESKTOP + MOBILE
-   Fixes rating stars / send button escaping outside the card.
-   Keep this block at the VERY END of style.css.
-========================================================= */
-
-.hero {
-  width: min(1440px, 96vw);
-}
-
-.community-comms {
-  width: 100%;
-  max-width: 1080px;
-  overflow: hidden;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.comments-list,
-#commentsList {
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-}
-
-.comment-form,
-#commentForm {
-  width: 100%;
-  max-width: 100%;
-  min-width: 0;
-  box-sizing: border-box;
-  display: grid;
-  grid-template-columns: minmax(120px, 0.75fr) minmax(0, 2fr) minmax(150px, 0.85fr) 54px;
-  gap: 12px;
-  align-items: center;
-  overflow: hidden;
-}
-
-#commentForm > *,
-.comment-form > * {
-  min-width: 0;
-  box-sizing: border-box;
-}
-
-#commentName,
-#commentText,
-.rating-box,
-#commentSubmitBtn {
-  max-width: 100%;
-}
-
-#commentName,
-#commentText {
-  width: 100%;
-}
-
-#commentText {
-  min-width: 0;
-  overflow: hidden;
-}
-
-.rating-box {
-  width: 100%;
-  min-width: 0;
-  max-width: 100%;
-  justify-self: stretch;
-}
-
-.rating-star {
-  flex: 0 0 auto;
-}
-
-#commentSubmitBtn {
-  width: 54px;
-  height: 54px;
-  min-width: 54px;
-  justify-self: end;
-  border-radius: 50%;
-}
-
-.comment-counter {
-  grid-column: 2 / 3;
-  width: 100%;
-  max-width: 100%;
-  text-align: right;
-}
-
-.portal-credit {
-  margin-left: auto;
-  margin-right: auto;
-  width: fit-content;
-  max-width: 100%;
-  text-align: center;
-}
-
-.portal-links {
-  justify-content: center;
-}
-
-@media (max-width: 980px) {
-  .hero {
-    padding-left: 32px;
-    padding-right: 32px;
-  }
-
-  .community-comms {
-    max-width: 100%;
-  }
-
-  .comment-form,
-  #commentForm {
-    grid-template-columns: minmax(120px, 0.8fr) minmax(0, 1.6fr) 54px;
-  }
-
-  .rating-box {
-    grid-column: 1 / 3;
-    grid-row: 2;
-    width: 100%;
-  }
-
-  #commentSubmitBtn {
-    grid-column: 3 / 4;
-    grid-row: 1 / 3;
-    align-self: stretch;
-    width: 54px;
-    height: auto;
-    min-height: 54px;
-    border-radius: 999px;
-  }
-
-  .comment-counter {
-    grid-column: 2 / 3;
-  }
-}
-
-@media (max-width: 760px) {
-  .hero {
-    width: 100%;
-    padding-left: 14px;
-    padding-right: 14px;
-  }
-
-  .community-comms {
-    width: 100%;
-    max-width: 100%;
-    padding: 20px 14px;
-    overflow: hidden;
-  }
-
-  .comment-form,
-  #commentForm {
-    grid-template-columns: 1fr;
-    gap: 12px;
-    padding: 14px;
-    overflow: hidden;
-  }
-
-  #commentName,
-  #commentText,
-  .rating-box,
-  #commentSubmitBtn,
-  .comment-counter {
-    grid-column: auto;
-    grid-row: auto;
-    width: 100%;
-    max-width: 100%;
-  }
-
-  #commentSubmitBtn {
-    height: 48px;
-    min-height: 48px;
-    border-radius: 999px;
-    justify-self: stretch;
-  }
-
-  .comment-counter {
-    text-align: right;
-    padding-right: 4px;
-  }
-}
-
-@media (max-width: 420px) {
-  .community-comms {
-    padding-left: 12px;
-    padding-right: 12px;
   }
 }
