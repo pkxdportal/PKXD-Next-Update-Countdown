@@ -935,11 +935,32 @@ h1 span {
   width: 0%;
   height: 100%;
   border-radius: 999px;
-  background: linear-gradient(90deg, #8be3ff, #ee6bf3, #72ff87);
+  background: linear-gradient(90deg, #0120d4, #f71e44, #33a74d);
   box-shadow:
-    0 0 18px rgba(139,227,255,0.78),
-    0 0 34px rgba(238,107,243,0.42);
+    0 0 18px rgba(1, 32, 212, 0.45),
+    0 0 34px rgba(247, 30, 68, 0.28);
   transition: width 0.45s ease;
+}
+
+body.selected-volts .progress-fill {
+  background: linear-gradient(90deg, #0120d4, #2d49ff, #8a97ff);
+  box-shadow:
+    0 0 18px rgba(1, 32, 212, 0.78),
+    0 0 34px rgba(1, 32, 212, 0.38);
+}
+
+body.selected-flame .progress-fill {
+  background: linear-gradient(90deg, #f71e44, #ff526e, #ff9aaa);
+  box-shadow:
+    0 0 18px rgba(247, 30, 68, 0.78),
+    0 0 34px rgba(247, 30, 68, 0.38);
+}
+
+body.selected-leaf .progress-fill {
+  background: linear-gradient(90deg, #33a74d, #58d972, #a5ffb5);
+  box-shadow:
+    0 0 18px rgba(51, 167, 77, 0.78),
+    0 0 34px rgba(51, 167, 77, 0.38);
 }
 
 .progress-text {
@@ -1082,18 +1103,27 @@ h1 span {
 }
 
 .team-btn.volts {
-  color: #5cc7ff;
-  box-shadow: 0 0 24px rgba(0, 120, 255, 0.32);
+  color: #7d8cff;
+  border-color: rgba(1, 32, 212, 0.7);
+  box-shadow:
+    0 0 24px rgba(1, 32, 212, 0.48),
+    inset 0 0 18px rgba(1, 32, 212, 0.18);
 }
 
 .team-btn.flame {
-  color: #ff7a6d;
-  box-shadow: 0 0 24px rgba(255, 60, 50, 0.32);
+  color: #ff7c91;
+  border-color: rgba(247, 30, 68, 0.7);
+  box-shadow:
+    0 0 24px rgba(247, 30, 68, 0.48),
+    inset 0 0 18px rgba(247, 30, 68, 0.18);
 }
 
 .team-btn.leaf {
-  color: #72ff87;
-  box-shadow: 0 0 24px rgba(40, 255, 100, 0.32);
+  color: #75e88b;
+  border-color: rgba(51, 167, 77, 0.7);
+  box-shadow:
+    0 0 24px rgba(51, 167, 77, 0.48),
+    inset 0 0 18px rgba(51, 167, 77, 0.18);
 }
 
 /* =========================
@@ -1163,6 +1193,24 @@ h1 span {
   font-size: 17px;
 }
 
+.energy-row.volts .energy-row-top,
+.energy-row.volts .energy-row-top strong {
+  color: #7d8cff;
+  text-shadow: 0 0 12px rgba(1, 32, 212, 0.75);
+}
+
+.energy-row.flame .energy-row-top,
+.energy-row.flame .energy-row-top strong {
+  color: #ff7c91;
+  text-shadow: 0 0 12px rgba(247, 30, 68, 0.75);
+}
+
+.energy-row.leaf .energy-row-top,
+.energy-row.leaf .energy-row-top strong {
+  color: #75e88b;
+  text-shadow: 0 0 12px rgba(51, 167, 77, 0.75);
+}
+
 .energy-track {
   height: 12px;
   overflow: hidden;
@@ -1178,18 +1226,24 @@ h1 span {
 }
 
 .energy-row.volts .energy-fill {
-  background: linear-gradient(90deg, #007cff, #8be3ff);
-  box-shadow: 0 0 18px rgba(0,130,255,0.62);
+  background: linear-gradient(90deg, #0120d4, #2d49ff, #8a97ff);
+  box-shadow:
+    0 0 18px rgba(1, 32, 212, 0.78),
+    0 0 34px rgba(1, 32, 212, 0.38);
 }
 
 .energy-row.flame .energy-fill {
-  background: linear-gradient(90deg, #ff315c, #ffb36b);
-  box-shadow: 0 0 18px rgba(255,80,40,0.60);
+  background: linear-gradient(90deg, #f71e44, #ff526e, #ff9aaa);
+  box-shadow:
+    0 0 18px rgba(247, 30, 68, 0.78),
+    0 0 34px rgba(247, 30, 68, 0.38);
 }
 
 .energy-row.leaf .energy-fill {
-  background: linear-gradient(90deg, #21ff73, #b8ff6a);
-  box-shadow: 0 0 18px rgba(40,255,100,0.55);
+  background: linear-gradient(90deg, #33a74d, #58d972, #a5ffb5);
+  box-shadow:
+    0 0 18px rgba(51, 167, 77, 0.78),
+    0 0 34px rgba(51, 167, 77, 0.38);
 }
 
 .vote-meta {
@@ -1221,8 +1275,27 @@ h1 span {
   font-size: 14px;
   font-weight: 900;
   text-shadow:
-    0 0 14px rgba(139, 227, 255, 0.55),
-    0 0 26px rgba(238, 107, 243, 0.28);
+    0 0 14px rgba(1, 32, 212, 0.35),
+    0 0 26px rgba(247, 30, 68, 0.22),
+    0 0 34px rgba(51, 167, 77, 0.18);
+}
+
+body.selected-volts #selectedTeamText,
+body.selected-volts #voteLeader {
+  color: #7d8cff;
+  text-shadow: 0 0 14px rgba(1, 32, 212, 0.8);
+}
+
+body.selected-flame #selectedTeamText,
+body.selected-flame #voteLeader {
+  color: #ff7c91;
+  text-shadow: 0 0 14px rgba(247, 30, 68, 0.8);
+}
+
+body.selected-leaf #selectedTeamText,
+body.selected-leaf #voteLeader {
+  color: #75e88b;
+  text-shadow: 0 0 14px rgba(51, 167, 77, 0.8);
 }
 
 .vote-change-link {
