@@ -2728,6 +2728,16 @@ body.near-1 .hero {
     drop-shadow(0 0 30px rgba(139, 227, 255, 0.35));
 }
 
+.top-team-icon {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  display: block;
+  filter:
+    drop-shadow(0 0 8px rgba(255,255,255,0.45))
+    drop-shadow(0 0 14px rgba(139,227,255,0.24));
+}
+
 @media (max-width: 760px) {
   .team-btn .team-icon {
     width: 22px;
@@ -2744,3 +2754,8 @@ body.near-1 .hero {
     height: 62px;
   }
 }
+
+  .top-team-icon {
+    width: 24px;
+    height: 24px;
+  }
