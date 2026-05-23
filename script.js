@@ -155,6 +155,24 @@ function getTeamData(team) {
   return translations[currentLang]?.teams?.[team] || translations.en.teams[team];
 }
 
+function getTeamIconSrc(team) {
+  const icons = {
+    volts: "icon-volts.png",
+    flame: "icon-flame.png",
+    leaf: "icon-leaf.png"
+  };
+
+  return icons[team] || "";
+}
+
+function getTeamIconHtml(team, className = "inline-team-icon") {
+  const src = getTeamIconSrc(team);
+
+  if (!src) return "";
+
+  return `<img src="${src}" class="${className}" alt="" />`;
+}
+
 function escapeHtml(value) {
   return String(value || "")
     .replaceAll("&", "&amp;")
@@ -297,7 +315,10 @@ function openPopup(team) {
   popup.className = "team-popup active " + team;
   popup.setAttribute("aria-hidden", "false");
 
-  if (popupIcon) popupIcon.textContent = data.icon;
+  if (popupIcon) {
+    popupIcon.innerHTML = getTeamIconHtml(team, "popup-team-icon");
+  }
+
   if (popupTitle) popupTitle.textContent = data.title;
   if (popupText) popupText.textContent = data.text;
 
@@ -433,7 +454,11 @@ function updateTeamEnergy() {
   const team = getTeamData(selectedTeam);
 
   if (selectedTeamText && team) {
-    selectedTeamText.textContent = `${getText("selectedTeamPrefix")} ${team.icon} ${team.title}`;
+    selectedTeamText.innerHTML = `
+      ${escapeHtml(getText("selectedTeamPrefix"))}
+      ${getTeamIconHtml(selectedTeam)}
+      ${escapeHtml(team.title)}
+    `;
   }
 
   const selectedEnergyRow = document.querySelector(`.energy-row.${selectedTeam}`);
@@ -465,7 +490,11 @@ function updateVoteLeader() {
     return;
   }
 
-  voteLeader.textContent = `${getText("currentLeader")} ${leaderData.icon} ${leaderData.title} — ${leader.value}%`;
+  voteLeader.innerHTML = `
+    ${escapeHtml(getText("currentLeader"))}
+    ${getTeamIconHtml(leader.key)}
+    ${escapeHtml(leaderData.title)} — ${leader.value}%
+  `;
 }
 
 function showTeamActivated(team) {
@@ -475,7 +504,12 @@ function showTeamActivated(team) {
 
   if (!teamData) return;
 
-  teamActivatedToast.textContent = `${teamData.icon} ${teamData.title} ${getText("teamActivated")}`;
+  teamActivatedToast.innerHTML = `
+    ${getTeamIconHtml(team)}
+    ${escapeHtml(teamData.title)}
+    ${escapeHtml(getText("teamActivated"))}
+  `;
+
   teamActivatedToast.className = "team-activated-toast show " + team;
   teamActivatedToast.setAttribute("aria-hidden", "false");
 
