@@ -400,12 +400,12 @@ function applyPreviewTheme() {
   if (themeToggle) {
     const icons = {
       default: "🌀",
-      volts: "⚡",
-      flame: "🔥",
-      leaf: "🍃"
+      volts: '<img src="icon-volts.png" class="top-team-icon" alt="Volts" />',
+      flame: '<img src="icon-flame.png" class="top-team-icon" alt="Flame" />',
+      leaf: '<img src="icon-leaf.png" class="top-team-icon" alt="Leaf" />'
     };
 
-    themeToggle.textContent = icons[previewTheme] || "🌀";
+    themeToggle.innerHTML = icons[previewTheme] || icons.default;
   }
 }
 
