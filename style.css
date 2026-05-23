@@ -32,7 +32,37 @@ body {
     radial-gradient(circle at 80% 65%, rgba(255, 183, 60, 0.16), transparent 25%),
     url("bag.png") center / cover no-repeat;
   filter: brightness(0.82) saturate(1.65);
-  transition: filter 0.5s ease, background-image 0.5s ease;
+  transition:
+    filter 0.5s ease,
+    opacity 0.5s ease,
+    background 0.5s ease;
+}
+
+body.selected-volts .background {
+  background:
+    radial-gradient(circle at 50% 35%, rgba(1, 32, 212, 0.34), transparent 24%),
+    radial-gradient(circle at 20% 70%, rgba(80, 130, 255, 0.22), transparent 30%),
+    radial-gradient(circle at 80% 65%, rgba(139, 227, 255, 0.16), transparent 28%),
+    url("bg-volts.png") center / cover no-repeat;
+  filter: brightness(0.82) saturate(1.75);
+}
+
+body.selected-flame .background {
+  background:
+    radial-gradient(circle at 50% 35%, rgba(247, 30, 68, 0.32), transparent 24%),
+    radial-gradient(circle at 20% 70%, rgba(255, 90, 110, 0.22), transparent 30%),
+    radial-gradient(circle at 80% 65%, rgba(255, 180, 80, 0.16), transparent 28%),
+    url("bg-flame.png") center / cover no-repeat;
+  filter: brightness(0.82) saturate(1.75);
+}
+
+body.selected-leaf .background {
+  background:
+    radial-gradient(circle at 50% 35%, rgba(51, 167, 77, 0.34), transparent 24%),
+    radial-gradient(circle at 20% 70%, rgba(80, 255, 130, 0.20), transparent 30%),
+    radial-gradient(circle at 80% 65%, rgba(180, 255, 120, 0.14), transparent 28%),
+    url("bg-leaf.png") center / cover no-repeat;
+  filter: brightness(0.82) saturate(1.7);
 }
 
 .background::after {
