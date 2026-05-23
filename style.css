@@ -2547,3 +2547,82 @@ body.near-1 .hero {
     transition-duration: 0.001ms !important;
   }
 }
+
+/* =========================
+   TEAM PNG ICONS
+========================= */
+
+.team-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  display: inline-block;
+  vertical-align: middle;
+  flex: 0 0 auto;
+  filter:
+    drop-shadow(0 0 8px rgba(139, 227, 255, 0.45))
+    drop-shadow(0 0 14px rgba(255, 255, 255, 0.18));
+}
+
+.team-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+}
+
+.team-btn .team-icon {
+  width: 26px;
+  height: 26px;
+}
+
+.energy-team-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.energy-team-name .team-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.inline-team-icon {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  display: inline-block;
+  vertical-align: -4px;
+  margin-right: 6px;
+  filter:
+    drop-shadow(0 0 7px rgba(139, 227, 255, 0.42))
+    drop-shadow(0 0 12px rgba(255, 255, 255, 0.18));
+}
+
+.popup-team-icon {
+  width: 74px;
+  height: 74px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto 10px;
+  filter:
+    drop-shadow(0 0 14px rgba(255, 255, 255, 0.55))
+    drop-shadow(0 0 30px rgba(139, 227, 255, 0.35));
+}
+
+@media (max-width: 760px) {
+  .team-btn .team-icon {
+    width: 22px;
+    height: 22px;
+  }
+
+  .energy-team-name .team-icon {
+    width: 21px;
+    height: 21px;
+  }
+
+  .popup-team-icon {
+    width: 62px;
+    height: 62px;
+  }
+}
