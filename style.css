@@ -1194,19 +1194,34 @@ body.selected-leaf .progress-fill {
 }
 
 .energy-row.volts .energy-row-top,
-.energy-row.volts .energy-row-top strong {
+.energy-row.flame .energy-row-top,
+.energy-row.leaf .energy-row-top {
+  color: rgba(255, 255, 255, 0.94);
+}
+
+.energy-row.volts .energy-team-name,
+.energy-row.volts .energy-team-name b,
+.energy-row.flame .energy-team-name,
+.energy-row.flame .energy-team-name b,
+.energy-row.leaf .energy-team-name,
+.energy-row.leaf .energy-team-name b {
+  color: rgba(255, 255, 255, 0.96);
+  text-shadow:
+    0 0 10px rgba(255,255,255,0.22),
+    0 0 18px rgba(139,227,255,0.16);
+}
+
+#voltsPercent {
   color: #7d8cff;
   text-shadow: 0 0 12px rgba(1, 32, 212, 0.75);
 }
 
-.energy-row.flame .energy-row-top,
-.energy-row.flame .energy-row-top strong {
+#flamePercent {
   color: #ff7c91;
   text-shadow: 0 0 12px rgba(247, 30, 68, 0.75);
 }
 
-.energy-row.leaf .energy-row-top,
-.energy-row.leaf .energy-row-top strong {
+#leafPercent {
   color: #75e88b;
   text-shadow: 0 0 12px rgba(51, 167, 77, 0.75);
 }
