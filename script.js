@@ -146,6 +146,7 @@ let selectedRating = 0;
 const averageStars = document.getElementById("averageStars");
 const averageRating = document.getElementById("averageRating");
 const ratingCount = document.getElementById("ratingCount");
+
 const COMMENT_REACTIONS = [
   { key: "volts", icon: "icon-volts.png", fallback: "⚡" },
   { key: "flame", icon: "icon-flame.png", fallback: "🔥" },
@@ -744,7 +745,7 @@ function updateAverageRating(comments) {
   if (!ratings.length) {
     averageStars.textContent = "☆☆☆☆☆";
     averageRating.textContent = "0.0 / 5";
-    ratingCount.textContent = "Based on 0 messages";
+    ratingCount.textContent = getText("ratingCountEmpty");
     return;
   }
 
@@ -756,7 +757,7 @@ function updateAverageRating(comments) {
     "★".repeat(rounded) + "☆".repeat(5 - rounded);
 
   averageRating.textContent = `${average.toFixed(1)} / 5`;
-  ratingCount.textContent = `Based on ${ratings.length} messages`;
+  ratingCount.textContent = getText("ratingCountText").replace("{count}", ratings.length);
 }
 
 function formatCommentTime(timestamp) {
@@ -834,6 +835,14 @@ function createReactionButtons(comment) {
   `;
 }
 
+function findReactionButton(commentId, reactionKey) {
+  if (!commentsList) return null;
+
+  return Array.from(commentsList.querySelectorAll(".reaction-btn")).find((button) => {
+    return button.dataset.commentId === commentId && button.dataset.reaction === reactionKey;
+  }) || null;
+}
+
 async function sendReaction(commentId, reactionKey) {
   if (!commentId || !reactionKey || isSendingReaction) return;
 
@@ -842,9 +851,7 @@ async function sendReaction(commentId, reactionKey) {
   isSendingReaction = true;
   markReacted(commentId, reactionKey);
 
-  const button = document.querySelector(
-    `.reaction-btn[data-comment-id="${CSS.escape(commentId)}"][data-reaction="${CSS.escape(reactionKey)}"]`
-  );
+  const button = findReactionButton(commentId, reactionKey);
 
   if (button) {
     button.classList.add("reacted");
@@ -924,34 +931,6 @@ async function renderComments() {
           <p>${escapeHtml(message)}</p>
 
           ${createReactionButtons(comment)}
-        </div>
-      `;
-    })
-    .join("");
-}
-
-  commentsList.innerHTML = comments
-    .slice(0, 30)
-    .map((comment) => {
-      const name = comment.name || "Player";
-      const message = comment.message || comment.text || "";
-      const createdAt =
-        comment.time ||
-        comment.createdAt ||
-        comment.timestamp ||
-        comment.date ||
-        "";
-
-      const rating = Number(comment.rating || 0);
-      const stars = rating > 0 ? "★".repeat(rating) + "☆".repeat(5 - rating) : "";
-
-      return `
-        <div class="comm-message">
-          <div class="comm-top">
-            <strong>${escapeHtml(name)}</strong>
-            <span>${escapeHtml(stars)} ${formatCommentTime(createdAt)}</span>
-          </div>
-          <p>${escapeHtml(message)}</p>
         </div>
       `;
     })
