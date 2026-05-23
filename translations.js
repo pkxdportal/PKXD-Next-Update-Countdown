@@ -39,6 +39,9 @@ const translations = {
     shareCopied: "Link copied!",
 
     teamEnergyTitle: "ZERO GRAVITY TEAM VOTE 2026",
+    teamVoltsName: "Team Volts",
+    teamFlameName: "Team Flame",
+    teamLeafName: "Team Leaf",
     noTeamSelected: "Choose your team to activate its energy.",
     chooseTeamBtn: "Choose Team",
     selectedTeamPrefix: "Your team:",
@@ -147,6 +150,9 @@ const translations = {
     shareCopied: "Ссылка скопирована!",
 
     teamEnergyTitle: "НЕВЕСОМОСТЬ: ГОЛОСОВАНИЕ КОМАНД 2026",
+    teamVoltsName: "Команда Молнии",
+    teamFlameName: "Команда Пламени",
+    teamLeafName: "Команда Листьев",
     noTeamSelected: "Выбери команду, чтобы активировать её энергию.",
     chooseTeamBtn: "Выбрать команду",
     selectedTeamPrefix: "Твоя команда:",
@@ -251,6 +257,9 @@ const languageOverrides = {
     shareCopied: "Link kopiert!",
 
     teamEnergyTitle: "ZERO GRAVITY TEAM-VOTING 2026",
+    teamVoltsName: "Team Volts",
+    teamFlameName: "Team Flame",
+    teamLeafName: "Team Leaf",
     noTeamSelected: "Wähle dein Team, um seine Energie zu aktivieren.",
     chooseTeamBtn: "Team wählen",
     selectedTeamPrefix: "Dein Team:",
@@ -353,6 +362,9 @@ const languageOverrides = {
     shareCopied: "Lien copié !",
 
     teamEnergyTitle: "VOTE DES ÉQUIPES ZÉRO GRAVITÉ 2026",
+    teamVoltsName: "Équipe Volts",
+    teamFlameName: "Équipe Flame",
+    teamLeafName: "Équipe Leaf",
     noTeamSelected: "Choisis ton équipe pour activer son énergie.",
     chooseTeamBtn: "Choisir l’équipe",
     selectedTeamPrefix: "Ton équipe :",
@@ -455,6 +467,9 @@ const languageOverrides = {
     shareCopied: "Link skopiowany!",
 
     teamEnergyTitle: "GŁOSOWANIE DRUŻYN NIEWAŻKOŚĆ 2026",
+    teamVoltsName: "Drużyna Volts",
+    teamFlameName: "Drużyna Flame",
+    teamLeafName: "Drużyna Leaf",
     noTeamSelected: "Wybierz drużynę, aby aktywować jej energię.",
     chooseTeamBtn: "Wybierz drużynę",
     selectedTeamPrefix: "Twoja drużyna:",
@@ -557,6 +572,9 @@ const languageOverrides = {
     shareCopied: "Link copiado!",
 
     teamEnergyTitle: "VOTAÇÃO DE TIMES GRAVIDADE ZERO 2026",
+    teamVoltsName: "Time Volts",
+    teamFlameName: "Time Flame",
+    teamLeafName: "Time Leaf",
     noTeamSelected: "Escolha seu time para ativar sua energia.",
     chooseTeamBtn: "Escolher time",
     selectedTeamPrefix: "Seu time:",
@@ -659,6 +677,9 @@ const languageOverrides = {
     shareCopied: "Bağlantı kopyalandı!",
 
     teamEnergyTitle: "SIFIR YERÇEKİMİ TAKIM OYLAMASI 2026",
+    teamVoltsName: "Volts Takımı",
+    teamFlameName: "Flame Takımı",
+    teamLeafName: "Leaf Takımı",
     noTeamSelected: "Enerjisini etkinleştirmek için takımını seç.",
     chooseTeamBtn: "Takımı seç",
     selectedTeamPrefix: "Takımın:",
@@ -761,6 +782,9 @@ const languageOverrides = {
     shareCopied: "Link disalin!",
 
     teamEnergyTitle: "VOTE TIM GRAVITASI NOL 2026",
+    teamVoltsName: "Tim Volts",
+    teamFlameName: "Tim Flame",
+    teamLeafName: "Tim Leaf",
     noTeamSelected: "Pilih tim untuk mengaktifkan energinya.",
     chooseTeamBtn: "Pilih Tim",
     selectedTeamPrefix: "Tim kamu:",
@@ -863,6 +887,9 @@ const languageOverrides = {
     shareCopied: "¡Enlace copiado!",
 
     teamEnergyTitle: "VOTACIÓN DE EQUIPOS GRAVEDAD CERO 2026",
+    teamVoltsName: "Equipo Volts",
+    teamFlameName: "Equipo Flame",
+    teamLeafName: "Equipo Leaf",
     noTeamSelected: "Elige tu equipo para activar su energía.",
     chooseTeamBtn: "Elegir equipo",
     selectedTeamPrefix: "Tu equipo:",
@@ -965,6 +992,9 @@ const languageOverrides = {
     shareCopied: "लिंक कॉपी हो गया!",
 
     teamEnergyTitle: "शून्य गुरुत्वाकर्षण टीम वोट 2026",
+    teamVoltsName: "टीम Volts",
+    teamFlameName: "टीम Flame",
+    teamLeafName: "टीम Leaf",
     noTeamSelected: "अपनी टीम चुनें ताकि उसकी ऊर्जा सक्रिय हो सके।",
     chooseTeamBtn: "टीम चुनें",
     selectedTeamPrefix: "आपकी टीम:",
