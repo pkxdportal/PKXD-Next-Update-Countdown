@@ -146,6 +146,16 @@ let selectedRating = 0;
 const averageStars = document.getElementById("averageStars");
 const averageRating = document.getElementById("averageRating");
 const ratingCount = document.getElementById("ratingCount");
+const COMMENT_REACTIONS = [
+  { key: "volts", icon: "icon-volts.png", fallback: "⚡" },
+  { key: "flame", icon: "icon-flame.png", fallback: "🔥" },
+  { key: "leaf", icon: "icon-leaf.png", fallback: "🍃" },
+  { key: "eyes", icon: "icon-eyes.png", fallback: "👀" },
+  { key: "laugh", icon: "icon-laugh.png", fallback: "😂" },
+  { key: "love", icon: "icon-love.png", fallback: "💖" }
+];
+
+let isSendingReaction = false;
 
 function getText(key) {
   return translations[currentLang]?.[key] || translations.en[key] || key;
@@ -768,6 +778,111 @@ function formatCommentTime(timestamp) {
   return `${diffDays}d ago`;
 }
 
+function getReactionStorageKey(commentId, reactionKey) {
+  return `reaction_${commentId}_${reactionKey}`;
+}
+
+function hasReacted(commentId, reactionKey) {
+  return localStorage.getItem(getReactionStorageKey(commentId, reactionKey)) === "1";
+}
+
+function markReacted(commentId, reactionKey) {
+  localStorage.setItem(getReactionStorageKey(commentId, reactionKey), "1");
+}
+
+function getReactionIconHtml(reaction) {
+  return `
+    <span class="reaction-icon-wrap">
+      <img
+        src="${reaction.icon}"
+        class="reaction-icon"
+        alt=""
+        onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';"
+      />
+      <span class="reaction-fallback">${reaction.fallback}</span>
+    </span>
+  `;
+}
+
+function createReactionButtons(comment) {
+  const commentId = String(comment.id || "");
+
+  if (!commentId) return "";
+
+  const reactions = comment.reactions || {};
+
+  return `
+    <div class="reaction-row" data-comment-id="${escapeHtml(commentId)}">
+      ${COMMENT_REACTIONS.map((reaction) => {
+        const count = Number(reactions[reaction.key] || 0);
+        const reacted = hasReacted(commentId, reaction.key);
+
+        return `
+          <button
+            type="button"
+            class="reaction-btn ${reacted ? "reacted" : ""}"
+            data-comment-id="${escapeHtml(commentId)}"
+            data-reaction="${escapeHtml(reaction.key)}"
+            aria-label="${escapeHtml(reaction.key)} reaction"
+          >
+            ${getReactionIconHtml(reaction)}
+            <span class="reaction-count">${count}</span>
+          </button>
+        `;
+      }).join("")}
+    </div>
+  `;
+}
+
+async function sendReaction(commentId, reactionKey) {
+  if (!commentId || !reactionKey || isSendingReaction) return;
+
+  if (hasReacted(commentId, reactionKey)) return;
+
+  isSendingReaction = true;
+  markReacted(commentId, reactionKey);
+
+  const button = document.querySelector(
+    `.reaction-btn[data-comment-id="${CSS.escape(commentId)}"][data-reaction="${CSS.escape(reactionKey)}"]`
+  );
+
+  if (button) {
+    button.classList.add("reacted");
+
+    const countEl = button.querySelector(".reaction-count");
+    const currentCount = Number(countEl?.textContent || 0);
+
+    if (countEl) {
+      countEl.textContent = String(currentCount + 1);
+    }
+  }
+
+  try {
+    await fetch(COMMENTS_API_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify({
+        action: "react",
+        id: commentId,
+        reaction: reactionKey
+      })
+    });
+
+    window.setTimeout(() => {
+      renderComments();
+    }, 900);
+  } catch (error) {
+    console.warn("Reaction could not be sent:", error);
+  } finally {
+    window.setTimeout(() => {
+      isSendingReaction = false;
+    }, 500);
+  }
+}
+
 async function renderComments() {
   if (!commentsList) return;
 
@@ -783,6 +898,37 @@ async function renderComments() {
     `;
     return;
   }
+
+  commentsList.innerHTML = comments
+    .slice(0, 30)
+    .map((comment) => {
+      const name = comment.name || "Player";
+      const message = comment.message || comment.text || "";
+      const createdAt =
+        comment.time ||
+        comment.createdAt ||
+        comment.timestamp ||
+        comment.date ||
+        "";
+
+      const rating = Number(comment.rating || 0);
+      const stars = rating > 0 ? "★".repeat(rating) + "☆".repeat(5 - rating) : "";
+
+      return `
+        <div class="comm-message">
+          <div class="comm-top">
+            <strong>${escapeHtml(name)}</strong>
+            <span>${escapeHtml(stars)} ${formatCommentTime(createdAt)}</span>
+          </div>
+
+          <p>${escapeHtml(message)}</p>
+
+          ${createReactionButtons(comment)}
+        </div>
+      `;
+    })
+    .join("");
+}
 
   commentsList.innerHTML = comments
     .slice(0, 30)
@@ -1029,6 +1175,19 @@ if (commentText) {
 
   commentText.addEventListener("input", () => {
     updateCommentCounter();
+  });
+}
+
+if (commentsList) {
+  commentsList.addEventListener("click", (event) => {
+    const reactionButton = event.target.closest(".reaction-btn");
+
+    if (!reactionButton) return;
+
+    const commentId = reactionButton.dataset.commentId;
+    const reactionKey = reactionButton.dataset.reaction;
+
+    sendReaction(commentId, reactionKey);
   });
 }
 
