@@ -902,7 +902,6 @@ async function sendReaction(commentId, reactionKey) {
   if (!commentId || !reactionKey || isSendingReaction) return;
 
   isSendingReaction = true;
-
   closeReactionMenu();
 
   const messageEl = document.querySelector(
@@ -913,26 +912,39 @@ async function sendReaction(commentId, reactionKey) {
     const summaryList = messageEl.querySelector(".reaction-summary-list");
 
     if (summaryList) {
-      const existingMine = summaryList.querySelector(".reaction-summary-item.mine");
-      const sameReaction = existingMine?.dataset?.reaction === reactionKey;
+      const currentMine = summaryList.querySelector(".reaction-summary-item.mine");
+      const currentMineReaction = currentMine?.dataset?.reaction || "";
+      const sameReaction = currentMineReaction === reactionKey;
 
-      if (existingMine) {
-        existingMine.remove();
+      if (currentMine) {
+        const currentCountEl = currentMine.querySelector(".reaction-summary-count");
+        const currentCount = Number(currentCountEl?.textContent || 0);
+        const nextCount = Math.max(0, currentCount - 1);
+
+        if (nextCount <= 0) {
+          currentMine.remove();
+        } else {
+          currentMine.classList.remove("mine");
+
+          if (currentCountEl) {
+            currentCountEl.textContent = String(nextCount);
+          }
+        }
       }
 
       if (!sameReaction) {
         const reaction = COMMENT_REACTIONS.find((item) => item.key === reactionKey);
 
         if (reaction) {
-          const oldItem = summaryList.querySelector(
+          let targetItem = summaryList.querySelector(
             `.reaction-summary-item[data-reaction="${reactionKey}"]`
           );
 
-          if (oldItem) {
-            const countEl = oldItem.querySelector(".reaction-summary-count");
+          if (targetItem) {
+            const countEl = targetItem.querySelector(".reaction-summary-count");
             const currentCount = Number(countEl?.textContent || 0);
 
-            oldItem.classList.add("mine");
+            targetItem.classList.add("mine");
 
             if (countEl) {
               countEl.textContent = String(currentCount + 1);
@@ -1246,6 +1258,19 @@ if (commentText) {
 
 if (commentsList) {
   commentsList.addEventListener("click", (event) => {
+    const summaryItem = event.target.closest(".reaction-summary-item.mine");
+
+    if (summaryItem) {
+      event.stopPropagation();
+
+      const message = summaryItem.closest(".comm-message");
+      const commentId = message?.dataset?.commentId;
+      const reactionKey = summaryItem.dataset.reaction;
+
+      sendReaction(commentId, reactionKey);
+      return;
+    }
+
     const openButton = event.target.closest(".reaction-open-btn");
 
     if (openButton) {
