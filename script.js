@@ -12,6 +12,7 @@ let isSendingComment = false;
 let previewTheme = localStorage.getItem("previewTheme") || "default";
 
 const COMMENT_MAX_LENGTH = 300;
+const REPLIES_VISIBLE_LIMIT = 2;
 
 const COMMENTS_API_URL =
   "https://script.google.com/macros/s/AKfycby7xTcqXuiBBDc4GyTzUTMO7WK_yfBkUgY94oyC400Vnqv1OgfN8Wgxiu5Srn9aO08/exec";
@@ -294,9 +295,7 @@ function setLanguage(lang) {
     commentName.placeholder = getText("commentNamePlaceholder");
   }
 
-  if (commentText) {
-    commentText.placeholder = getText("commPlaceholder");
-  }
+  updateCommentPlaceholder();
 
   document.querySelectorAll("#languageMenu .lang-btn").forEach((button) => {
     button.classList.toggle("active", button.dataset.lang === currentLang);
@@ -724,6 +723,16 @@ function updateCommentCounter() {
   commentCounter.classList.toggle("limit", left === 0);
 }
 
+function updateCommentPlaceholder() {
+  if (!commentText) return;
+
+  if (replyTarget) {
+    commentText.placeholder = `${getText("replyingTo")} ${replyTarget.name}...`;
+  } else {
+    commentText.placeholder = getText("commPlaceholder");
+  }
+}
+
 async function getStoredComments() {
   try {
     const url =
@@ -852,32 +861,50 @@ function createReactionSummary(comment) {
 function createRepliesHtml(replies) {
   if (!Array.isArray(replies) || !replies.length) return "";
 
+  const hasManyReplies = replies.length > REPLIES_VISIBLE_LIMIT;
+  const hiddenCount = Math.max(0, replies.length - REPLIES_VISIBLE_LIMIT);
+
   return `
-    <div class="reply-list">
-      ${replies.map((reply) => {
-        const createdAt =
-          reply.time ||
-          reply.createdAt ||
-          reply.timestamp ||
-          reply.date ||
-          "";
+    <div class="replies-wrap">
+      <div class="reply-list ${hasManyReplies ? "collapsed" : ""}">
+        ${replies.map((reply, index) => {
+          const createdAt =
+            reply.time ||
+            reply.createdAt ||
+            reply.timestamp ||
+            reply.date ||
+            "";
 
-        const rating = Number(reply.rating || 0);
-        const stars = rating > 0 ? "★".repeat(rating) + "☆".repeat(5 - rating) : "";
+          const rating = Number(reply.rating || 0);
+          const stars = rating > 0 ? "★".repeat(rating) + "☆".repeat(5 - rating) : "";
+          const extraClass = hasManyReplies && index >= REPLIES_VISIBLE_LIMIT ? "reply-extra" : "";
 
-        return `
-          <div class="comm-reply" data-comment-id="${escapeHtml(reply.id || "")}">
-            <div class="comm-top">
-              <strong>${escapeHtml(reply.name || "Player")}</strong>
-              <span>${escapeHtml(stars)} ${formatCommentTime(createdAt)}</span>
+          return `
+            <div class="comm-reply ${extraClass}" data-comment-id="${escapeHtml(reply.id || "")}">
+              <div class="comm-top">
+                <strong>${escapeHtml(reply.name || "Player")}</strong>
+                <span>${escapeHtml(stars)} ${formatCommentTime(createdAt)}</span>
+              </div>
+
+              <p>${escapeHtml(reply.message || "")}</p>
+
+              ${createReactionSummary(reply)}
             </div>
+          `;
+        }).join("")}
+      </div>
 
-            <p>${escapeHtml(reply.message || "")}</p>
-
-            ${createReactionSummary(reply)}
-          </div>
-        `;
-      }).join("")}
+      ${hasManyReplies ? `
+        <button
+          type="button"
+          class="replies-toggle-btn"
+          data-expanded="false"
+          data-show-text="${escapeHtml(getText("showReplies").replace("{count}", hiddenCount))}"
+          data-hide-text="${escapeHtml(getText("hideReplies"))}"
+        >
+          ${escapeHtml(getText("showReplies").replace("{count}", hiddenCount))}
+        </button>
+      ` : ""}
     </div>
   `;
 }
@@ -901,6 +928,8 @@ function updateReplyBox() {
   if (oldBox) {
     oldBox.remove();
   }
+
+  updateCommentPlaceholder();
 
   if (!replyTarget || !commentForm) return;
 
@@ -1376,6 +1405,27 @@ if (commentsList) {
 
         return;
       }
+
+    const repliesToggleBtn = event.target.closest(".replies-toggle-btn");
+
+    if (repliesToggleBtn) {
+      event.stopPropagation();
+
+      const wrap = repliesToggleBtn.closest(".replies-wrap");
+      const list = wrap?.querySelector(".reply-list");
+
+      if (!list) return;
+
+      const isExpanded = repliesToggleBtn.dataset.expanded === "true";
+
+      list.classList.toggle("collapsed", isExpanded);
+      repliesToggleBtn.dataset.expanded = isExpanded ? "false" : "true";
+      repliesToggleBtn.textContent = isExpanded
+        ? repliesToggleBtn.dataset.showText
+        : repliesToggleBtn.dataset.hideText;
+
+      return;
+    }
 
     const openButton = event.target.closest(".reaction-open-btn");
 
