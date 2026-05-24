@@ -14,7 +14,7 @@ let previewTheme = localStorage.getItem("previewTheme") || "default";
 const COMMENT_MAX_LENGTH = 300;
 
 const COMMENTS_API_URL =
-  "https://script.google.com/macros/s/AKfycby-AGX19imUB6Gm4guCEOhsZhOFRjrG21lYk7-PdIz8PsS5l6ran_uC0MXqTbta55jT/exec";
+  "https://script.google.com/macros/s/AKfycby7xTcqXuiBBDc4GyTzUTMO7WK_yfBkUgY94oyC400Vnqv1OgfN8Wgxiu5Srn9aO08/exec";
 
 const GOOGLE_SHEET_CSV_URL =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vQSWxR6NP3qLfM_-Fi_qoRjpgEA0qiUCUTze8P3XHmNea9ROrpIGMp2kKxd_5FaqZvNi3j28G1-nmlQ/pub?gid=747099020&single=true&output=csv";
@@ -904,9 +904,9 @@ async function sendReaction(commentId, reactionKey) {
   isSendingReaction = true;
   closeReactionMenu();
 
-  const messageEl = document.querySelector(
-    `.comm-message[data-comment-id="${CSS.escape(commentId)}"]`
-  );
+  const messageEl =
+    document.querySelector(`.comm-message[data-comment-id="${CSS.escape(commentId)}"]`) ||
+    document.querySelector(`.comm-reply[data-comment-id="${CSS.escape(commentId)}"]`);
 
   if (messageEl) {
     const summaryList = messageEl.querySelector(".reaction-summary-list");
@@ -1263,7 +1263,7 @@ if (commentsList) {
     if (summaryItem) {
       event.stopPropagation();
 
-      const message = summaryItem.closest(".comm-message");
+      const message = summaryItem.closest(".comm-message, .comm-reply");
       const commentId = message?.dataset?.commentId;
       const reactionKey = summaryItem.dataset.reaction;
 
@@ -1283,7 +1283,7 @@ if (commentsList) {
   });
 
   commentsList.addEventListener("contextmenu", (event) => {
-    const message = event.target.closest(".comm-message");
+    const message = event.target.closest(".comm-message, .comm-reply");
 
     if (!message) return;
 
@@ -1295,7 +1295,7 @@ if (commentsList) {
   });
 
   commentsList.addEventListener("touchstart", (event) => {
-    const message = event.target.closest(".comm-message");
+    const message = event.target.closest(".comm-message, .comm-reply");
 
     if (!message) return;
 
