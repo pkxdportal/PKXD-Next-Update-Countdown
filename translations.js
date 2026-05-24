@@ -90,6 +90,8 @@ const translations = {
     commPlaceholder: "Message...",
     commentsLocalNote: "Messages are visible to everyone after sending.",
     noCommentsYet: "No messages yet. Be the first.",
+    replyBtn: "Reply",
+    replyingTo: "Replying to",
 
     teams: {
       volts: {
@@ -201,6 +203,8 @@ const translations = {
     commPlaceholder: "Сообщение...",
     commentsLocalNote: "Сообщения после отправки видны всем.",
     noCommentsYet: "Сообщений пока нет. Будь первым.",
+    replyBtn: "Ответить",
+    replyingTo: "Ответ для",
 
     teams: {
       volts: {
@@ -308,6 +312,8 @@ const languageOverrides = {
     commPlaceholder: "Nachricht...",
     commentsLocalNote: "Nachrichten sind nach dem Senden für alle sichtbar.",
     noCommentsYet: "Noch keine Nachrichten. Sei der Erste.",
+    replyBtn: "Antworten",
+    replyingTo: "Antwort an",
 
     teams: {
       volts: {
@@ -413,6 +419,8 @@ const languageOverrides = {
     commPlaceholder: "Message...",
     commentsLocalNote: "Les messages sont visibles par tous après l’envoi.",
     noCommentsYet: "Aucun message pour l’instant. Sois le premier.",
+    replyBtn: "Répondre",
+    replyingTo: "Réponse à",
 
     teams: {
       volts: {
@@ -518,6 +526,8 @@ const languageOverrides = {
     commPlaceholder: "Wiadomość...",
     commentsLocalNote: "Wiadomości po wysłaniu są widoczne dla wszystkich.",
     noCommentsYet: "Brak wiadomości. Bądź pierwszy.",
+    replyBtn: "Odpowiedz",
+    replyingTo: "Odpowiedź dla",
 
     teams: {
       volts: {
@@ -623,6 +633,8 @@ const languageOverrides = {
     commPlaceholder: "Mensagem...",
     commentsLocalNote: "As mensagens ficam visíveis para todos após o envio.",
     noCommentsYet: "Ainda não há mensagens. Seja o primeiro.",
+    replyBtn: "Responder",
+    replyingTo: "Respondendo a",
 
     teams: {
       volts: {
@@ -728,6 +740,8 @@ const languageOverrides = {
     commPlaceholder: "Mesaj...",
     commentsLocalNote: "Mesajlar gönderildikten sonra herkes tarafından görülebilir.",
     noCommentsYet: "Henüz mesaj yok. İlk sen ol.",
+    replyBtn: "Yanıtla",
+    replyingTo: "Yanıtlanıyor",
 
     teams: {
       volts: {
@@ -833,6 +847,8 @@ const languageOverrides = {
     commPlaceholder: "Pesan...",
     commentsLocalNote: "Pesan akan terlihat oleh semua orang setelah dikirim.",
     noCommentsYet: "Belum ada pesan. Jadilah yang pertama.",
+    replyBtn: "Balas",
+    replyingTo: "Membalas",
 
     teams: {
       volts: {
@@ -938,6 +954,8 @@ const languageOverrides = {
     commPlaceholder: "Mensaje...",
     commentsLocalNote: "Los mensajes serán visibles para todos después de enviarlos.",
     noCommentsYet: "Aún no hay mensajes. Sé el primero.",
+    replyBtn: "Responder",
+    replyingTo: "Respondiendo a",
 
     teams: {
       volts: {
@@ -1043,6 +1061,8 @@ const languageOverrides = {
     commPlaceholder: "संदेश...",
     commentsLocalNote: "भेजने के बाद संदेश सभी को दिखाई देंगे।",
     noCommentsYet: "अभी कोई संदेश नहीं। पहले बनें।",
+    replyBtn: "जवाब दें",
+    replyingTo: "जवाब दे रहे हैं",
 
     teams: {
       volts: {
