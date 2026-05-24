@@ -1788,19 +1788,22 @@ body.selected-leaf #voteLeader {
   display: grid;
   place-items: center;
   border: none;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.06);
+  border-radius: 0;
+  background: transparent;
   cursor: pointer;
+  padding: 0;
   transition:
-    transform 0.16s ease,
-    background 0.16s ease,
-    box-shadow 0.16s ease;
+    transform 0.14s ease,
+    filter 0.14s ease;
 }
 
 .reaction-menu-btn:hover {
-  transform: translateY(-5px) scale(1.18);
-  background: rgba(255,255,255,0.12);
-  box-shadow: 0 0 20px rgba(139,227,255,0.24);
+  transform: translateY(-4px) scale(1.22);
+  background: transparent;
+  box-shadow: none;
+  filter:
+    drop-shadow(0 0 10px rgba(255,255,255,0.55))
+    drop-shadow(0 0 18px rgba(139,227,255,0.35));
 }
 
 .reaction-icon-wrap {
