@@ -818,9 +818,12 @@ function createReactionSummary(comment) {
       if (count <= 0) return "";
 
       return `
-        <span class="reaction-summary-item ${myReaction === reaction.key ? "mine" : ""}">
+        <span
+          class="reaction-summary-item ${myReaction === reaction.key ? "mine" : ""}"
+          data-reaction="${escapeHtml(reaction.key)}"
+        >
           ${getReactionIconHtml(reaction)}
-          <span>${count}</span>
+          <span class="reaction-summary-count">${count}</span>
         </span>
       `;
     })
@@ -900,6 +903,53 @@ async function sendReaction(commentId, reactionKey) {
 
   isSendingReaction = true;
 
+  closeReactionMenu();
+
+  const messageEl = document.querySelector(
+    `.comm-message[data-comment-id="${CSS.escape(commentId)}"]`
+  );
+
+  if (messageEl) {
+    const summaryList = messageEl.querySelector(".reaction-summary-list");
+
+    if (summaryList) {
+      const existingMine = summaryList.querySelector(".reaction-summary-item.mine");
+      const sameReaction = existingMine?.dataset?.reaction === reactionKey;
+
+      if (existingMine) {
+        existingMine.remove();
+      }
+
+      if (!sameReaction) {
+        const reaction = COMMENT_REACTIONS.find((item) => item.key === reactionKey);
+
+        if (reaction) {
+          const oldItem = summaryList.querySelector(
+            `.reaction-summary-item[data-reaction="${reactionKey}"]`
+          );
+
+          if (oldItem) {
+            const countEl = oldItem.querySelector(".reaction-summary-count");
+            const currentCount = Number(countEl?.textContent || 0);
+
+            oldItem.classList.add("mine");
+
+            if (countEl) {
+              countEl.textContent = String(currentCount + 1);
+            }
+          } else {
+            summaryList.insertAdjacentHTML("beforeend", `
+              <span class="reaction-summary-item mine" data-reaction="${escapeHtml(reactionKey)}">
+                ${getReactionIconHtml(reaction)}
+                <span class="reaction-summary-count">1</span>
+              </span>
+            `);
+          }
+        }
+      }
+    }
+  }
+
   try {
     await fetch(COMMENTS_API_URL, {
       method: "POST",
@@ -915,17 +965,15 @@ async function sendReaction(commentId, reactionKey) {
       })
     });
 
-    closeReactionMenu();
-
     window.setTimeout(() => {
       renderComments();
-    }, 900);
+    }, 700);
   } catch (error) {
     console.warn("Reaction could not be sent:", error);
   } finally {
     window.setTimeout(() => {
       isSendingReaction = false;
-    }, 500);
+    }, 350);
   }
 }
 
