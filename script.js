@@ -14,7 +14,7 @@ let previewTheme = localStorage.getItem("previewTheme") || "default";
 const COMMENT_MAX_LENGTH = 300;
 
 const COMMENTS_API_URL =
-  "https://script.google.com/macros/s/AKfycbzrFNnK62MadpPoKYjXZQZQQBeAK-e_iQrCwHaQ16MrhF5px-5RFk0OCiN6Ww1F2AQm/exec";
+  "https://script.google.com/macros/s/AKfycby-AGX19imUB6Gm4guCEOhsZhOFRjrG21lYk7-PdIz8PsS5l6ran_uC0MXqTbta55jT/exec";
 
 const GOOGLE_SHEET_CSV_URL =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vQSWxR6NP3qLfM_-Fi_qoRjpgEA0qiUCUTze8P3XHmNea9ROrpIGMp2kKxd_5FaqZvNi3j28G1-nmlQ/pub?gid=747099020&single=true&output=csv";
@@ -157,6 +157,15 @@ const COMMENT_REACTIONS = [
 ];
 
 let isSendingReaction = false;
+let activeReactionCommentId = null;
+let activeReactionMenu = null;
+let longPressTimer = null;
+
+const COMMENT_USER_KEY =
+  localStorage.getItem("commentUserKey") ||
+  "u_" + Date.now() + "_" + Math.random().toString(36).slice(2, 12);
+
+localStorage.setItem("commentUserKey", COMMENT_USER_KEY);
 
 function getText(key) {
   return translations[currentLang]?.[key] || translations.en[key] || key;
@@ -716,7 +725,12 @@ function updateCommentCounter() {
 
 async function getStoredComments() {
   try {
-    const response = await fetch(COMMENTS_API_URL + "?cache=" + Date.now());
+    const url =
+      COMMENTS_API_URL +
+      "?cache=" + Date.now() +
+      "&userKey=" + encodeURIComponent(COMMENT_USER_KEY);
+
+    const response = await fetch(url);
 
     if (!response.ok) {
       throw new Error("Could not load comments");
@@ -779,18 +793,6 @@ function formatCommentTime(timestamp) {
   return `${diffDays}d ago`;
 }
 
-function getReactionStorageKey(commentId, reactionKey) {
-  return `reaction_${commentId}_${reactionKey}`;
-}
-
-function hasReacted(commentId, reactionKey) {
-  return localStorage.getItem(getReactionStorageKey(commentId, reactionKey)) === "1";
-}
-
-function markReacted(commentId, reactionKey) {
-  localStorage.setItem(getReactionStorageKey(commentId, reactionKey), "1");
-}
-
 function getReactionIconHtml(reaction) {
   return `
     <span class="reaction-icon-wrap">
@@ -805,64 +807,98 @@ function getReactionIconHtml(reaction) {
   `;
 }
 
-function createReactionButtons(comment) {
-  const commentId = String(comment.id || "");
-
-  if (!commentId) return "";
-
+function createReactionSummary(comment) {
   const reactions = comment.reactions || {};
+  const myReaction = comment.myReaction || "";
+
+  const activeReactions = COMMENT_REACTIONS
+    .map((reaction) => {
+      const count = Number(reactions[reaction.key] || 0);
+
+      if (count <= 0) return "";
+
+      return `
+        <span class="reaction-summary-item ${myReaction === reaction.key ? "mine" : ""}">
+          ${getReactionIconHtml(reaction)}
+          <span>${count}</span>
+        </span>
+      `;
+    })
+    .filter(Boolean)
+    .join("");
 
   return `
-    <div class="reaction-row" data-comment-id="${escapeHtml(commentId)}">
-      ${COMMENT_REACTIONS.map((reaction) => {
-        const count = Number(reactions[reaction.key] || 0);
-        const reacted = hasReacted(commentId, reaction.key);
+    <div class="reaction-summary">
+      <div class="reaction-summary-list">
+        ${activeReactions}
+      </div>
 
-        return `
-          <button
-            type="button"
-            class="reaction-btn ${reacted ? "reacted" : ""}"
-            data-comment-id="${escapeHtml(commentId)}"
-            data-reaction="${escapeHtml(reaction.key)}"
-            aria-label="${escapeHtml(reaction.key)} reaction"
-          >
-            ${getReactionIconHtml(reaction)}
-            <span class="reaction-count">${count}</span>
-          </button>
-        `;
-      }).join("")}
+      <button
+        type="button"
+        class="reaction-open-btn"
+        data-comment-id="${escapeHtml(comment.id || "")}"
+        aria-label="React"
+      >
+        ＋
+      </button>
     </div>
   `;
 }
 
-function findReactionButton(commentId, reactionKey) {
-  if (!commentsList) return null;
+function closeReactionMenu() {
+  if (activeReactionMenu) {
+    activeReactionMenu.remove();
+    activeReactionMenu = null;
+    activeReactionCommentId = null;
+  }
+}
 
-  return Array.from(commentsList.querySelectorAll(".reaction-btn")).find((button) => {
-    return button.dataset.commentId === commentId && button.dataset.reaction === reactionKey;
-  }) || null;
+function openReactionMenu(commentId, targetElement) {
+  if (!commentId || !targetElement) return;
+
+  closeReactionMenu();
+
+  activeReactionCommentId = commentId;
+
+  const menu = document.createElement("div");
+  menu.className = "reaction-menu";
+  menu.innerHTML = COMMENT_REACTIONS.map((reaction) => {
+    return `
+      <button
+        type="button"
+        class="reaction-menu-btn"
+        data-reaction="${escapeHtml(reaction.key)}"
+        aria-label="${escapeHtml(reaction.key)} reaction"
+      >
+        ${getReactionIconHtml(reaction)}
+      </button>
+    `;
+  }).join("");
+
+  document.body.appendChild(menu);
+
+  const rect = targetElement.getBoundingClientRect();
+  const menuWidth = 280;
+
+  let left = rect.left + rect.width / 2 - menuWidth / 2;
+  left = Math.max(12, Math.min(left, window.innerWidth - menuWidth - 12));
+
+  let top = rect.top - 58;
+
+  if (top < 12) {
+    top = rect.bottom + 10;
+  }
+
+  menu.style.left = left + "px";
+  menu.style.top = top + "px";
+
+  activeReactionMenu = menu;
 }
 
 async function sendReaction(commentId, reactionKey) {
   if (!commentId || !reactionKey || isSendingReaction) return;
 
-  if (hasReacted(commentId, reactionKey)) return;
-
   isSendingReaction = true;
-  markReacted(commentId, reactionKey);
-
-  const button = findReactionButton(commentId, reactionKey);
-
-  if (button) {
-    button.classList.add("reacted");
-
-    const countEl = button.querySelector(".reaction-count");
-    const currentCount = Number(countEl?.textContent || 0);
-
-    if (countEl) {
-      countEl.textContent = String(currentCount + 1);
-    }
-  }
 
   try {
     await fetch(COMMENTS_API_URL, {
@@ -874,9 +910,12 @@ async function sendReaction(commentId, reactionKey) {
       body: JSON.stringify({
         action: "react",
         id: commentId,
-        reaction: reactionKey
+        reaction: reactionKey,
+        userKey: COMMENT_USER_KEY
       })
     });
+
+    closeReactionMenu();
 
     window.setTimeout(() => {
       renderComments();
@@ -922,7 +961,7 @@ async function renderComments() {
       const stars = rating > 0 ? "★".repeat(rating) + "☆".repeat(5 - rating) : "";
 
       return `
-        <div class="comm-message">
+        <div class="comm-message" data-comment-id="${escapeHtml(comment.id || "")}">
           <div class="comm-top">
             <strong>${escapeHtml(name)}</strong>
             <span>${escapeHtml(stars)} ${formatCommentTime(createdAt)}</span>
@@ -930,7 +969,7 @@ async function renderComments() {
 
           <p>${escapeHtml(message)}</p>
 
-          ${createReactionButtons(comment)}
+          ${createReactionSummary(comment)}
         </div>
       `;
     })
@@ -1159,16 +1198,72 @@ if (commentText) {
 
 if (commentsList) {
   commentsList.addEventListener("click", (event) => {
-    const reactionButton = event.target.closest(".reaction-btn");
+    const openButton = event.target.closest(".reaction-open-btn");
 
-    if (!reactionButton) return;
+    if (openButton) {
+      event.stopPropagation();
 
-    const commentId = reactionButton.dataset.commentId;
-    const reactionKey = reactionButton.dataset.reaction;
+      const commentId = openButton.dataset.commentId;
+      openReactionMenu(commentId, openButton);
+      return;
+    }
+  });
 
-    sendReaction(commentId, reactionKey);
+  commentsList.addEventListener("contextmenu", (event) => {
+    const message = event.target.closest(".comm-message");
+
+    if (!message) return;
+
+    event.preventDefault();
+
+    const commentId = message.dataset.commentId;
+
+    openReactionMenu(commentId, message);
+  });
+
+  commentsList.addEventListener("touchstart", (event) => {
+    const message = event.target.closest(".comm-message");
+
+    if (!message) return;
+
+    longPressTimer = window.setTimeout(() => {
+      openReactionMenu(message.dataset.commentId, message);
+    }, 520);
+  }, { passive: true });
+
+  commentsList.addEventListener("touchend", () => {
+    if (longPressTimer) {
+      clearTimeout(longPressTimer);
+      longPressTimer = null;
+    }
+  });
+
+  commentsList.addEventListener("touchmove", () => {
+    if (longPressTimer) {
+      clearTimeout(longPressTimer);
+      longPressTimer = null;
+    }
   });
 }
+
+document.addEventListener("click", (event) => {
+  const clickedReactionMenu = event.target.closest(".reaction-menu");
+  const clickedReactionOpen = event.target.closest(".reaction-open-btn");
+
+  if (!clickedReactionMenu && !clickedReactionOpen) {
+    closeReactionMenu();
+  }
+});
+
+document.addEventListener("click", (event) => {
+  const reactionMenuButton = event.target.closest(".reaction-menu-btn");
+
+  if (!reactionMenuButton || !activeReactionCommentId) return;
+
+  const reactionKey = reactionMenuButton.dataset.reaction;
+
+  sendReaction(activeReactionCommentId, reactionKey);
+});
 
 if (commentForm && commentName && commentText) {
   commentForm.addEventListener("submit", async (event) => {
