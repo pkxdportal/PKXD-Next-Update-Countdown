@@ -92,6 +92,8 @@ const translations = {
     noCommentsYet: "No messages yet. Be the first.",
     replyBtn: "Reply",
     replyingTo: "Replying to",
+    showReplies: "Show {count} more replies",
+    hideReplies: "Hide replies",
 
     teams: {
       volts: {
@@ -205,6 +207,8 @@ const translations = {
     noCommentsYet: "Сообщений пока нет. Будь первым.",
     replyBtn: "Ответить",
     replyingTo: "Ответ для",
+    showReplies: "Показать ещё {count} ответа",
+    hideReplies: "Скрыть ответы",
 
     teams: {
       volts: {
@@ -314,6 +318,8 @@ const languageOverrides = {
     noCommentsYet: "Noch keine Nachrichten. Sei der Erste.",
     replyBtn: "Antworten",
     replyingTo: "Antwort an",
+    showReplies: "{count} weitere Antworten anzeigen",
+    hideReplies: "Antworten ausblenden",
 
     teams: {
       volts: {
@@ -421,6 +427,8 @@ const languageOverrides = {
     noCommentsYet: "Aucun message pour l’instant. Sois le premier.",
     replyBtn: "Répondre",
     replyingTo: "Réponse à",
+    showReplies: "Afficher encore {count} réponses",
+    hideReplies: "Masquer les réponses",
 
     teams: {
       volts: {
@@ -528,6 +536,8 @@ const languageOverrides = {
     noCommentsYet: "Brak wiadomości. Bądź pierwszy.",
     replyBtn: "Odpowiedz",
     replyingTo: "Odpowiedź dla",
+    showReplies: "Pokaż jeszcze {count} odpowiedzi",
+    hideReplies: "Ukryj odpowiedzi",
 
     teams: {
       volts: {
@@ -635,6 +645,8 @@ const languageOverrides = {
     noCommentsYet: "Ainda não há mensagens. Seja o primeiro.",
     replyBtn: "Responder",
     replyingTo: "Respondendo a",
+    showReplies: "Mostrar mais {count} respostas",
+    hideReplies: "Ocultar respostas",
 
     teams: {
       volts: {
@@ -742,6 +754,8 @@ const languageOverrides = {
     noCommentsYet: "Henüz mesaj yok. İlk sen ol.",
     replyBtn: "Yanıtla",
     replyingTo: "Yanıtlanıyor",
+    showReplies: "{count} yanıt daha göster",
+    hideReplies: "Yanıtları gizle",
 
     teams: {
       volts: {
@@ -849,6 +863,8 @@ const languageOverrides = {
     noCommentsYet: "Belum ada pesan. Jadilah yang pertama.",
     replyBtn: "Balas",
     replyingTo: "Membalas",
+    showReplies: "Tampilkan {count} balasan lagi",
+    hideReplies: "Sembunyikan balasan",
 
     teams: {
       volts: {
@@ -956,6 +972,8 @@ const languageOverrides = {
     noCommentsYet: "Aún no hay mensajes. Sé el primero.",
     replyBtn: "Responder",
     replyingTo: "Respondiendo a",
+    showReplies: "Mostrar {count} respuestas más",
+    hideReplies: "Ocultar respuestas",
 
     teams: {
       volts: {
@@ -1063,6 +1081,8 @@ const languageOverrides = {
     noCommentsYet: "अभी कोई संदेश नहीं। पहले बनें।",
     replyBtn: "जवाब दें",
     replyingTo: "जवाब दे रहे हैं",
+    showReplies: "{count} और जवाब दिखाएँ",
+    hideReplies: "जवाब छिपाएँ",
 
     teams: {
       volts: {
