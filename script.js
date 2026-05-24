@@ -160,6 +160,7 @@ let isSendingReaction = false;
 let activeReactionCommentId = null;
 let activeReactionMenu = null;
 let longPressTimer = null;
+let replyTarget = null;
 
 const COMMENT_USER_KEY =
   localStorage.getItem("commentUserKey") ||
@@ -848,6 +849,86 @@ function createReactionSummary(comment) {
   `;
 }
 
+function createRepliesHtml(replies) {
+  if (!Array.isArray(replies) || !replies.length) return "";
+
+  return `
+    <div class="reply-list">
+      ${replies.map((reply) => {
+        const createdAt =
+          reply.time ||
+          reply.createdAt ||
+          reply.timestamp ||
+          reply.date ||
+          "";
+
+        const rating = Number(reply.rating || 0);
+        const stars = rating > 0 ? "★".repeat(rating) + "☆".repeat(5 - rating) : "";
+
+        return `
+          <div class="comm-reply" data-comment-id="${escapeHtml(reply.id || "")}">
+            <div class="comm-top">
+              <strong>${escapeHtml(reply.name || "Player")}</strong>
+              <span>${escapeHtml(stars)} ${formatCommentTime(createdAt)}</span>
+            </div>
+
+            <p>${escapeHtml(reply.message || "")}</p>
+
+            ${createReactionSummary(reply)}
+          </div>
+        `;
+      }).join("")}
+    </div>
+  `;
+}
+
+function createReplyButton(comment) {
+  return `
+    <button
+      type="button"
+      class="reply-btn"
+      data-comment-id="${escapeHtml(comment.id || "")}"
+      data-comment-name="${escapeHtml(comment.name || "Player")}"
+    >
+      ${escapeHtml(getText("replyBtn"))}
+    </button>
+  `;
+}
+
+function updateReplyBox() {
+  const oldBox = document.getElementById("replyBox");
+
+  if (oldBox) {
+    oldBox.remove();
+  }
+
+  if (!replyTarget || !commentForm) return;
+
+  const box = document.createElement("div");
+  box.id = "replyBox";
+  box.className = "reply-box";
+
+  box.innerHTML = `
+    <span>
+      ${escapeHtml(getText("replyingTo"))}
+      <b>${escapeHtml(replyTarget.name)}</b>
+    </span>
+
+    <button type="button" id="cancelReplyBtn">×</button>
+  `;
+
+  commentForm.parentNode.insertBefore(box, commentForm);
+
+  const cancelBtn = document.getElementById("cancelReplyBtn");
+
+  if (cancelBtn) {
+    cancelBtn.addEventListener("click", () => {
+      replyTarget = null;
+      updateReplyBox();
+    });
+  }
+}
+
 function closeReactionMenu() {
   if (activeReactionMenu) {
     activeReactionMenu.remove();
@@ -1029,7 +1110,12 @@ async function renderComments() {
 
           <p>${escapeHtml(message)}</p>
 
-          ${createReactionSummary(comment)}
+          <div class="comm-actions">
+            ${createReactionSummary(comment)}
+            ${createReplyButton(comment)}
+          </div>
+
+          ${createRepliesHtml(comment.replies)}
         </div>
       `;
     })
@@ -1060,7 +1146,8 @@ async function addComment(name, text) {
       body: JSON.stringify({
         name: cleanName,
         message: cleanText,
-        rating: cleanRating
+        rating: cleanRating,
+        parentId: replyTarget?.id || ""
       })
     });
 
@@ -1271,6 +1358,25 @@ if (commentsList) {
       return;
     }
 
+      const replyButton = event.target.closest(".reply-btn");
+
+      if (replyButton) {
+        event.stopPropagation();
+
+        replyTarget = {
+          id: replyButton.dataset.commentId,
+          name: replyButton.dataset.commentName || "Player"
+        };
+
+        updateReplyBox();
+
+        if (commentText) {
+          commentText.focus();
+        }
+
+        return;
+      }
+
     const openButton = event.target.closest(".reaction-open-btn");
 
     if (openButton) {
@@ -1346,6 +1452,8 @@ if (commentForm && commentName && commentText) {
 
     commentText.value = "";
     selectedRating = 0;
+    replyTarget = null;
+    updateReplyBox();
     updateRatingStars();
     updateCommentCounter();
     commentText.focus();
