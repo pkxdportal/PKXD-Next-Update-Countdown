@@ -10,6 +10,8 @@ let selectedTeam = localStorage.getItem("selectedTeam") || null;
 let totalVotes = 0;
 let isSendingComment = false;
 let previewTheme = localStorage.getItem("previewTheme") || "default";
+let activeSection = localStorage.getItem("activeSection") || "countdownSection";
+let activeChatRoom = "general";
 
 const COMMENT_MAX_LENGTH = 300;
 const REPLIES_VISIBLE_LIMIT = 2;
@@ -114,13 +116,26 @@ const downloadMenu = document.getElementById("downloadMenu");
 
 const shareBtn = document.getElementById("shareBtn");
 const themeToggle = document.getElementById("themeToggle");
+const portalToggle = document.getElementById("portalToggle");
+const portalMenu = document.getElementById("portalMenu");
+
+const mainNavButtons = document.querySelectorAll(".main-nav-btn");
+const appSections = document.querySelectorAll(".app-section");
+
+const chatTabs = document.querySelectorAll(".chat-tab");
+const teamChatTab = document.getElementById("teamChatTab");
+const teamChatLocked = document.getElementById("teamChatLocked");
+
+const theoryName = document.getElementById("theoryName");
+const theoryText = document.getElementById("theoryText");
+const theoryCounter = document.getElementById("theoryCounter");
+const theoryForm = document.getElementById("theoryForm");
+const theorySubmitBtn = document.getElementById("theorySubmitBtn");
 
 const countdownModeBtn = document.getElementById("countdownModeBtn");
 const progressModeBtn = document.getElementById("progressModeBtn");
-const theoriesModeBtn = document.getElementById("theoriesModeBtn");
 
 const progressPanel = document.getElementById("progressPanel");
-const theoriesPanel = document.getElementById("theoriesPanel");
 const progressFill = document.getElementById("progressFill");
 const progressPercent = document.getElementById("progressPercent");
 const progressText = document.getElementById("progressText");
@@ -295,6 +310,14 @@ function setLanguage(lang) {
     commentName.placeholder = getText("commentNamePlaceholder");
   }
 
+  if (theoryName) {
+    theoryName.placeholder = getText("commentNamePlaceholder");
+  }
+
+  if (theoryText) {
+    theoryText.placeholder = getText("theoryPlaceholder");
+  }
+
   updateCommentPlaceholder();
 
   document.querySelectorAll("#languageMenu .lang-btn").forEach((button) => {
@@ -305,24 +328,83 @@ function setLanguage(lang) {
   updateProgress();
   updateTeamEnergy();
   updateChooseButton();
+  updateTeamChatUi();
+  updateChatTabs();
   updateCommentCounter();
+  updateTheoryCounter();
   renderVideoHub();
   renderComments();
 
   if (languageMenu) languageMenu.classList.remove("open");
   if (downloadMenu) downloadMenu.classList.remove("open");
+  if (portalMenu) portalMenu.classList.remove("open");
 }
 
 function setMode(mode) {
-  if (!timer || !progressPanel || !theoriesPanel) return;
+  if (!timer || !progressPanel) return;
 
   timer.classList.toggle("hidden", mode !== "countdown");
   progressPanel.classList.toggle("active", mode === "progress");
-  theoriesPanel.classList.toggle("active", mode === "theories");
 
   countdownModeBtn?.classList.toggle("active", mode === "countdown");
   progressModeBtn?.classList.toggle("active", mode === "progress");
-  theoriesModeBtn?.classList.toggle("active", mode === "theories");
+}
+
+function setActiveSection(sectionId) {
+  const targetId = sectionId || "countdownSection";
+
+  activeSection = targetId;
+  localStorage.setItem("activeSection", activeSection);
+
+  appSections.forEach((section) => {
+    section.classList.toggle("active", section.id === activeSection);
+  });
+
+  mainNavButtons.forEach((button) => {
+    button.classList.toggle("active", button.dataset.sectionTarget === activeSection);
+  });
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+function updateTeamChatUi() {
+  if (!teamChatTab || !teamChatLocked) return;
+
+  if (!selectedTeam) {
+    teamChatLocked.classList.remove("hidden");
+    teamChatTab.disabled = true;
+    teamChatTab.classList.add("locked");
+    teamChatTab.textContent = getText("teamChatTab");
+
+    if (activeChatRoom === "team") {
+      activeChatRoom = "general";
+      updateChatTabs();
+    }
+
+    return;
+  }
+
+  teamChatLocked.classList.add("hidden");
+  teamChatTab.disabled = false;
+  teamChatTab.classList.remove("locked");
+
+  const teamData = getTeamData(selectedTeam);
+
+  if (teamData) {
+    teamChatTab.innerHTML = `
+      ${getTeamIconHtml(selectedTeam, "inline-team-icon")}
+      ${escapeHtml(teamData.title)}
+    `;
+  }
+}
+
+function updateChatTabs() {
+  chatTabs.forEach((tab) => {
+    tab.classList.toggle("active", tab.dataset.chatRoom === activeChatRoom);
+  });
 }
 
 function openPopup(team) {
@@ -371,6 +453,7 @@ function chooseTeam(team) {
   applyPreviewTheme();
   updateTeamEnergy();
   updateChooseButton();
+  updateTeamChatUi();
   closeTeamPopup();
   showTeamActivated(team);
 
@@ -721,6 +804,19 @@ function updateCommentCounter() {
 
   commentCounter.classList.toggle("warning", left <= 60 && left > 0);
   commentCounter.classList.toggle("limit", left === 0);
+}
+
+function updateTheoryCounter() {
+  if (!theoryText || !theoryCounter) return;
+
+  const maxLength = Number(theoryText.getAttribute("maxlength") || 500);
+  const length = theoryText.value.length;
+  const left = Math.max(0, maxLength - length);
+
+  theoryCounter.textContent = `${length} / ${maxLength}`;
+
+  theoryCounter.classList.toggle("warning", left <= 80 && left > 0);
+  theoryCounter.classList.toggle("limit", left === 0);
 }
 
 function updateCommentPlaceholder() {
@@ -1158,6 +1254,8 @@ async function addComment(name, text) {
 
   if (!cleanName || !cleanText || isSendingComment) return;
 
+  localStorage.setItem("portalUserName", cleanName);
+
   isSendingComment = true;
 
   if (commentSubmitBtn) {
@@ -1251,6 +1349,7 @@ if (langToggle) {
     event.stopPropagation();
     languageMenu?.classList.toggle("open");
     downloadMenu?.classList.remove("open");
+    portalMenu?.classList.remove("open");
   });
 }
 
@@ -1259,6 +1358,16 @@ if (downloadToggle) {
     event.stopPropagation();
     downloadMenu?.classList.toggle("open");
     languageMenu?.classList.remove("open");
+    portalMenu?.classList.remove("open");
+  });
+}
+
+if (portalToggle) {
+  portalToggle.addEventListener("click", (event) => {
+    event.stopPropagation();
+    portalMenu?.classList.toggle("open");
+    languageMenu?.classList.remove("open");
+    downloadMenu?.classList.remove("open");
   });
 }
 
@@ -1267,6 +1376,7 @@ document.addEventListener("click", (event) => {
   const clickedTeamButton = event.target.closest(".team-btn");
   const clickedInsideLang = event.target.closest(".language-wrapper");
   const clickedInsideDownload = event.target.closest(".download-wrapper");
+  const clickedInsidePortal = event.target.closest(".portal-wrapper");
 
   if (
     popup &&
@@ -1284,6 +1394,10 @@ document.addEventListener("click", (event) => {
   if (!clickedInsideDownload && downloadMenu) {
     downloadMenu.classList.remove("open");
   }
+
+  if (!clickedInsidePortal && portalMenu) {
+    portalMenu.classList.remove("open");
+  }
 });
 
 document.addEventListener("keydown", (event) => {
@@ -1292,6 +1406,7 @@ document.addEventListener("keydown", (event) => {
 
     if (languageMenu) languageMenu.classList.remove("open");
     if (downloadMenu) downloadMenu.classList.remove("open");
+    if (portalMenu) portalMenu.classList.remove("open");
   }
 });
 
@@ -1324,12 +1439,6 @@ if (progressModeBtn) {
   });
 }
 
-if (theoriesModeBtn) {
-  theoriesModeBtn.addEventListener("click", () => {
-    setMode("theories");
-  });
-}
-
 if (themeToggle) {
   themeToggle.addEventListener("click", () => {
     const themes = ["default", "volts", "flame", "leaf"];
@@ -1345,24 +1454,41 @@ if (themeToggle) {
 
 if (shareBtn) {
   shareBtn.addEventListener("click", async () => {
-    const url = window.location.href;
+    const url = window.location.href.split("#")[0];
 
     try {
-      if (navigator.share) {
-        await navigator.share({
-          title: document.title,
-          url: url
-        });
-      } else {
-        await navigator.clipboard.writeText(url);
-        alert(getText("shareCopied"));
-      }
-    } catch (error) {
       await navigator.clipboard.writeText(url);
+      alert(getText("shareCopied"));
+    } catch (error) {
+      console.warn("Could not copy link:", error);
       alert(getText("shareCopied"));
     }
   });
 }
+
+mainNavButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const sectionId = button.dataset.sectionTarget;
+
+    if (!sectionId) return;
+
+    setActiveSection(sectionId);
+  });
+});
+
+chatTabs.forEach((tab) => {
+  tab.addEventListener("click", () => {
+    const room = tab.dataset.chatRoom;
+
+    if (room === "team" && !selectedTeam) {
+      updateTeamChatUi();
+      return;
+    }
+
+    activeChatRoom = room || "general";
+    updateChatTabs();
+  });
+});
 
 if (commentText) {
   commentText.setAttribute("maxlength", String(COMMENT_MAX_LENGTH));
@@ -1370,6 +1496,34 @@ if (commentText) {
   commentText.addEventListener("input", () => {
     updateCommentCounter();
   });
+}
+
+if (commentName) {
+  const savedName = localStorage.getItem("portalUserName") || "";
+
+  if (savedName && !commentName.value) {
+    commentName.value = savedName;
+  }
+
+  commentName.addEventListener("input", () => {
+    localStorage.setItem("portalUserName", commentName.value.trim().slice(0, 18));
+  });
+}
+
+if (theoryName) {
+  const savedName = localStorage.getItem("portalUserName") || "";
+
+  if (savedName && !theoryName.value) {
+    theoryName.value = savedName;
+  }
+
+  theoryName.addEventListener("input", () => {
+    localStorage.setItem("portalUserName", theoryName.value.trim().slice(0, 18));
+  });
+}
+
+if (theoryText) {
+  theoryText.addEventListener("input", updateTheoryCounter);
 }
 
 if (commentsList) {
@@ -1387,24 +1541,24 @@ if (commentsList) {
       return;
     }
 
-      const replyButton = event.target.closest(".reply-btn");
+    const replyButton = event.target.closest(".reply-btn");
 
-      if (replyButton) {
-        event.stopPropagation();
+    if (replyButton) {
+      event.stopPropagation();
 
-        replyTarget = {
-          id: replyButton.dataset.commentId,
-          name: replyButton.dataset.commentName || "Player"
-        };
+      replyTarget = {
+        id: replyButton.dataset.commentId,
+        name: replyButton.dataset.commentName || "Player"
+      };
 
-        updateReplyBox();
+      updateReplyBox();
 
-        if (commentText) {
-          commentText.focus();
-        }
-
-        return;
+      if (commentText) {
+        commentText.focus();
       }
+
+      return;
+    }
 
     const repliesToggleBtn = event.target.closest(".replies-toggle-btn");
 
@@ -1510,18 +1664,49 @@ if (commentForm && commentName && commentText) {
   });
 }
 
+if (theoryForm && theoryName && theoryText) {
+  theoryForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const today = new Date().toISOString().slice(0, 10);
+    const lastTheoryDate = localStorage.getItem("lastTheoryDate");
+
+    if (lastTheoryDate === today) {
+      alert(getText("oneTheoryPerDay"));
+      return;
+    }
+
+    const name = theoryName.value.trim().slice(0, 18);
+    const text = theoryText.value.trim().slice(0, 500);
+
+    if (!name || !text) return;
+
+    localStorage.setItem("portalUserName", name);
+    localStorage.setItem("lastTheoryDate", today);
+
+    alert(getText("theorySavedSoon"));
+
+    theoryText.value = "";
+    updateTheoryCounter();
+  });
+}
+
 const savedLang = localStorage.getItem("selectedLang") || "en";
 
 setLanguage(savedLang);
 applySelectedTeamTheme();
 applyPreviewTheme();
 updateTeamEnergy();
+updateTeamChatUi();
+updateChatTabs();
 renderVideoHub();
 renderComments();
 loadTeamEnergyFromSheet();
 updateCountdown();
 updateCommentCounter();
+updateTheoryCounter();
 setMode("countdown");
+setActiveSection(activeSection);
 
 countdownInterval = setInterval(updateCountdown, 1000);
 setInterval(loadTeamEnergyFromSheet, 60000);
