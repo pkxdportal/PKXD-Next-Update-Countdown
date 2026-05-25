@@ -17,7 +17,7 @@ const COMMENT_MAX_LENGTH = 300;
 const REPLIES_VISIBLE_LIMIT = 2;
 
 const COMMENTS_API_URL =
-  "https://script.google.com/macros/s/AKfycby7xTcqXuiBBDc4GyTzUTMO7WK_yfBkUgY94oyC400Vnqv1OgfN8Wgxiu5Srn9aO08/exec";
+  "https://script.google.com/macros/s/AKfycbyApSkcMeOYFBS88Ich9qX18M4_3o9IunaY-NpecRVeLsF4koKWgy6Xc7bU8MF6XLUl/exec";
 
 const GOOGLE_SHEET_CSV_URL =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vQSWxR6NP3qLfM_-Fi_qoRjpgEA0qiUCUTze8P3XHmNea9ROrpIGMp2kKxd_5FaqZvNi3j28G1-nmlQ/pub?gid=747099020&single=true&output=csv";
@@ -452,6 +452,14 @@ function updateChatTabs() {
   });
 }
 
+function getActiveCommentRoom() {
+  if (activeChatRoom === "team" && selectedTeam) {
+    return selectedTeam;
+  }
+
+  return "general";
+}
+
 function openPopup(team) {
   const data = getTeamData(team);
 
@@ -499,6 +507,8 @@ function chooseTeam(team) {
   updateTeamEnergy();
   updateChooseButton();
   updateTeamChatUi();
+  updateChatTabs();
+  renderComments();
   closeTeamPopup();
   showTeamActivated(team);
 
@@ -874,11 +884,13 @@ function updateCommentPlaceholder() {
   }
 }
 
-async function getStoredComments() {
+async function getStoredComments(room = "general") {
   try {
     const url =
       COMMENTS_API_URL +
       "?cache=" + Date.now() +
+      "&room=" + encodeURIComponent(room) +
+      "&team=" + encodeURIComponent(selectedTeam || "") +
       "&userKey=" + encodeURIComponent(COMMENT_USER_KEY);
 
     const response = await fetch(url);
@@ -1243,7 +1255,7 @@ async function sendReaction(commentId, reactionKey) {
 async function renderComments() {
   if (!commentsList) return;
 
-  const comments = await getStoredComments();
+  const comments = await getStoredComments(getActiveCommentRoom());
 
   updateAverageRating(comments);
 
@@ -1319,7 +1331,10 @@ async function addComment(name, text) {
         name: cleanName,
         message: cleanText,
         rating: cleanRating,
-        parentId: replyTarget?.id || ""
+        parentId: replyTarget?.id || "",
+        room: getActiveCommentRoom(),
+        team: selectedTeam || "",
+        userKey: COMMENT_USER_KEY
       })
     });
 
@@ -1538,6 +1553,7 @@ chatTabs.forEach((tab) => {
 
     activeChatRoom = room || "general";
     updateChatTabs();
+    renderComments();
   });
 });
 
