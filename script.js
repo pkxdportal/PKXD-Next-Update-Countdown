@@ -131,6 +131,8 @@ const theoryText = document.getElementById("theoryText");
 const theoryCounter = document.getElementById("theoryCounter");
 const theoryForm = document.getElementById("theoryForm");
 const theorySubmitBtn = document.getElementById("theorySubmitBtn");
+const dailyIntro = document.getElementById("dailyIntro");
+const skipIntroBtn = document.getElementById("skipIntroBtn");
 
 const countdownModeBtn = document.getElementById("countdownModeBtn");
 const progressModeBtn = document.getElementById("progressModeBtn");
@@ -368,6 +370,49 @@ function setActiveSection(sectionId) {
     top: 0,
     behavior: "smooth"
   });
+}
+
+function getTodayKey() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+function shouldShowIntroToday() {
+  const today = getTodayKey();
+  const lastIntroDate = localStorage.getItem("zgIntroDate");
+
+  return lastIntroDate !== today;
+}
+
+function hideDailyIntro() {
+  if (!dailyIntro) return;
+
+  dailyIntro.classList.remove("show");
+  dailyIntro.classList.add("hide");
+  dailyIntro.setAttribute("aria-hidden", "true");
+
+  localStorage.setItem("zgIntroDate", getTodayKey());
+
+  window.setTimeout(() => {
+    dailyIntro.style.display = "none";
+  }, 650);
+}
+
+function showDailyIntro() {
+  if (!dailyIntro) return;
+
+  if (!shouldShowIntroToday()) {
+    dailyIntro.style.display = "none";
+    return;
+  }
+
+  dailyIntro.style.display = "grid";
+  dailyIntro.classList.remove("hide");
+  dailyIntro.classList.add("show");
+  dailyIntro.setAttribute("aria-hidden", "false");
+
+  window.setTimeout(() => {
+    hideDailyIntro();
+  }, 4200);
 }
 
 function updateTeamChatUi() {
@@ -1371,6 +1416,12 @@ if (portalToggle) {
   });
 }
 
+if (skipIntroBtn) {
+  skipIntroBtn.addEventListener("click", () => {
+    hideDailyIntro();
+  });
+}
+
 document.addEventListener("click", (event) => {
   const clickedInsidePopup = popup?.contains(event.target);
   const clickedTeamButton = event.target.closest(".team-btn");
@@ -1707,6 +1758,7 @@ updateCommentCounter();
 updateTheoryCounter();
 setMode("countdown");
 setActiveSection(activeSection);
+showDailyIntro();
 
 countdownInterval = setInterval(updateCountdown, 1000);
 setInterval(loadTeamEnergyFromSheet, 60000);
