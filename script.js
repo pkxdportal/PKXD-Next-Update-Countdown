@@ -213,6 +213,22 @@ function getTeamIconHtml(team, className = "inline-team-icon") {
   return `<img src="${src}" class="${className}" alt="" />`;
 }
 
+function getAuthorNameHtml(name, team) {
+  const safeName = escapeHtml(name || "Player");
+  const icon = getTeamIconHtml(team, "author-team-icon");
+
+  if (!icon) {
+    return `<strong>${safeName}</strong>`;
+  }
+
+  return `
+    <strong class="author-with-team">
+      ${icon}
+      <span>${safeName}</span>
+    </strong>
+  `;
+}
+
 function escapeHtml(value) {
   return String(value || "")
     .replaceAll("&", "&amp;")
@@ -337,6 +353,7 @@ function setLanguage(lang) {
   updateTheoryCounter();
   renderVideoHub();
   renderComments();
+  renderTheories();
 
   if (languageMenu) languageMenu.classList.remove("open");
   if (downloadMenu) downloadMenu.classList.remove("open");
@@ -1063,7 +1080,7 @@ function createRepliesHtml(replies) {
           return `
             <div class="comm-reply ${extraClass}" data-comment-id="${escapeHtml(reply.id || "")}">
               <div class="comm-top">
-                <strong>${escapeHtml(reply.name || "Player")}</strong>
+                ${getAuthorNameHtml(reply.name || "Player", reply.team)}
                 <span>${escapeHtml(stars)} ${formatCommentTime(createdAt)}</span>
               </div>
 
@@ -1315,7 +1332,7 @@ async function renderComments() {
       return `
         <div class="comm-message" data-comment-id="${escapeHtml(comment.id || "")}">
           <div class="comm-top">
-            <strong>${escapeHtml(name)}</strong>
+            ${getAuthorNameHtml(name, comment.team)}
             <span>${escapeHtml(stars)} ${formatCommentTime(createdAt)}</span>
           </div>
 
@@ -1363,7 +1380,7 @@ async function renderTheories() {
       return `
         <div class="comm-message theory-message" data-comment-id="${escapeHtml(theory.id || "")}">
           <div class="comm-top">
-            <strong>${escapeHtml(name)}</strong>
+            ${getAuthorNameHtml(name, theory.team)}
             <span>${formatCommentTime(createdAt)}</span>
           </div>
 
