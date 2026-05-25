@@ -131,6 +131,7 @@ const theoryText = document.getElementById("theoryText");
 const theoryCounter = document.getElementById("theoryCounter");
 const theoryForm = document.getElementById("theoryForm");
 const theorySubmitBtn = document.getElementById("theorySubmitBtn");
+const userTheoriesList = document.getElementById("userTheoriesList");
 const dailyIntro = document.getElementById("dailyIntro");
 const skipIntroBtn = document.getElementById("skipIntroBtn");
 
@@ -912,6 +913,33 @@ async function getStoredComments(room = "general") {
   }
 }
 
+async function getStoredTheories() {
+  try {
+    const url =
+      COMMENTS_API_URL +
+      "?cache=" + Date.now() +
+      "&room=theories" +
+      "&userKey=" + encodeURIComponent(COMMENT_USER_KEY);
+
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error("Could not load theories");
+    }
+
+    const data = await response.json();
+
+    if (!Array.isArray(data)) {
+      return [];
+    }
+
+    return data;
+  } catch (error) {
+    console.warn("Theories could not be loaded:", error);
+    return [];
+  }
+}
+
 function updateAverageRating(comments) {
   if (!averageStars || !averageRating || !ratingCount) return;
 
@@ -1267,6 +1295,51 @@ async function renderComments() {
     `;
     return;
   }
+
+  async function renderTheories() {
+  if (!userTheoriesList) return;
+
+  const theories = await getStoredTheories();
+
+  if (!theories.length) {
+    userTheoriesList.innerHTML = `
+      <div class="comment-empty">
+        ${escapeHtml(getText("theoriesComingSoon"))}
+      </div>
+    `;
+    return;
+  }
+
+  userTheoriesList.innerHTML = theories
+    .slice(-50)
+    .reverse()
+    .map((theory) => {
+      const name = theory.name || "Player";
+      const message = theory.message || theory.text || "";
+      const createdAt =
+        theory.time ||
+        theory.createdAt ||
+        theory.timestamp ||
+        theory.date ||
+        "";
+
+      return `
+        <div class="comm-message theory-message" data-comment-id="${escapeHtml(theory.id || "")}">
+          <div class="comm-top">
+            <strong>${escapeHtml(name)}</strong>
+            <span>${formatCommentTime(createdAt)}</span>
+          </div>
+
+          <p>${escapeHtml(message)}</p>
+
+          <div class="comm-actions">
+            ${createReactionSummary(theory)}
+          </div>
+        </div>
+      `;
+    })
+    .join("");
+}
 
   commentsList.innerHTML = comments
     .slice(0, 30)
@@ -1696,6 +1769,69 @@ if (commentsList) {
   });
 }
 
+if (userTheoriesList) {
+  userTheoriesList.addEventListener("click", (event) => {
+    const summaryItem = event.target.closest(".reaction-summary-item.mine");
+
+    if (summaryItem) {
+      event.stopPropagation();
+
+      const message = summaryItem.closest(".theory-message");
+      const commentId = message?.dataset?.commentId;
+      const reactionKey = summaryItem.dataset.reaction;
+
+      sendReaction(commentId, reactionKey);
+      return;
+    }
+
+    const openButton = event.target.closest(".reaction-open-btn");
+
+    if (openButton) {
+      event.stopPropagation();
+
+      const commentId = openButton.dataset.commentId;
+      openReactionMenu(commentId, openButton);
+      return;
+    }
+  });
+
+  userTheoriesList.addEventListener("contextmenu", (event) => {
+    const message = event.target.closest(".theory-message");
+
+    if (!message) return;
+
+    event.preventDefault();
+
+    const commentId = message.dataset.commentId;
+
+    openReactionMenu(commentId, message);
+  });
+
+  userTheoriesList.addEventListener("touchstart", (event) => {
+    const message = event.target.closest(".theory-message");
+
+    if (!message) return;
+
+    longPressTimer = window.setTimeout(() => {
+      openReactionMenu(message.dataset.commentId, message);
+    }, 520);
+  }, { passive: true });
+
+  userTheoriesList.addEventListener("touchend", () => {
+    if (longPressTimer) {
+      clearTimeout(longPressTimer);
+      longPressTimer = null;
+    }
+  });
+
+  userTheoriesList.addEventListener("touchmove", () => {
+    if (longPressTimer) {
+      clearTimeout(longPressTimer);
+      longPressTimer = null;
+    }
+  });
+}
+
 document.addEventListener("click", (event) => {
   const clickedReactionMenu = event.target.closest(".reaction-menu");
   const clickedReactionOpen = event.target.closest(".reaction-open-btn");
@@ -1732,7 +1868,7 @@ if (commentForm && commentName && commentText) {
 }
 
 if (theoryForm && theoryName && theoryText) {
-  theoryForm.addEventListener("submit", (event) => {
+  theoryForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     const today = new Date().toISOString().slice(0, 10);
@@ -1749,12 +1885,48 @@ if (theoryForm && theoryName && theoryText) {
     if (!name || !text) return;
 
     localStorage.setItem("portalUserName", name);
-    localStorage.setItem("lastTheoryDate", today);
 
-    alert(getText("theorySavedSoon"));
+    if (theorySubmitBtn) {
+      theorySubmitBtn.disabled = true;
+      theorySubmitBtn.textContent = "…";
+    }
 
-    theoryText.value = "";
-    updateTheoryCounter();
+    try {
+      await fetch(COMMENTS_API_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8"
+        },
+        body: JSON.stringify({
+          name: name,
+          message: text,
+          rating: 0,
+          parentId: "",
+          room: "theories",
+          team: selectedTeam || "",
+          userKey: COMMENT_USER_KEY
+        })
+      });
+
+      localStorage.setItem("lastTheoryDate", today);
+
+      theoryText.value = "";
+      updateTheoryCounter();
+
+      window.setTimeout(() => {
+        renderTheories();
+      }, 1800);
+    } catch (error) {
+      console.warn("Theory could not be sent:", error);
+    } finally {
+      window.setTimeout(() => {
+        if (theorySubmitBtn) {
+          theorySubmitBtn.disabled = false;
+          theorySubmitBtn.textContent = getText("submitTheoryBtn");
+        }
+      }, 1200);
+    }
   });
 }
 
@@ -1768,6 +1940,7 @@ updateTeamChatUi();
 updateChatTabs();
 renderVideoHub();
 renderComments();
+renderTheories();
 loadTeamEnergyFromSheet();
 updateCountdown();
 updateCommentCounter();
@@ -1779,3 +1952,4 @@ showDailyIntro();
 countdownInterval = setInterval(updateCountdown, 1000);
 setInterval(loadTeamEnergyFromSheet, 60000);
 setInterval(renderComments, 60000);
+setInterval(renderTheories, 60000);
