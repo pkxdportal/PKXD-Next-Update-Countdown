@@ -7,15 +7,26 @@ const translations = {
     hours: "hours",
     minutes: "minutes",
     seconds: "seconds",
+
     credit: "Website created by <b>PK XD PORTAL</b>",
     telegramBtn: "Telegram",
     youtubeBtn: "YouTube",
     discordBtn: "Discord",
+    soonLabel: "Soon",
+    portalLabel: "Portal",
+
     musicLabel: "Music",
     musicOn: "🔊",
     musicOff: "🔇",
     started: "🚀 Zero Gravity has begun",
     fanCountdown: "Fan countdown for PK XD",
+
+    zeroGravityCountdownNav: "Zero Gravity Countdown",
+    mediaHubNav: "Media Hub",
+    theoriesNav: "Theories",
+    communityCommsNav: "Community Comms",
+
+    fanProjectInfoTitle: "Fan Project Info",
 
     disclaimer: "This is a fan-made countdown created by PK XD PORTAL for the community. PK XD, the PK XD logo, the background image and the music belong to Afterverse. This site is not official and is not affiliated with Afterverse.",
     dateNote: "The countdown date is based on community speculation and logical observation, since Zero Gravity events usually appear in June. The date may change if official information is announced.",
@@ -70,6 +81,16 @@ const translations = {
     theoryRewardsTitle: "Special rewards",
     theoryRewardsText: "There may be limited rewards connected to the event.",
 
+    communityTheoriesTitle: "Community Theories",
+    communityTheoriesText: "Share one Zero Gravity theory per day.",
+    submitTheoryBtn: "Submit Theory",
+    theoryPlaceholder: "Your theory...",
+    theoriesComingSoon: "Community theories will appear here soon.",
+    oneTheoryPerDay: "You can submit only one theory per day.",
+    theorySavedSoon: "Your theory is saved locally for now. Public theory posting will be connected soon.",
+
+    mediaHubTitle: "MEDIA HUB",
+    mediaHubText: "Watch PK XD PORTAL updates and selected community videos about Zero Gravity.",
     videoHubTitle: "ZERO GRAVITY VIDEO HUB",
     videoHubText: "Watch PK XD PORTAL updates and selected community videos about Zero Gravity.",
     watchMoreTitle: "ZERO GRAVITY VIDEO HUB",
@@ -83,6 +104,9 @@ const translations = {
 
     communityCommsTitle: "Community Comms",
     communityCommsText: "Write a message for the Zero Gravity community.",
+    generalChatTab: "General Chat",
+    teamChatTab: "Team Chat",
+    chooseTeamToUnlockChat: "Choose a team to unlock your team chat.",
     communityRatingTitle: "Community Rating",
     ratingCountEmpty: "Based on 0 messages",
     ratingCountText: "Based on {count} messages",
@@ -122,15 +146,26 @@ const translations = {
     hours: "часов",
     minutes: "минут",
     seconds: "секунд",
+
     credit: "Сайт создан командой <b>PK XD PORTAL</b>",
     telegramBtn: "Telegram",
     youtubeBtn: "YouTube",
     discordBtn: "Discord",
+    soonLabel: "Скоро",
+    portalLabel: "Портал",
+
     musicLabel: "Музыка",
     musicOn: "🔊",
     musicOff: "🔇",
     started: "🚀 Невесомость началась",
     fanCountdown: "Фанатский отсчёт для PK XD",
+
+    zeroGravityCountdownNav: "Отсчёт Невесомости",
+    mediaHubNav: "Медиа Хаб",
+    theoriesNav: "Теории",
+    communityCommsNav: "Сообщество",
+
+    fanProjectInfoTitle: "Информация о фан-проекте",
 
     disclaimer: "Это фанатский отсчёт, созданный PK XD PORTAL для сообщества. PK XD, логотип PK XD, фоновое изображение и музыка принадлежат Afterverse. Этот сайт не является официальным и не связан с Afterverse.",
     dateNote: "Дата отсчёта основана на предположении сообщества и логическом наблюдении, потому что события Невесомости обычно появляются в июне. Дата может измениться, если появится официальная информация.",
@@ -185,6 +220,16 @@ const translations = {
     theoryRewardsTitle: "Особые награды",
     theoryRewardsText: "Могут появиться ограниченные награды, связанные с событием.",
 
+    communityTheoriesTitle: "Теории сообщества",
+    communityTheoriesText: "Поделись одной теорией о Невесомости в день.",
+    submitTheoryBtn: "Отправить теорию",
+    theoryPlaceholder: "Твоя теория...",
+    theoriesComingSoon: "Теории сообщества скоро будут появляться здесь.",
+    oneTheoryPerDay: "Можно отправить только одну теорию в день.",
+    theorySavedSoon: "Пока теория сохранена локально. Публичную отправку теорий подключим позже.",
+
+    mediaHubTitle: "МЕДИА ХАБ",
+    mediaHubText: "Смотри обновления PK XD PORTAL и выбранные видео сообщества о Невесомости.",
     videoHubTitle: "ВИДЕОЦЕНТР НЕВЕСОМОСТИ",
     videoHubText: "Смотри обновления PK XD PORTAL и выбранные видео сообщества о Невесомости.",
     watchMoreTitle: "ВИДЕОЦЕНТР НЕВЕСОМОСТИ",
@@ -198,6 +243,9 @@ const translations = {
 
     communityCommsTitle: "Сообщения сообщества",
     communityCommsText: "Напиши сообщение для сообщества Невесомости.",
+    generalChatTab: "Общий чат",
+    teamChatTab: "Командный чат",
+    chooseTeamToUnlockChat: "Выбери команду, чтобы открыть командный чат.",
     communityRatingTitle: "Рейтинг сообщества",
     ratingCountEmpty: "На основе 0 сообщений",
     ratingCountText: "На основе {count} сообщений",
@@ -239,9 +287,20 @@ const languageOverrides = {
     hours: "Stunden",
     minutes: "Minuten",
     seconds: "Sekunden",
+
     musicLabel: "Musik",
     started: "🚀 Zero Gravity hat begonnen",
     fanCountdown: "Fan-Countdown für PK XD",
+
+    soonLabel: "Bald",
+    portalLabel: "Portal",
+
+    zeroGravityCountdownNav: "Zero Gravity Countdown",
+    mediaHubNav: "Media Hub",
+    theoriesNav: "Theorien",
+    communityCommsNav: "Community",
+
+    fanProjectInfoTitle: "Fan-Projekt-Info",
 
     disclaimer: "Dies ist ein Fan-Countdown von PK XD PORTAL für die Community. PK XD, das PK XD-Logo, das Hintergrundbild und die Musik gehören Afterverse. Diese Website ist nicht offiziell und steht nicht mit Afterverse in Verbindung.",
     dateNote: "Das Countdown-Datum basiert auf Spekulationen der Community und logischer Beobachtung, da Zero-Gravity-Events normalerweise im Juni erscheinen. Das Datum kann sich ändern, wenn offizielle Informationen veröffentlicht werden.",
@@ -249,8 +308,6 @@ const languageOverrides = {
     afterverseContact: "Wenn jemand von Afterverse diese Seite sieht und möchte, dass wir etwas ändern, erwähnen, entfernen oder anpassen, kontaktiert uns bitte über unsere Social-Links. Wir kooperieren gerne, damit das Projekt respektvoll und regelkonform bleibt.",
 
     downloadTitle: "PK XD herunterladen / aktualisieren",
-    googlePlayBtn: "Google Play",
-    appStoreBtn: "App Store",
     languageLabel: "Sprache",
     downloadLabel: "Download",
     shareLabel: "Teilen",
@@ -296,10 +353,18 @@ const languageOverrides = {
     theoryRewardsTitle: "Besondere Belohnungen",
     theoryRewardsText: "Es könnte limitierte Belohnungen zum Event geben.",
 
+    communityTheoriesTitle: "Community-Theorien",
+    communityTheoriesText: "Teile eine Zero-Gravity-Theorie pro Tag.",
+    submitTheoryBtn: "Theorie senden",
+    theoryPlaceholder: "Deine Theorie...",
+    theoriesComingSoon: "Community-Theorien werden bald hier erscheinen.",
+    oneTheoryPerDay: "Du kannst nur eine Theorie pro Tag senden.",
+    theorySavedSoon: "Deine Theorie ist vorerst lokal gespeichert. Öffentliches Posten wird später verbunden.",
+
+    mediaHubTitle: "MEDIA HUB",
+    mediaHubText: "Verfolge PK XD PORTAL Updates und ausgewählte Community-Videos zu Zero Gravity.",
     videoHubTitle: "ZERO GRAVITY VIDEO HUB",
     videoHubText: "Verfolge PK XD PORTAL Updates und ausgewählte Community-Videos zu Zero Gravity.",
-    watchMoreTitle: "ZERO GRAVITY VIDEO HUB",
-    watchMoreText: "Verfolge PK XD PORTAL Updates und ausgewählte Community-Videos zu Zero Gravity.",
     portalVideosBtn: "Alle ansehen",
     zeroGravityVideosBtn: "Alle ansehen",
     portalVideosTitle: "PK XD PORTAL Videos",
@@ -309,6 +374,9 @@ const languageOverrides = {
 
     communityCommsTitle: "Community-Nachrichten",
     communityCommsText: "Schreibe eine Nachricht für die Zero-Gravity-Community.",
+    generalChatTab: "Allgemeiner Chat",
+    teamChatTab: "Team-Chat",
+    chooseTeamToUnlockChat: "Wähle ein Team, um deinen Team-Chat freizuschalten.",
     communityRatingTitle: "Community-Bewertung",
     ratingCountEmpty: "Basierend auf 0 Nachrichten",
     ratingCountText: "Basierend auf {count} Nachrichten",
@@ -348,9 +416,20 @@ const languageOverrides = {
     hours: "heures",
     minutes: "minutes",
     seconds: "secondes",
+
     musicLabel: "Musique",
     started: "🚀 Zéro Gravité a commencé",
     fanCountdown: "Compte à rebours de fan pour PK XD",
+
+    soonLabel: "Bientôt",
+    portalLabel: "Portail",
+
+    zeroGravityCountdownNav: "Compte à rebours",
+    mediaHubNav: "Media Hub",
+    theoriesNav: "Théories",
+    communityCommsNav: "Communauté",
+
+    fanProjectInfoTitle: "Infos du projet fan",
 
     disclaimer: "Ceci est un compte à rebours créé par des fans de PK XD PORTAL pour la communauté. PK XD, le logo PK XD, l’image de fond et la musique appartiennent à Afterverse. Ce site n’est pas officiel et n’est pas affilié à Afterverse.",
     dateNote: "La date du compte à rebours est basée sur des suppositions de la communauté et des observations logiques, car les événements Zéro Gravité apparaissent généralement en juin. La date peut changer si des informations officielles sont annoncées.",
@@ -358,8 +437,6 @@ const languageOverrides = {
     afterverseContact: "Si quelqu’un d’Afterverse voit ce site et souhaite que nous modifiions, créditons, supprimions ou ajustions quelque chose, contactez-nous via nos liens sociaux. Nous coopérerons volontiers pour garder le projet respectueux et conforme aux règles.",
 
     downloadTitle: "Télécharger / Mettre à jour PK XD",
-    googlePlayBtn: "Google Play",
-    appStoreBtn: "App Store",
     languageLabel: "Langue",
     downloadLabel: "Télécharger",
     shareLabel: "Partager",
@@ -405,10 +482,18 @@ const languageOverrides = {
     theoryRewardsTitle: "Récompenses spéciales",
     theoryRewardsText: "Il pourrait y avoir des récompenses limitées liées à l’événement.",
 
+    communityTheoriesTitle: "Théories de la communauté",
+    communityTheoriesText: "Partage une théorie Zéro Gravité par jour.",
+    submitTheoryBtn: "Envoyer la théorie",
+    theoryPlaceholder: "Ta théorie...",
+    theoriesComingSoon: "Les théories de la communauté apparaîtront bientôt ici.",
+    oneTheoryPerDay: "Tu peux envoyer une seule théorie par jour.",
+    theorySavedSoon: "Ta théorie est enregistrée localement pour l’instant. La publication publique sera connectée plus tard.",
+
+    mediaHubTitle: "MEDIA HUB",
+    mediaHubText: "Suis les mises à jour de PK XD PORTAL et des vidéos sélectionnées de la communauté.",
     videoHubTitle: "HUB VIDÉO ZÉRO GRAVITÉ",
     videoHubText: "Suis les mises à jour de PK XD PORTAL et des vidéos sélectionnées de la communauté.",
-    watchMoreTitle: "HUB VIDÉO ZÉRO GRAVITÉ",
-    watchMoreText: "Suis les mises à jour de PK XD PORTAL et des vidéos sélectionnées de la communauté.",
     portalVideosBtn: "Voir tout",
     zeroGravityVideosBtn: "Voir tout",
     portalVideosTitle: "Vidéos PK XD PORTAL",
@@ -418,6 +503,9 @@ const languageOverrides = {
 
     communityCommsTitle: "Messages de la communauté",
     communityCommsText: "Écris un message pour la communauté Zéro Gravité.",
+    generalChatTab: "Chat général",
+    teamChatTab: "Chat d’équipe",
+    chooseTeamToUnlockChat: "Choisis une équipe pour débloquer ton chat d’équipe.",
     communityRatingTitle: "Note de la communauté",
     ratingCountEmpty: "Basé sur 0 message",
     ratingCountText: "Basé sur {count} messages",
@@ -457,9 +545,20 @@ const languageOverrides = {
     hours: "godziny",
     minutes: "minuty",
     seconds: "sekundy",
+
     musicLabel: "Muzyka",
     started: "🚀 Nieważkość się rozpoczęła",
     fanCountdown: "Fanowski licznik dla PK XD",
+
+    soonLabel: "Wkrótce",
+    portalLabel: "Portal",
+
+    zeroGravityCountdownNav: "Odliczanie",
+    mediaHubNav: "Media Hub",
+    theoriesNav: "Teorie",
+    communityCommsNav: "Społeczność",
+
+    fanProjectInfoTitle: "Informacje o projekcie fanowskim",
 
     disclaimer: "To fanowski licznik stworzony przez PK XD PORTAL dla społeczności. PK XD, logo PK XD, obraz tła i muzyka należą do Afterverse. Ta strona nie jest oficjalna i nie jest powiązana z Afterverse.",
     dateNote: "Data licznika jest oparta na spekulacjach społeczności i logicznej obserwacji, ponieważ wydarzenia Nieważkości zwykle pojawiają się w czerwcu. Data może się zmienić, jeśli pojawią się oficjalne informacje.",
@@ -467,8 +566,6 @@ const languageOverrides = {
     afterverseContact: "Jeśli ktoś z Afterverse zobaczy tę stronę i będzie chciał, abyśmy coś zmienili, dodali kredyt, usunęli lub poprawili, prosimy o kontakt przez nasze linki społecznościowe. Chętnie będziemy współpracować, aby projekt pozostał zgodny z zasadami i pełen szacunku.",
 
     downloadTitle: "Pobierz / Zaktualizuj PK XD",
-    googlePlayBtn: "Google Play",
-    appStoreBtn: "App Store",
     languageLabel: "Język",
     downloadLabel: "Pobierz",
     shareLabel: "Udostępnij",
@@ -514,10 +611,18 @@ const languageOverrides = {
     theoryRewardsTitle: "Specjalne nagrody",
     theoryRewardsText: "Mogą pojawić się limitowane nagrody związane z wydarzeniem.",
 
+    communityTheoriesTitle: "Teorie społeczności",
+    communityTheoriesText: "Udostępnij jedną teorię o Nieważkości dziennie.",
+    submitTheoryBtn: "Wyślij teorię",
+    theoryPlaceholder: "Twoja teoria...",
+    theoriesComingSoon: "Teorie społeczności pojawią się tutaj wkrótce.",
+    oneTheoryPerDay: "Możesz wysłać tylko jedną teorię dziennie.",
+    theorySavedSoon: "Twoja teoria jest na razie zapisana lokalnie. Publiczne publikowanie zostanie podłączone później.",
+
+    mediaHubTitle: "MEDIA HUB",
+    mediaHubText: "Śledź aktualizacje PK XD PORTAL i oglądaj wybrane filmy społeczności.",
     videoHubTitle: "CENTRUM WIDEO NIEWAŻKOŚCI",
     videoHubText: "Śledź aktualizacje PK XD PORTAL i oglądaj wybrane filmy społeczności.",
-    watchMoreTitle: "CENTRUM WIDEO NIEWAŻKOŚCI",
-    watchMoreText: "Śledź aktualizacje PK XD PORTAL i oglądaj wybrane filmy społeczności.",
     portalVideosBtn: "Zobacz wszystko",
     zeroGravityVideosBtn: "Zobacz wszystko",
     portalVideosTitle: "Filmy PK XD PORTAL",
@@ -527,6 +632,9 @@ const languageOverrides = {
 
     communityCommsTitle: "Wiadomości społeczności",
     communityCommsText: "Napisz wiadomość dla społeczności Nieważkości.",
+    generalChatTab: "Czat ogólny",
+    teamChatTab: "Czat drużyny",
+    chooseTeamToUnlockChat: "Wybierz drużynę, aby odblokować czat drużyny.",
     communityRatingTitle: "Ocena społeczności",
     ratingCountEmpty: "Na podstawie 0 wiadomości",
     ratingCountText: "Na podstawie {count} wiadomości",
@@ -566,9 +674,20 @@ const languageOverrides = {
     hours: "horas",
     minutes: "minutos",
     seconds: "segundos",
+
     musicLabel: "Música",
     started: "🚀 Gravidade Zero começou",
     fanCountdown: "Contagem regressiva feita por fãs para PK XD",
+
+    soonLabel: "Em breve",
+    portalLabel: "Portal",
+
+    zeroGravityCountdownNav: "Contagem Zero Gravity",
+    mediaHubNav: "Media Hub",
+    theoriesNav: "Teorias",
+    communityCommsNav: "Comunidade",
+
+    fanProjectInfoTitle: "Informações do projeto de fãs",
 
     disclaimer: "Esta é uma contagem regressiva feita por fãs da PK XD PORTAL para a comunidade. PK XD, o logotipo PK XD, a imagem de fundo e a música pertencem à Afterverse. Este site não é oficial e não é afiliado à Afterverse.",
     dateNote: "A data da contagem é baseada em especulação da comunidade e observação lógica, já que eventos de Gravidade Zero geralmente aparecem em junho. A data pode mudar se informações oficiais forem anunciadas.",
@@ -576,8 +695,6 @@ const languageOverrides = {
     afterverseContact: "Se alguém da Afterverse vir este site e quiser que a gente altere, credite, remova ou ajuste algo, entre em contato pelos nossos links sociais. Vamos cooperar para manter o projeto respeitoso e dentro das regras.",
 
     downloadTitle: "Baixar / Atualizar PK XD",
-    googlePlayBtn: "Google Play",
-    appStoreBtn: "App Store",
     languageLabel: "Idioma",
     downloadLabel: "Baixar",
     shareLabel: "Compartilhar",
@@ -623,10 +740,18 @@ const languageOverrides = {
     theoryRewardsTitle: "Recompensas especiais",
     theoryRewardsText: "Podem aparecer recompensas limitadas ligadas ao evento.",
 
+    communityTheoriesTitle: "Teorias da comunidade",
+    communityTheoriesText: "Compartilhe uma teoria de Gravidade Zero por dia.",
+    submitTheoryBtn: "Enviar teoria",
+    theoryPlaceholder: "Sua teoria...",
+    theoriesComingSoon: "As teorias da comunidade aparecerão aqui em breve.",
+    oneTheoryPerDay: "Você só pode enviar uma teoria por dia.",
+    theorySavedSoon: "Sua teoria foi salva localmente por enquanto. A publicação pública será conectada depois.",
+
+    mediaHubTitle: "MEDIA HUB",
+    mediaHubText: "Acompanhe as atualizações da PK XD PORTAL e vídeos selecionados da comunidade.",
     videoHubTitle: "CENTRAL DE VÍDEOS GRAVIDADE ZERO",
     videoHubText: "Acompanhe as atualizações da PK XD PORTAL e vídeos selecionados da comunidade.",
-    watchMoreTitle: "CENTRAL DE VÍDEOS GRAVIDADE ZERO",
-    watchMoreText: "Acompanhe as atualizações da PK XD PORTAL e vídeos selecionados da comunidade.",
     portalVideosBtn: "Ver todos",
     zeroGravityVideosBtn: "Ver todos",
     portalVideosTitle: "Vídeos da PK XD PORTAL",
@@ -636,6 +761,9 @@ const languageOverrides = {
 
     communityCommsTitle: "Mensagens da comunidade",
     communityCommsText: "Escreva uma mensagem para a comunidade Gravidade Zero.",
+    generalChatTab: "Chat geral",
+    teamChatTab: "Chat do time",
+    chooseTeamToUnlockChat: "Escolha um time para desbloquear seu chat do time.",
     communityRatingTitle: "Avaliação da comunidade",
     ratingCountEmpty: "Baseado em 0 mensagens",
     ratingCountText: "Baseado em {count} mensagens",
@@ -675,9 +803,20 @@ const languageOverrides = {
     hours: "saat",
     minutes: "dakika",
     seconds: "saniye",
+
     musicLabel: "Müzik",
     started: "🚀 Sıfır Yerçekimi başladı",
     fanCountdown: "PK XD için hayran geri sayımı",
+
+    soonLabel: "Yakında",
+    portalLabel: "Portal",
+
+    zeroGravityCountdownNav: "Sıfır Yerçekimi Geri Sayımı",
+    mediaHubNav: "Media Hub",
+    theoriesNav: "Teoriler",
+    communityCommsNav: "Topluluk",
+
+    fanProjectInfoTitle: "Hayran projesi bilgisi",
 
     disclaimer: "Bu, PK XD PORTAL tarafından topluluk için hazırlanmış bir hayran geri sayım sitesidir. PK XD, PK XD logosu, arka plan görseli ve müzik Afterverse’e aittir. Bu site resmi değildir ve Afterverse ile bağlantılı değildir.",
     dateNote: "Geri sayım tarihi topluluk tahminlerine ve mantıklı gözleme dayanır, çünkü Sıfır Yerçekimi etkinlikleri genellikle haziran ayında görünür. Resmi bilgi açıklanırsa tarih değişebilir.",
@@ -685,8 +824,6 @@ const languageOverrides = {
     afterverseContact: "Afterverse’den biri bu siteyi görür ve bir şeyi değiştirmemizi, kaynak belirtmemizi, kaldırmamızı veya düzenlememizi isterse, lütfen sosyal bağlantılarımızdan bize ulaşsın. Projeyi saygılı ve kurallara uygun tutmak için memnuniyetle iş birliği yaparız.",
 
     downloadTitle: "PK XD indir / güncelle",
-    googlePlayBtn: "Google Play",
-    appStoreBtn: "App Store",
     languageLabel: "Dil",
     downloadLabel: "İndir",
     shareLabel: "Paylaş",
@@ -732,10 +869,18 @@ const languageOverrides = {
     theoryRewardsTitle: "Özel ödüller",
     theoryRewardsText: "Etkinlikle bağlantılı sınırlı ödüller olabilir.",
 
+    communityTheoriesTitle: "Topluluk teorileri",
+    communityTheoriesText: "Günde bir Sıfır Yerçekimi teorisi paylaş.",
+    submitTheoryBtn: "Teoriyi gönder",
+    theoryPlaceholder: "Teorin...",
+    theoriesComingSoon: "Topluluk teorileri yakında burada görünecek.",
+    oneTheoryPerDay: "Günde sadece bir teori gönderebilirsin.",
+    theorySavedSoon: "Teorin şimdilik yerel olarak kaydedildi. Herkese açık gönderim daha sonra bağlanacak.",
+
+    mediaHubTitle: "MEDIA HUB",
+    mediaHubText: "PK XD PORTAL güncellemelerini ve seçilmiş topluluk videolarını izle.",
     videoHubTitle: "SIFIR YERÇEKİMİ VİDEO MERKEZİ",
     videoHubText: "PK XD PORTAL güncellemelerini ve seçilmiş topluluk videolarını izle.",
-    watchMoreTitle: "SIFIR YERÇEKİMİ VİDEO MERKEZİ",
-    watchMoreText: "PK XD PORTAL güncellemelerini ve seçilmiş topluluk videolarını izle.",
     portalVideosBtn: "Tümünü gör",
     zeroGravityVideosBtn: "Tümünü gör",
     portalVideosTitle: "PK XD PORTAL Videoları",
@@ -745,6 +890,9 @@ const languageOverrides = {
 
     communityCommsTitle: "Topluluk Mesajları",
     communityCommsText: "Sıfır Yerçekimi topluluğu için mesaj yaz.",
+    generalChatTab: "Genel sohbet",
+    teamChatTab: "Takım sohbeti",
+    chooseTeamToUnlockChat: "Takım sohbetini açmak için bir takım seç.",
     communityRatingTitle: "Topluluk Puanı",
     ratingCountEmpty: "0 mesaja göre",
     ratingCountText: "{count} mesaja göre",
@@ -784,9 +932,20 @@ const languageOverrides = {
     hours: "jam",
     minutes: "menit",
     seconds: "detik",
+
     musicLabel: "Musik",
     started: "🚀 Gravitasi Nol dimulai",
     fanCountdown: "Hitung mundur penggemar untuk PK XD",
+
+    soonLabel: "Segera",
+    portalLabel: "Portal",
+
+    zeroGravityCountdownNav: "Hitung Mundur Gravitasi Nol",
+    mediaHubNav: "Media Hub",
+    theoriesNav: "Teori",
+    communityCommsNav: "Komunitas",
+
+    fanProjectInfoTitle: "Info proyek penggemar",
 
     disclaimer: "Ini adalah hitung mundur buatan penggemar dari PK XD PORTAL untuk komunitas. PK XD, logo PK XD, gambar latar, dan musik adalah milik Afterverse. Situs ini tidak resmi dan tidak berafiliasi dengan Afterverse.",
     dateNote: "Tanggal hitung mundur ini berdasarkan spekulasi komunitas dan pengamatan logis, karena event Gravitasi Nol biasanya muncul pada bulan Juni. Tanggal dapat berubah jika informasi resmi diumumkan.",
@@ -794,8 +953,6 @@ const languageOverrides = {
     afterverseContact: "Jika seseorang dari Afterverse melihat situs ini dan ingin kami mengubah, memberi kredit, menghapus, atau menyesuaikan sesuatu, silakan hubungi kami melalui tautan sosial kami. Kami akan bekerja sama agar proyek tetap sopan dan sesuai aturan.",
 
     downloadTitle: "Unduh / Perbarui PK XD",
-    googlePlayBtn: "Google Play",
-    appStoreBtn: "App Store",
     languageLabel: "Bahasa",
     downloadLabel: "Unduh",
     shareLabel: "Bagikan",
@@ -841,10 +998,18 @@ const languageOverrides = {
     theoryRewardsTitle: "Hadiah khusus",
     theoryRewardsText: "Mungkin ada hadiah terbatas yang terhubung dengan event.",
 
+    communityTheoriesTitle: "Teori komunitas",
+    communityTheoriesText: "Bagikan satu teori Gravitasi Nol per hari.",
+    submitTheoryBtn: "Kirim teori",
+    theoryPlaceholder: "Teori kamu...",
+    theoriesComingSoon: "Teori komunitas akan muncul di sini segera.",
+    oneTheoryPerDay: "Kamu hanya bisa mengirim satu teori per hari.",
+    theorySavedSoon: "Teori kamu sementara disimpan secara lokal. Posting publik akan dihubungkan nanti.",
+
+    mediaHubTitle: "MEDIA HUB",
+    mediaHubText: "Ikuti update PK XD PORTAL dan video komunitas pilihan.",
     videoHubTitle: "PUSAT VIDEO GRAVITASI NOL",
     videoHubText: "Ikuti update PK XD PORTAL dan video komunitas pilihan.",
-    watchMoreTitle: "PUSAT VIDEO GRAVITASI NOL",
-    watchMoreText: "Ikuti update PK XD PORTAL dan video komunitas pilihan.",
     portalVideosBtn: "Lihat semua",
     zeroGravityVideosBtn: "Lihat semua",
     portalVideosTitle: "Video PK XD PORTAL",
@@ -854,6 +1019,9 @@ const languageOverrides = {
 
     communityCommsTitle: "Pesan komunitas",
     communityCommsText: "Tulis pesan untuk komunitas Gravitasi Nol.",
+    generalChatTab: "Chat umum",
+    teamChatTab: "Chat tim",
+    chooseTeamToUnlockChat: "Pilih tim untuk membuka chat tim kamu.",
     communityRatingTitle: "Rating Komunitas",
     ratingCountEmpty: "Berdasarkan 0 pesan",
     ratingCountText: "Berdasarkan {count} pesan",
@@ -893,9 +1061,20 @@ const languageOverrides = {
     hours: "horas",
     minutes: "minutos",
     seconds: "segundos",
+
     musicLabel: "Música",
     started: "🚀 Gravedad Cero comenzó",
     fanCountdown: "Cuenta regresiva hecha por fans para PK XD",
+
+    soonLabel: "Pronto",
+    portalLabel: "Portal",
+
+    zeroGravityCountdownNav: "Cuenta regresiva",
+    mediaHubNav: "Media Hub",
+    theoriesNav: "Teorías",
+    communityCommsNav: "Comunidad",
+
+    fanProjectInfoTitle: "Información del proyecto fan",
 
     disclaimer: "Esta es una cuenta regresiva hecha por fans de PK XD PORTAL para la comunidad. PK XD, el logo de PK XD, la imagen de fondo y la música pertenecen a Afterverse. Este sitio no es oficial y no está afiliado a Afterverse.",
     dateNote: "La fecha de la cuenta regresiva se basa en especulación de la comunidad y observación lógica, ya que los eventos de Gravedad Cero suelen aparecer en junio. La fecha puede cambiar si se anuncia información oficial.",
@@ -903,8 +1082,6 @@ const languageOverrides = {
     afterverseContact: "Si alguien de Afterverse ve este sitio y quiere que cambiemos, demos crédito, eliminemos o ajustemos algo, por favor contáctenos por nuestros enlaces sociales. Cooperaremos con gusto para mantener el proyecto respetuoso y dentro de las reglas.",
 
     downloadTitle: "Descargar / Actualizar PK XD",
-    googlePlayBtn: "Google Play",
-    appStoreBtn: "App Store",
     languageLabel: "Idioma",
     downloadLabel: "Descargar",
     shareLabel: "Compartir",
@@ -950,10 +1127,18 @@ const languageOverrides = {
     theoryRewardsTitle: "Recompensas especiales",
     theoryRewardsText: "Podría haber recompensas limitadas conectadas al evento.",
 
+    communityTheoriesTitle: "Teorías de la comunidad",
+    communityTheoriesText: "Comparte una teoría de Gravedad Cero por día.",
+    submitTheoryBtn: "Enviar teoría",
+    theoryPlaceholder: "Tu teoría...",
+    theoriesComingSoon: "Las teorías de la comunidad aparecerán aquí pronto.",
+    oneTheoryPerDay: "Solo puedes enviar una teoría por día.",
+    theorySavedSoon: "Tu teoría está guardada localmente por ahora. La publicación pública se conectará más tarde.",
+
+    mediaHubTitle: "MEDIA HUB",
+    mediaHubText: "Mira actualizaciones de PK XD PORTAL y videos seleccionados de la comunidad.",
     videoHubTitle: "CENTRO DE VIDEOS GRAVEDAD CERO",
     videoHubText: "Mira actualizaciones de PK XD PORTAL y videos seleccionados de la comunidad.",
-    watchMoreTitle: "CENTRO DE VIDEOS GRAVEDAD CERO",
-    watchMoreText: "Mira actualizaciones de PK XD PORTAL y videos seleccionados de la comunidad.",
     portalVideosBtn: "Ver todos",
     zeroGravityVideosBtn: "Ver todos",
     portalVideosTitle: "Videos de PK XD PORTAL",
@@ -963,6 +1148,9 @@ const languageOverrides = {
 
     communityCommsTitle: "Mensajes de la comunidad",
     communityCommsText: "Escribe un mensaje para la comunidad de Gravedad Cero.",
+    generalChatTab: "Chat general",
+    teamChatTab: "Chat del equipo",
+    chooseTeamToUnlockChat: "Elige un equipo para desbloquear tu chat del equipo.",
     communityRatingTitle: "Valoración de la comunidad",
     ratingCountEmpty: "Basado en 0 mensajes",
     ratingCountText: "Basado en {count} mensajes",
@@ -1002,9 +1190,20 @@ const languageOverrides = {
     hours: "घंटे",
     minutes: "मिनट",
     seconds: "सेकंड",
+
     musicLabel: "संगीत",
     started: "🚀 शून्य गुरुत्वाकर्षण शुरू हो गया",
     fanCountdown: "PK XD के लिए फैन काउंटडाउन",
+
+    soonLabel: "जल्द",
+    portalLabel: "पोर्टल",
+
+    zeroGravityCountdownNav: "Zero Gravity काउंटडाउन",
+    mediaHubNav: "Media Hub",
+    theoriesNav: "थ्योरी",
+    communityCommsNav: "कम्युनिटी",
+
+    fanProjectInfoTitle: "फैन प्रोजेक्ट जानकारी",
 
     disclaimer: "यह PK XD PORTAL द्वारा समुदाय के लिए बनाया गया एक फैन काउंटडाउन है। PK XD, PK XD लोगो, बैकग्राउंड इमेज और संगीत Afterverse के हैं। यह साइट आधिकारिक नहीं है और Afterverse से जुड़ी नहीं है।",
     dateNote: "काउंटडाउन की तारीख समुदाय की अटकलों और तार्किक अवलोकन पर आधारित है, क्योंकि Zero Gravity इवेंट आमतौर पर जून में आते हैं। आधिकारिक जानकारी आने पर तारीख बदल सकती है।",
@@ -1012,8 +1211,6 @@ const languageOverrides = {
     afterverseContact: "अगर Afterverse से कोई इस साइट को देखता है और चाहता है कि हम कुछ बदलें, क्रेडिट दें, हटाएँ या ठीक करें, तो कृपया हमारे सोशल लिंक से संपर्क करें। हम प्रोजेक्ट को सम्मानजनक और नियमों के भीतर रखने के लिए खुशी से सहयोग करेंगे।",
 
     downloadTitle: "PK XD डाउनलोड / अपडेट करें",
-    googlePlayBtn: "Google Play",
-    appStoreBtn: "App Store",
     languageLabel: "भाषा",
     downloadLabel: "डाउनलोड",
     shareLabel: "शेयर",
@@ -1059,10 +1256,18 @@ const languageOverrides = {
     theoryRewardsTitle: "खास इनाम",
     theoryRewardsText: "इवेंट से जुड़े लिमिटेड इनाम हो सकते हैं।",
 
+    communityTheoriesTitle: "कम्युनिटी थ्योरी",
+    communityTheoriesText: "हर दिन एक Zero Gravity थ्योरी शेयर करें।",
+    submitTheoryBtn: "थ्योरी भेजें",
+    theoryPlaceholder: "आपकी थ्योरी...",
+    theoriesComingSoon: "कम्युनिटी थ्योरी जल्द ही यहाँ दिखाई देंगी।",
+    oneTheoryPerDay: "आप दिन में केवल एक थ्योरी भेज सकते हैं।",
+    theorySavedSoon: "आपकी थ्योरी अभी लोकल रूप से सेव हुई है। पब्लिक पोस्टिंग बाद में जोड़ी जाएगी।",
+
+    mediaHubTitle: "MEDIA HUB",
+    mediaHubText: "PK XD PORTAL अपडेट्स और चुने हुए कम्युनिटी वीडियो देखें।",
     videoHubTitle: "शून्य गुरुत्वाकर्षण वीडियो हब",
     videoHubText: "PK XD PORTAL अपडेट्स और चुने हुए कम्युनिटी वीडियो देखें।",
-    watchMoreTitle: "शून्य गुरुत्वाकर्षण वीडियो हब",
-    watchMoreText: "PK XD PORTAL अपडेट्स और चुने हुए कम्युनिटी वीडियो देखें।",
     portalVideosBtn: "सभी देखें",
     zeroGravityVideosBtn: "सभी देखें",
     portalVideosTitle: "PK XD PORTAL वीडियो",
@@ -1072,6 +1277,9 @@ const languageOverrides = {
 
     communityCommsTitle: "कम्युनिटी संदेश",
     communityCommsText: "शून्य गुरुत्वाकर्षण कम्युनिटी के लिए संदेश लिखें।",
+    generalChatTab: "जनरल चैट",
+    teamChatTab: "टीम चैट",
+    chooseTeamToUnlockChat: "अपनी टीम चैट खोलने के लिए टीम चुनें।",
     communityRatingTitle: "कम्युनिटी रेटिंग",
     ratingCountEmpty: "0 संदेशों के आधार पर",
     ratingCountText: "{count} संदेशों के आधार पर",
