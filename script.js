@@ -1270,6 +1270,7 @@ async function sendReaction(commentId, reactionKey) {
 
     window.setTimeout(() => {
       renderComments();
+      renderTheories();
     }, 700);
   } catch (error) {
     console.warn("Reaction could not be sent:", error);
@@ -1296,7 +1297,43 @@ async function renderComments() {
     return;
   }
 
-  async function renderTheories() {
+  commentsList.innerHTML = comments
+    .slice(0, 30)
+    .map((comment) => {
+      const name = comment.name || "Player";
+      const message = comment.message || comment.text || "";
+      const createdAt =
+        comment.time ||
+        comment.createdAt ||
+        comment.timestamp ||
+        comment.date ||
+        "";
+
+      const rating = Number(comment.rating || 0);
+      const stars = rating > 0 ? "★".repeat(rating) + "☆".repeat(5 - rating) : "";
+
+      return `
+        <div class="comm-message" data-comment-id="${escapeHtml(comment.id || "")}">
+          <div class="comm-top">
+            <strong>${escapeHtml(name)}</strong>
+            <span>${escapeHtml(stars)} ${formatCommentTime(createdAt)}</span>
+          </div>
+
+          <p>${escapeHtml(message)}</p>
+
+          <div class="comm-actions">
+            ${createReactionSummary(comment)}
+            ${createReplyButton(comment)}
+          </div>
+
+          ${createRepliesHtml(comment.replies)}
+        </div>
+      `;
+    })
+    .join("");
+}
+
+async function renderTheories() {
   if (!userTheoriesList) return;
 
   const theories = await getStoredTheories();
@@ -1335,42 +1372,6 @@ async function renderComments() {
           <div class="comm-actions">
             ${createReactionSummary(theory)}
           </div>
-        </div>
-      `;
-    })
-    .join("");
-}
-
-  commentsList.innerHTML = comments
-    .slice(0, 30)
-    .map((comment) => {
-      const name = comment.name || "Player";
-      const message = comment.message || comment.text || "";
-      const createdAt =
-        comment.time ||
-        comment.createdAt ||
-        comment.timestamp ||
-        comment.date ||
-        "";
-
-      const rating = Number(comment.rating || 0);
-      const stars = rating > 0 ? "★".repeat(rating) + "☆".repeat(5 - rating) : "";
-
-      return `
-        <div class="comm-message" data-comment-id="${escapeHtml(comment.id || "")}">
-          <div class="comm-top">
-            <strong>${escapeHtml(name)}</strong>
-            <span>${escapeHtml(stars)} ${formatCommentTime(createdAt)}</span>
-          </div>
-
-          <p>${escapeHtml(message)}</p>
-
-          <div class="comm-actions">
-            ${createReactionSummary(comment)}
-            ${createReplyButton(comment)}
-          </div>
-
-          ${createRepliesHtml(comment.replies)}
         </div>
       `;
     })
