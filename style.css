@@ -4057,3 +4057,40 @@ body.near-1 .hero {
     height: 34px;
   }
 }
+
+/* =========================
+   AUTHOR TEAM ICONS
+========================= */
+
+.author-with-team {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.author-with-team span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.author-team-icon {
+  width: 21px;
+  height: 21px;
+  object-fit: contain;
+  flex: 0 0 auto;
+  display: inline-block;
+  filter:
+    drop-shadow(0 0 7px rgba(255,255,255,0.35))
+    drop-shadow(0 0 12px rgba(139,227,255,0.20));
+}
+
+@media (max-width: 760px) {
+  .author-team-icon {
+    width: 19px;
+    height: 19px;
+  }
+}
