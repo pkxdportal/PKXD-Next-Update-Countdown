@@ -175,6 +175,52 @@ const COMMENT_REACTIONS = [
   { key: "love", icon: "icon-love.png", fallback: "💖" }
 ];
 
+function getAvailableReactionsForRoom(room) {
+  const normalizedRoom = String(room || "general").toLowerCase();
+
+  if (normalizedRoom === "volts") {
+    return COMMENT_REACTIONS.filter((reaction) => {
+      return ["volts", "eyes", "laugh", "love"].includes(reaction.key);
+    });
+  }
+
+  if (normalizedRoom === "flame") {
+    return COMMENT_REACTIONS.filter((reaction) => {
+      return ["flame", "eyes", "laugh", "love"].includes(reaction.key);
+    });
+  }
+
+  if (normalizedRoom === "leaf") {
+    return COMMENT_REACTIONS.filter((reaction) => {
+      return ["leaf", "eyes", "laugh", "love"].includes(reaction.key);
+    });
+  }
+
+  return COMMENT_REACTIONS;
+}
+
+function getRoomFromReactionTarget(targetElement) {
+  if (!targetElement) return getActiveCommentRoom();
+
+  const roomFromDataset = targetElement.dataset?.commentRoom;
+
+  if (roomFromDataset) {
+    return roomFromDataset;
+  }
+
+  const closestMessage = targetElement.closest?.(".comm-message, .comm-reply, .theory-message");
+
+  if (closestMessage?.dataset?.commentRoom) {
+    return closestMessage.dataset.commentRoom;
+  }
+
+  if (targetElement.closest?.(".theory-message")) {
+    return "theories";
+  }
+
+  return getActiveCommentRoom();
+}
+
 let isSendingReaction = false;
 let activeReactionCommentId = null;
 let activeReactionMenu = null;
@@ -1078,7 +1124,11 @@ function createRepliesHtml(replies) {
           const extraClass = hasManyReplies && index >= REPLIES_VISIBLE_LIMIT ? "reply-extra" : "";
 
           return `
-            <div class="comm-reply ${extraClass}" data-comment-id="${escapeHtml(reply.id || "")}">
+            <div
+              class="comm-reply ${extraClass}"
+              data-comment-id="${escapeHtml(reply.id || "")}"
+              data-comment-room="${escapeHtml(reply.room || getActiveCommentRoom())}"
+            >
               <div class="comm-top">
                 ${getAuthorNameHtml(reply.name || "Player", reply.team)}
                 <span>${escapeHtml(stars)} ${formatCommentTime(createdAt)}</span>
@@ -1171,9 +1221,14 @@ function openReactionMenu(commentId, targetElement) {
 
   activeReactionCommentId = commentId;
 
+  const room = getRoomFromReactionTarget(targetElement);
+  const availableReactions = getAvailableReactionsForRoom(room);
+
   const menu = document.createElement("div");
   menu.className = "reaction-menu";
-  menu.innerHTML = COMMENT_REACTIONS.map((reaction) => {
+  menu.dataset.room = room;
+
+  menu.innerHTML = availableReactions.map((reaction) => {
     return `
       <button
         type="button"
@@ -1189,7 +1244,7 @@ function openReactionMenu(commentId, targetElement) {
   document.body.appendChild(menu);
 
   const rect = targetElement.getBoundingClientRect();
-  const menuWidth = 280;
+  const menuWidth = Math.min(280, window.innerWidth - 24);
 
   let left = rect.left + rect.width / 2 - menuWidth / 2;
   left = Math.max(12, Math.min(left, window.innerWidth - menuWidth - 12));
@@ -1202,10 +1257,10 @@ function openReactionMenu(commentId, targetElement) {
 
   menu.style.left = left + "px";
   menu.style.top = top + "px";
+  menu.style.width = menuWidth + "px";
 
   activeReactionMenu = menu;
 }
-
 async function sendReaction(commentId, reactionKey) {
   if (!commentId || !reactionKey || isSendingReaction) return;
 
@@ -1330,7 +1385,11 @@ async function renderComments() {
       const stars = rating > 0 ? "★".repeat(rating) + "☆".repeat(5 - rating) : "";
 
       return `
-        <div class="comm-message" data-comment-id="${escapeHtml(comment.id || "")}">
+        <div
+          class="comm-message"
+          data-comment-id="${escapeHtml(comment.id || "")}"
+          data-comment-room="${escapeHtml(comment.room || getActiveCommentRoom())}"
+        >
           <div class="comm-top">
             ${getAuthorNameHtml(name, comment.team)}
             <span>${escapeHtml(stars)} ${formatCommentTime(createdAt)}</span>
@@ -1378,7 +1437,11 @@ async function renderTheories() {
         "";
 
       return `
-        <div class="comm-message theory-message" data-comment-id="${escapeHtml(theory.id || "")}">
+        <div
+          class="comm-message theory-message"
+          data-comment-id="${escapeHtml(theory.id || "")}"
+          data-comment-room="theories"
+        >
           <div class="comm-top">
             ${getAuthorNameHtml(name, theory.team)}
             <span>${formatCommentTime(createdAt)}</span>
