@@ -32,10 +32,10 @@ const translations = {
 
     fanProjectInfoTitle: "Fan Project Info",
 
-    disclaimer: "This is a fan-made countdown created by PK XD PORTAL for the community. PK XD, the PK XD logo, the background image and the music belong to Afterverse. This site is not official and is not affiliated with Afterverse.",
-    dateNote: "The countdown date is based on community speculation and logical observation, since Zero Gravity events usually appear in June. The date may change if official information is announced.",
-    feedbackText: "For website improvements, new languages, questions, or contact requests, message us through one of our social links above.",
-    afterverseContact: "If someone from Afterverse sees this site and wants us to change, credit, remove, or adjust anything, please contact us through one of our social links above. We will gladly cooperate to keep the project respectful and within the rules.",
+    disclaimer: "This is a fan-made countdown project created by PK XD PORTAL for the community. PK XD and related assets belong to Afterverse. This website is not official and is not affiliated with Afterverse.",
+    dateNote: "The countdown date is based on community speculation and previous Zero Gravity event patterns. Dates may change if official information is announced.",
+    feedbackText: "For feedback, questions or contact requests, please use one of our social links above.",
+    afterverseContact: "If requested by Afterverse, we are happy to make adjustments to keep this project respectful and community-friendly.",
 
     downloadTitle: "Download / Update PK XD",
     googlePlayBtn: "Google Play",
@@ -175,10 +175,10 @@ const translations = {
 
     fanProjectInfoTitle: "Информация о фан-проекте",
 
-    disclaimer: "Это фанатский отсчёт, созданный PK XD PORTAL для сообщества. PK XD, логотип PK XD, фоновое изображение и музыка принадлежат Afterverse. Этот сайт не является официальным и не связан с Afterverse.",
-    dateNote: "Дата отсчёта основана на предположении сообщества и логическом наблюдении, потому что события Невесомости обычно появляются в июне. Дата может измениться, если появится официальная информация.",
-    feedbackText: "По вопросам улучшения сайта, новых языков, вопросов или связи пишите нам через одну из социальных ссылок выше.",
-    afterverseContact: "Если кто-то из Afterverse увидит этот сайт и захочет, чтобы мы что-то изменили, указали авторство, удалили или исправили, пожалуйста, свяжитесь с нами через наши социальные ссылки. Мы с радостью пойдём навстречу, чтобы проект оставался уважительным и соответствовал правилам.",
+    disclaimer: "Это фанатский проект отсчёта, созданный PK XD PORTAL для сообщества. PK XD и связанные материалы принадлежат Afterverse. Этот сайт не является официальным и не связан с Afterverse.",
+    dateNote: "Дата отсчёта основана на предположениях сообщества и прошлых паттернах событий Zero Gravity. Даты могут измениться, если появится официальная информация.",
+    feedbackText: "Для обратной связи, вопросов или связи с нами используйте одну из социальных ссылок выше.",
+    afterverseContact: "Если Afterverse попросит внести изменения, мы готовы всё скорректировать, чтобы проект оставался уважительным и дружелюбным к сообществу.",
 
     downloadTitle: "Скачать / обновить PK XD",
     googlePlayBtn: "Google Play",
@@ -314,10 +314,10 @@ const languageOverrides = {
 
     fanProjectInfoTitle: "Fan-Projekt-Info",
 
-    disclaimer: "Dies ist ein Fan-Countdown von PK XD PORTAL für die Community. PK XD, das PK XD-Logo, das Hintergrundbild und die Musik gehören Afterverse. Diese Website ist nicht offiziell und steht nicht mit Afterverse in Verbindung.",
-    dateNote: "Das Countdown-Datum basiert auf Spekulationen der Community und logischer Beobachtung, da Zero-Gravity-Events normalerweise im Juni erscheinen. Das Datum kann sich ändern, wenn offizielle Informationen veröffentlicht werden.",
-    feedbackText: "Für Website-Verbesserungen, neue Sprachen, Fragen oder Kontaktanfragen schreibe uns über einen unserer Social-Links oben.",
-    afterverseContact: "Wenn jemand von Afterverse diese Seite sieht und möchte, dass wir etwas ändern, erwähnen, entfernen oder anpassen, kontaktiert uns bitte über unsere Social-Links. Wir kooperieren gerne, damit das Projekt respektvoll und regelkonform bleibt.",
+    disclaimer: "Dies ist ein Fan-Countdown-Projekt, das von PK XD PORTAL für die Community erstellt wurde. PK XD und zugehörige Inhalte gehören Afterverse. Diese Website ist nicht offiziell und steht nicht mit Afterverse in Verbindung.",
+    dateNote: "Das Countdown-Datum basiert auf Spekulationen der Community und früheren Mustern von Zero-Gravity-Events. Daten können sich ändern, wenn offizielle Informationen angekündigt werden.",
+    feedbackText: "Für Feedback, Fragen oder Kontaktanfragen nutzt bitte einen unserer Social-Links oben.",
+    afterverseContact: "Wenn Afterverse Änderungen wünscht, nehmen wir diese gerne vor, damit das Projekt respektvoll und community-freundlich bleibt.",
 
     downloadTitle: "PK XD herunterladen / aktualisieren",
     languageLabel: "Sprache",
@@ -447,10 +447,10 @@ const languageOverrides = {
 
     fanProjectInfoTitle: "Infos du projet fan",
 
-    disclaimer: "Ceci est un compte à rebours créé par des fans de PK XD PORTAL pour la communauté. PK XD, le logo PK XD, l’image de fond et la musique appartiennent à Afterverse. Ce site n’est pas officiel et n’est pas affilié à Afterverse.",
-    dateNote: "La date du compte à rebours est basée sur des suppositions de la communauté et des observations logiques, car les événements Zéro Gravité apparaissent généralement en juin. La date peut changer si des informations officielles sont annoncées.",
-    feedbackText: "Pour améliorer le site, proposer de nouvelles langues, poser une question ou nous contacter, écrivez-nous via l’un de nos liens sociaux ci-dessus.",
-    afterverseContact: "Si quelqu’un d’Afterverse voit ce site et souhaite que nous modifiions, créditons, supprimions ou ajustions quelque chose, contactez-nous via nos liens sociaux. Nous coopérerons volontiers pour garder le projet respectueux et conforme aux règles.",
+    disclaimer: "Ceci est un projet de compte à rebours créé par des fans de PK XD PORTAL pour la communauté. PK XD et les éléments associés appartiennent à Afterverse. Ce site n’est pas officiel et n’est pas affilié à Afterverse.",
+    dateNote: "La date du compte à rebours est basée sur les suppositions de la communauté et les anciens schémas des événements Zéro Gravité. Les dates peuvent changer si des informations officielles sont annoncées.",
+    feedbackText: "Pour des retours, des questions ou des demandes de contact, utilisez l’un de nos liens sociaux ci-dessus.",
+    afterverseContact: "Si Afterverse demande des modifications, nous serons heureux de les effectuer afin de garder ce projet respectueux et adapté à la communauté.",
 
     downloadTitle: "Télécharger / Mettre à jour PK XD",
     languageLabel: "Langue",
@@ -580,10 +580,10 @@ const languageOverrides = {
 
     fanProjectInfoTitle: "Informacje o projekcie fanowskim",
 
-    disclaimer: "To fanowski licznik stworzony przez PK XD PORTAL dla społeczności. PK XD, logo PK XD, obraz tła i muzyka należą do Afterverse. Ta strona nie jest oficjalna i nie jest powiązana z Afterverse.",
-    dateNote: "Data licznika jest oparta na spekulacjach społeczności i logicznej obserwacji, ponieważ wydarzenia Nieważkości zwykle pojawiają się w czerwcu. Data może się zmienić, jeśli pojawią się oficjalne informacje.",
-    feedbackText: "W sprawie ulepszeń strony, nowych języków, pytań lub kontaktu napisz do nas przez jeden z linków społecznościowych powyżej.",
-    afterverseContact: "Jeśli ktoś z Afterverse zobaczy tę stronę i będzie chciał, abyśmy coś zmienili, dodali kredyt, usunęli lub poprawili, prosimy o kontakt przez nasze linki społecznościowe. Chętnie będziemy współpracować, aby projekt pozostał zgodny z zasadami i pełen szacunku.",
+    disclaimer: "To fanowski projekt odliczania stworzony przez PK XD PORTAL dla społeczności. PK XD oraz powiązane materiały należą do Afterverse. Ta strona nie jest oficjalna i nie jest powiązana z Afterverse.",
+    dateNote: "Data odliczania opiera się na spekulacjach społeczności i wcześniejszych schematach wydarzeń Zero Gravity. Daty mogą się zmienić, jeśli pojawią się oficjalne informacje.",
+    feedbackText: "W sprawie opinii, pytań lub kontaktu skorzystaj z jednego z naszych linków społecznościowych powyżej.",
+    afterverseContact: "Jeśli Afterverse poprosi o zmiany, chętnie je wprowadzimy, aby projekt pozostał pełen szacunku i przyjazny społeczności.",
 
     downloadTitle: "Pobierz / Zaktualizuj PK XD",
     languageLabel: "Język",
@@ -713,10 +713,10 @@ const languageOverrides = {
 
     fanProjectInfoTitle: "Informações do projeto de fãs",
 
-    disclaimer: "Esta é uma contagem regressiva feita por fãs da PK XD PORTAL para a comunidade. PK XD, o logotipo PK XD, a imagem de fundo e a música pertencem à Afterverse. Este site não é oficial e não é afiliado à Afterverse.",
-    dateNote: "A data da contagem é baseada em especulação da comunidade e observação lógica, já que eventos de Gravidade Zero geralmente aparecem em junho. A data pode mudar se informações oficiais forem anunciadas.",
-    feedbackText: "Para melhorias no site, novos idiomas, perguntas ou contato, envie uma mensagem por um dos links sociais acima.",
-    afterverseContact: "Se alguém da Afterverse vir este site e quiser que a gente altere, credite, remova ou ajuste algo, entre em contato pelos nossos links sociais. Vamos cooperar para manter o projeto respeitoso e dentro das regras.",
+    disclaimer: "Este é um projeto de contagem regressiva feito por fãs da PK XD PORTAL para a comunidade. PK XD e materiais relacionados pertencem à Afterverse. Este site não é oficial e não é afiliado à Afterverse.",
+    dateNote: "A data da contagem regressiva é baseada em especulações da comunidade e em padrões anteriores dos eventos Zero Gravity. As datas podem mudar se informações oficiais forem anunciadas.",
+    feedbackText: "Para feedback, perguntas ou pedidos de contato, use um dos nossos links sociais acima.",
+    afterverseContact: "Se a Afterverse solicitar alterações, teremos prazer em ajustar o projeto para mantê-lo respeitoso e amigável para a comunidade.",
 
     downloadTitle: "Baixar / Atualizar PK XD",
     languageLabel: "Idioma",
@@ -846,10 +846,10 @@ const languageOverrides = {
 
     fanProjectInfoTitle: "Hayran projesi bilgisi",
 
-    disclaimer: "Bu, PK XD PORTAL tarafından topluluk için hazırlanmış bir hayran geri sayım sitesidir. PK XD, PK XD logosu, arka plan görseli ve müzik Afterverse’e aittir. Bu site resmi değildir ve Afterverse ile bağlantılı değildir.",
-    dateNote: "Geri sayım tarihi topluluk tahminlerine ve mantıklı gözleme dayanır, çünkü Sıfır Yerçekimi etkinlikleri genellikle haziran ayında görünür. Resmi bilgi açıklanırsa tarih değişebilir.",
-    feedbackText: "Site iyileştirmeleri, yeni diller, sorular veya iletişim için yukarıdaki sosyal bağlantılarımızdan bize yazın.",
-    afterverseContact: "Afterverse’den biri bu siteyi görür ve bir şeyi değiştirmemizi, kaynak belirtmemizi, kaldırmamızı veya düzenlememizi isterse, lütfen sosyal bağlantılarımızdan bize ulaşsın. Projeyi saygılı ve kurallara uygun tutmak için memnuniyetle iş birliği yaparız.",
+    disclaimer: "Bu, PK XD PORTAL tarafından topluluk için oluşturulmuş bir hayran geri sayım projesidir. PK XD ve ilgili varlıklar Afterverse’e aittir. Bu web sitesi resmi değildir ve Afterverse ile bağlantılı değildir.",
+    dateNote: "Geri sayım tarihi, topluluk tahminlerine ve önceki Zero Gravity etkinlik düzenlerine dayanmaktadır. Resmi bilgi açıklanırsa tarihler değişebilir.",
+    feedbackText: "Geri bildirim, sorular veya iletişim talepleri için lütfen yukarıdaki sosyal bağlantılarımızdan birini kullanın.",
+    afterverseContact: "Afterverse tarafından talep edilirse, bu projeyi saygılı ve topluluk dostu tutmak için gerekli düzenlemeleri yapmaktan memnuniyet duyarız.",
 
     downloadTitle: "PK XD indir / güncelle",
     languageLabel: "Dil",
@@ -979,11 +979,11 @@ const languageOverrides = {
 
     fanProjectInfoTitle: "Info proyek penggemar",
 
-    disclaimer: "Ini adalah hitung mundur buatan penggemar dari PK XD PORTAL untuk komunitas. PK XD, logo PK XD, gambar latar, dan musik adalah milik Afterverse. Situs ini tidak resmi dan tidak berafiliasi dengan Afterverse.",
-    dateNote: "Tanggal hitung mundur ini berdasarkan spekulasi komunitas dan pengamatan logis, karena event Gravitasi Nol biasanya muncul pada bulan Juni. Tanggal dapat berubah jika informasi resmi diumumkan.",
-    feedbackText: "Untuk peningkatan situs, bahasa baru, pertanyaan, atau permintaan kontak, kirim pesan melalui salah satu tautan sosial kami di atas.",
-    afterverseContact: "Jika seseorang dari Afterverse melihat situs ini dan ingin kami mengubah, memberi kredit, menghapus, atau menyesuaikan sesuatu, silakan hubungi kami melalui tautan sosial kami. Kami akan bekerja sama agar proyek tetap sopan dan sesuai aturan.",
-
+    disclaimer: "Ini adalah proyek hitung mundur buatan penggemar yang dibuat oleh PK XD PORTAL untuk komunitas. PK XD dan aset terkait adalah milik Afterverse. Situs web ini tidak resmi dan tidak berafiliasi dengan Afterverse.",
+    dateNote: "Tanggal hitung mundur didasarkan pada spekulasi komunitas dan pola event Zero Gravity sebelumnya. Tanggal dapat berubah jika informasi resmi diumumkan.",
+    feedbackText: "Untuk masukan, pertanyaan, atau permintaan kontak, silakan gunakan salah satu tautan sosial kami di atas.",
+    afterverseContact: "Jika diminta oleh Afterverse, kami dengan senang hati akan melakukan penyesuaian agar proyek ini tetap sopan dan ramah komunitas.",
+    
     downloadTitle: "Unduh / Perbarui PK XD",
     languageLabel: "Bahasa",
     downloadLabel: "Unduh",
@@ -1112,11 +1112,11 @@ const languageOverrides = {
 
     fanProjectInfoTitle: "Información del proyecto fan",
 
-    disclaimer: "Esta es una cuenta regresiva hecha por fans de PK XD PORTAL para la comunidad. PK XD, el logo de PK XD, la imagen de fondo y la música pertenecen a Afterverse. Este sitio no es oficial y no está afiliado a Afterverse.",
-    dateNote: "La fecha de la cuenta regresiva se basa en especulación de la comunidad y observación lógica, ya que los eventos de Gravedad Cero suelen aparecer en junio. La fecha puede cambiar si se anuncia información oficial.",
-    feedbackText: "Para mejoras del sitio, nuevos idiomas, preguntas o contacto, escríbenos por uno de nuestros enlaces sociales de arriba.",
-    afterverseContact: "Si alguien de Afterverse ve este sitio y quiere que cambiemos, demos crédito, eliminemos o ajustemos algo, por favor contáctenos por nuestros enlaces sociales. Cooperaremos con gusto para mantener el proyecto respetuoso y dentro de las reglas.",
-
+    disclaimer: "Este es un proyecto de cuenta regresiva hecho por fans y creado por PK XD PORTAL para la comunidad. PK XD y los recursos relacionados pertenecen a Afterverse. Este sitio web no es oficial y no está afiliado a Afterverse.",
+    dateNote: "La fecha de la cuenta regresiva se basa en especulación de la comunidad y en patrones anteriores de eventos Zero Gravity. Las fechas pueden cambiar si se anuncia información oficial.",
+    feedbackText: "Para comentarios, preguntas o solicitudes de contacto, usa uno de nuestros enlaces sociales de arriba.",
+    afterverseContact: "Si Afterverse lo solicita, estaremos encantados de hacer ajustes para mantener este proyecto respetuoso y amigable para la comunidad.",
+    
     downloadTitle: "Descargar / Actualizar PK XD",
     languageLabel: "Idioma",
     downloadLabel: "Descargar",
@@ -1245,11 +1245,11 @@ const languageOverrides = {
 
     fanProjectInfoTitle: "फैन प्रोजेक्ट जानकारी",
 
-    disclaimer: "यह PK XD PORTAL द्वारा समुदाय के लिए बनाया गया एक फैन काउंटडाउन है। PK XD, PK XD लोगो, बैकग्राउंड इमेज और संगीत Afterverse के हैं। यह साइट आधिकारिक नहीं है और Afterverse से जुड़ी नहीं है।",
-    dateNote: "काउंटडाउन की तारीख समुदाय की अटकलों और तार्किक अवलोकन पर आधारित है, क्योंकि Zero Gravity इवेंट आमतौर पर जून में आते हैं। आधिकारिक जानकारी आने पर तारीख बदल सकती है।",
-    feedbackText: "वेबसाइट सुधार, नई भाषाएँ, सवाल या संपर्क के लिए ऊपर दिए गए हमारे किसी सोशल लिंक से हमें संदेश भेजें।",
-    afterverseContact: "अगर Afterverse से कोई इस साइट को देखता है और चाहता है कि हम कुछ बदलें, क्रेडिट दें, हटाएँ या ठीक करें, तो कृपया हमारे सोशल लिंक से संपर्क करें। हम प्रोजेक्ट को सम्मानजनक और नियमों के भीतर रखने के लिए खुशी से सहयोग करेंगे।",
-
+    disclaimer: "यह PK XD PORTAL द्वारा समुदाय के लिए बनाया गया एक फैन-मेड काउंटडाउन प्रोजेक्ट है। PK XD और संबंधित सामग्री Afterverse की है। यह वेबसाइट आधिकारिक नहीं है और Afterverse से संबद्ध नहीं है।",
+    dateNote: "काउंटडाउन की तारीख समुदाय की अटकलों और पिछले Zero Gravity इवेंट पैटर्न पर आधारित है। अगर आधिकारिक जानकारी घोषित होती है, तो तारीखें बदल सकती हैं।",
+    feedbackText: "फीडबैक, सवालों या संपर्क अनुरोधों के लिए कृपया ऊपर दिए गए हमारे किसी सोशल लिंक का उपयोग करें।",
+    afterverseContact: "अगर Afterverse अनुरोध करता है, तो हम इस प्रोजेक्ट को सम्मानजनक और कम्युनिटी-फ्रेंडली बनाए रखने के लिए बदलाव करने में खुशी महसूस करेंगे।",
+    
     downloadTitle: "PK XD डाउनलोड / अपडेट करें",
     languageLabel: "भाषा",
     downloadLabel: "डाउनलोड",
