@@ -1,4 +1,4 @@
-const targetDate = new Date("2026-07-02T13:00:00Z");
+const targetDate = new Date("2026-07-09T13:00:00Z");
 const eventStartDate = new Date("2025-06-26T00:00:00Z");
 
 let currentLang = "en";
