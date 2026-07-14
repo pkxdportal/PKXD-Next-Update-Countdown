@@ -8,47 +8,46 @@
     content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
   />
 
-  <title>Zero Gravity Countdown</title>
+  <title>PK XD Next Update Countdown</title>
 
-  <link rel="stylesheet" href="style.css?v=67" />
+  <link rel="stylesheet" href="style.css?v=68" />
 </head>
 
 <body>
   <div id="dailyIntro" class="daily-intro" aria-hidden="true">
-  <div class="intro-bg-glow"></div>
+    <div class="intro-bg-glow"></div>
 
-  <div class="intro-orbit intro-orbit-one"></div>
-  <div class="intro-orbit intro-orbit-two"></div>
-  <div class="intro-orbit intro-orbit-three"></div>
+    <div class="intro-orbit intro-orbit-one"></div>
+    <div class="intro-orbit intro-orbit-two"></div>
+    <div class="intro-orbit intro-orbit-three"></div>
 
-  <img src="icon-volts.png" class="intro-float intro-volts" alt="" />
-  <img src="icon-flame.png" class="intro-float intro-flame" alt="" />
-  <img src="icon-leaf.png" class="intro-float intro-leaf" alt="" />
+    <div class="intro-float intro-symbol intro-symbol-one">🎮</div>
+    <div class="intro-float intro-symbol intro-symbol-two">✨</div>
+    <div class="intro-float intro-symbol intro-symbol-three">🧩</div>
 
-  <div class="intro-crystal crystal-one"></div>
-  <div class="intro-crystal crystal-two"></div>
-  <div class="intro-crystal crystal-three"></div>
-  <div class="intro-crystal crystal-four"></div>
+    <div class="intro-crystal crystal-one"></div>
+    <div class="intro-crystal crystal-two"></div>
+    <div class="intro-crystal crystal-three"></div>
+    <div class="intro-crystal crystal-four"></div>
 
-  <div class="intro-content">
-    <div class="intro-kicker">PK XD PORTAL</div>
+    <div class="intro-content">
+      <div class="intro-kicker">PK XD PORTAL</div>
 
-    <h1 data-i18n="introTitle">
-      Fan Countdown for the Zero Gravity Event in PK XD
-    </h1>
+      <h1 data-i18n="introTitle">
+        Fan Countdown for the Next PK XD Update
+      </h1>
 
-    <p data-i18n="introSubtitle">
-      Choose your team. Follow the countdown. Join the community.
-    </p>
+      <p data-i18n="introSubtitle">
+        Follow the countdown. Watch updates. Share your theories.
+      </p>
 
-    <button type="button" id="skipIntroBtn" data-i18n="skipIntroBtn">
-      Enter Portal
-    </button>
+      <button type="button" id="skipIntroBtn" data-i18n="skipIntroBtn">
+        Enter Portal
+      </button>
+    </div>
   </div>
-</div>
-  
+
   <div class="background"></div>
-  <div class="team-glow" id="teamGlow"></div>
   <div class="noise"></div>
   <div class="particles"></div>
 
@@ -119,14 +118,6 @@
     </div>
 
     <div class="action-block">
-      <button type="button" id="themeToggle" class="theme-toggle" aria-label="Change theme">
-        🌀
-      </button>
-
-      <span class="action-label" data-i18n="themeLabel">Theme</span>
-    </div>
-
-    <div class="action-block">
       <div class="portal-wrapper">
         <button type="button" id="portalToggle" class="portal-toggle" aria-label="Open PK XD PORTAL links">
           ▶️
@@ -151,14 +142,6 @@
 
       <span class="action-label" data-i18n="portalLabel">Portal</span>
     </div>
-
-    <div class="action-block">
-      <button type="button" id="musicToggle" class="music-top-toggle" aria-label="Toggle music">
-        🔊
-      </button>
-
-      <span class="action-label" data-i18n="musicLabel">Music</span>
-    </div>
   </div>
 
   <main class="scene">
@@ -169,42 +152,57 @@
       </div>
 
       <nav class="main-nav" aria-label="Main website sections">
-        <button type="button" class="main-nav-btn active" data-section-target="countdownSection" data-i18n="zeroGravityCountdownNav">
-          Zero Gravity Countdown
+        <button
+          type="button"
+          class="main-nav-btn active"
+          data-section-target="countdownSection"
+          data-i18n="nextUpdateCountdownNav"
+        >
+          Next Update Countdown
         </button>
 
-        <button type="button" class="main-nav-btn" data-section-target="mediaSection" data-i18n="mediaHubNav">
+        <button
+          type="button"
+          class="main-nav-btn"
+          data-section-target="mediaSection"
+          data-i18n="mediaHubNav"
+        >
           Media Hub
         </button>
 
-        <button type="button" class="main-nav-btn" data-section-target="theoriesSection" data-i18n="theoriesNav">
-          Theories
-        </button>
-
-        <button type="button" class="main-nav-btn" data-section-target="communitySection" data-i18n="communityCommsNav">
-          Community Comms
+        <button
+          type="button"
+          class="main-nav-btn"
+          data-section-target="communityTheoriesSection"
+          data-i18n="communityTheoriesNav"
+        >
+          Community Theories
         </button>
       </nav>
 
       <section id="countdownSection" class="app-section active">
         <div class="event-date" data-i18n="eventDate">
-          JUNE 11, 2026 • 09:00 NEW YORK
+          NEXT UPDATE DATE • FAN ESTIMATE
         </div>
 
-        <div class="signs-orbit">
+        <div class="update-orbit">
           <div class="orbit-line orbit-blue"></div>
           <div class="orbit-line orbit-red"></div>
           <div class="orbit-line orbit-green"></div>
 
-          <img src="volt.png" class="sign sign-volt" alt="Team Volts" loading="eager" />
-          <img src="flame.png" class="sign sign-flame" alt="Team Flame" loading="eager" />
-          <img src="leaf.png" class="sign sign-leaf" alt="Team Leaf" loading="eager" />
+          <div class="update-sign update-sign-one">🎮</div>
+          <div class="update-sign update-sign-two">✨</div>
+          <div class="update-sign update-sign-three">🧩</div>
         </div>
 
         <h1>
           <span class="title-small" data-i18n="titleTop">Until</span>
-          <span class="title-main" data-i18n="titleMain">Zero Gravity</span>
+          <span class="title-main" data-i18n="titleMain">Next PK XD Update</span>
         </h1>
+
+        <p class="hero-subtitle" data-i18n="heroSubtitle">
+          A fan-made countdown based on community speculation and update patterns.
+        </p>
 
         <div class="mode-switch">
           <button type="button" id="countdownModeBtn" class="mode-btn active" data-i18n="countdownMode">
@@ -252,98 +250,21 @@
           <p id="progressText" class="progress-text"></p>
         </div>
 
-        <div class="hashtags">
-          <button type="button" class="team-btn volts" data-team="volts">
-            <img src="icon-volts.png" class="team-icon" alt="" />
-            <span data-i18n="voteVolts">Vote Volts</span>
-          </button>
+        <div class="countdown-note">
+          <h2 data-i18n="countdownNoteTitle">Fan Estimate</h2>
 
-          <button type="button" class="team-btn flame" data-team="flame">
-            <img src="icon-flame.png" class="team-icon" alt="" />
-            <span data-i18n="voteFlame">Vote Flame</span>
-          </button>
-
-          <button type="button" class="team-btn leaf" data-team="leaf">
-            <img src="icon-leaf.png" class="team-icon" alt="" />
-            <span data-i18n="voteLeaf">Vote Leaf</span>
-          </button>
-        </div>
-
-        <div id="teamEnergy" class="team-energy">
-          <div class="team-energy-head">
-            <h2 data-i18n="teamEnergyTitle">ZERO GRAVITY TEAM VOTE 2026</h2>
-
-            <p id="selectedTeamText" data-i18n="noTeamSelected">
-              Choose your team to activate its energy.
-            </p>
-
-            <p class="total-votes" id="totalVotesText">
-              Total votes: 0
-            </p>
-          </div>
-
-          <div class="energy-list">
-            <div class="energy-row volts">
-              <div class="energy-row-top">
-                <span class="energy-team-name">
-                  <img src="icon-volts.png" class="team-icon" alt="" />
-                  <b data-i18n="teamVoltsName">Team Volts</b>
-                </span>
-                <strong id="voltsPercent">0%</strong>
-              </div>
-              <div class="energy-track">
-                <div class="energy-fill" style="width: 0%"></div>
-              </div>
-            </div>
-
-            <div class="energy-row flame">
-              <div class="energy-row-top">
-                <span class="energy-team-name">
-                  <img src="icon-flame.png" class="team-icon" alt="" />
-                  <b data-i18n="teamFlameName">Team Flame</b>
-                </span>
-                <strong id="flamePercent">0%</strong>
-              </div>
-              <div class="energy-track">
-                <div class="energy-fill" style="width: 0%"></div>
-              </div>
-            </div>
-
-            <div class="energy-row leaf">
-              <div class="energy-row-top">
-                <span class="energy-team-name">
-                  <img src="icon-leaf.png" class="team-icon" alt="" />
-                  <b data-i18n="teamLeafName">Team Leaf</b>
-                </span>
-                <strong id="leafPercent">0%</strong>
-              </div>
-              <div class="energy-track">
-                <div class="energy-fill" style="width: 0%"></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="vote-meta">
-            <p class="vote-status" data-i18n="voteStatus">
-              Votes update automatically from the community form.
-            </p>
-
-            <p class="vote-leader" id="voteLeader">
-              Current leader: —
-            </p>
-
-            <p class="vote-change-link" data-i18n="changeVoteText">
-              Need to change your vote? Contact PK XD PORTAL.
-            </p>
-          </div>
+          <p data-i18n="countdownNoteText">
+            This countdown is not official. It is based on community observation and may change when new official information appears.
+          </p>
         </div>
       </section>
 
       <section id="mediaSection" class="app-section">
         <div class="section-head">
           <h2 data-i18n="mediaHubTitle">MEDIA HUB</h2>
+
           <p data-i18n="mediaHubText">
-            Watch PK XD PORTAL updates and selected community videos about Zero Gravity.
+            Watch PK XD PORTAL videos and follow news about upcoming PK XD updates.
           </p>
         </div>
 
@@ -363,120 +284,59 @@
             </div>
 
             <div class="video-grid">
-              <a class="video-card" href="https://www.youtube.com/watch?v=VIDEO_ID_1" target="_blank" rel="noopener noreferrer">
-                <img src="https://img.youtube.com/vi/VIDEO_ID_1/hqdefault.jpg" alt="PK XD PORTAL video" loading="lazy" />
-                <h4>WELCOME TO PK XD PORTAL</h4>
-              </a>
-
-              <a class="video-card" href="https://www.youtube.com/watch?v=VIDEO_ID_2" target="_blank" rel="noopener noreferrer">
-                <img src="https://img.youtube.com/vi/VIDEO_ID_2/hqdefault.jpg" alt="PK XD PORTAL video" loading="lazy" />
-                <h4>PK XD Zero Gravity Countdown Has Started...</h4>
-              </a>
-
-              <a class="video-card" href="https://www.youtube.com/watch?v=VIDEO_ID_3" target="_blank" rel="noopener noreferrer">
-                <img src="https://img.youtube.com/vi/VIDEO_ID_3/hqdefault.jpg" alt="PK XD PORTAL video" loading="lazy" />
-                <h4>Zero Gravity Is Coming...</h4>
-              </a>
-            </div>
-          </section>
-
-          <section class="video-section">
-            <div class="video-section-head">
-              <h3 data-i18n="communityVideosTitle">Community Zero Gravity Videos</h3>
-
               <a
-                href="https://www.youtube.com/results?search_query=PK+XD+Zero+Gravity"
+                class="video-card"
+                href="https://youtu.be/sZszBFUDbt0?si=EeKDuwUQBumjEq5B"
                 target="_blank"
                 rel="noopener noreferrer"
-                data-i18n="zeroGravityVideosBtn"
               >
-                View all
-              </a>
-            </div>
-
-            <div class="video-grid">
-              <a class="video-card" href="https://www.youtube.com/watch?v=VIDEO_ID_4" target="_blank" rel="noopener noreferrer">
-                <img src="https://img.youtube.com/vi/VIDEO_ID_4/hqdefault.jpg" alt="Zero Gravity community video" loading="lazy" />
-                <h4>PK XD ZERO GRAVITY UPDATE</h4>
+                <img
+                  src="https://img.youtube.com/vi/sZszBFUDbt0/hqdefault.jpg"
+                  alt="PK XD PORTAL video"
+                  loading="lazy"
+                />
+                <span class="video-card-title">WELCOME TO PK XD PORTAL</span>
               </a>
 
-              <a class="video-card" href="https://www.youtube.com/watch?v=VIDEO_ID_5" target="_blank" rel="noopener noreferrer">
-                <img src="https://img.youtube.com/vi/VIDEO_ID_5/hqdefault.jpg" alt="Zero Gravity community video" loading="lazy" />
-                <h4>Zero Gravity Update Secrets</h4>
+              <a
+                class="video-card"
+                href="https://youtube.com/shorts/cSBDn6gM2Fc?si=QGCXKXqoG852Sw6p"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  src="https://img.youtube.com/vi/cSBDn6gM2Fc/hqdefault.jpg"
+                  alt="PK XD PORTAL video"
+                  loading="lazy"
+                />
+                <span class="video-card-title">PK XD Update Watch</span>
               </a>
 
-              <a class="video-card" href="https://www.youtube.com/watch?v=VIDEO_ID_6" target="_blank" rel="noopener noreferrer">
-                <img src="https://img.youtube.com/vi/VIDEO_ID_6/hqdefault.jpg" alt="Zero Gravity community video" loading="lazy" />
-                <h4>New PK XD Update Theory</h4>
+              <a
+                class="video-card"
+                href="https://youtube.com/shorts/8-JdJ_r6qZQ?si=lFu3fKhWuJ8_ozTt"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  src="https://img.youtube.com/vi/8-JdJ_r6qZQ/hqdefault.jpg"
+                  alt="PK XD PORTAL video"
+                  loading="lazy"
+                />
+                <span class="video-card-title">PK XD Fan Theory</span>
               </a>
             </div>
           </section>
         </div>
       </section>
 
-      <section id="theoriesSection" class="app-section">
-        <div class="section-head">
-          <h2 data-i18n="theoriesTitle">ZERO GRAVITY THEORIES</h2>
-          <p data-i18n="theoriesSubtitle">
-            Fan theories by PK XD PORTAL. Nothing here is official.
-          </p>
-        </div>
-
-        <div class="theory-grid">
-          <div class="theory-card">
-            <div class="theory-icon">🌌</div>
-            <h3 data-i18n="theoryGravityTitle">New gravity mechanics</h3>
-            <p data-i18n="theoryGravityText">
-              Players may float, jump higher or move differently during the event.
-            </p>
-          </div>
-
-          <div class="theory-card">
-            <div class="theory-icon">🛸</div>
-            <h3 data-i18n="theoryItemsTitle">Space-style items</h3>
-            <p data-i18n="theoryItemsText">
-              The update could bring space outfits, effects, pets or vehicles.
-            </p>
-          </div>
-
-          <div class="theory-card">
-            <div class="theory-icon">⚡</div>
-            <h3 data-i18n="theoryTeamsTitle">Team energy</h3>
-            <p data-i18n="theoryTeamsText">
-              Volts, Flame and Leaf may be connected to the event theme.
-            </p>
-          </div>
-
-          <div class="theory-card">
-            <div class="theory-icon">🎮</div>
-            <h3 data-i18n="theoryGamesTitle">New mini-games</h3>
-            <p data-i18n="theoryGamesText">
-              The event may include flying, floating or low-gravity challenges.
-            </p>
-          </div>
-
-          <div class="theory-card">
-            <div class="theory-icon">🏝️</div>
-            <h3 data-i18n="theoryMapTitle">Map changes</h3>
-            <p data-i18n="theoryMapText">
-              The island may receive temporary Zero Gravity decorations.
-            </p>
-          </div>
-
-          <div class="theory-card">
-            <div class="theory-icon">🎁</div>
-            <h3 data-i18n="theoryRewardsTitle">Special rewards</h3>
-            <p data-i18n="theoryRewardsText">
-              There may be limited rewards connected to the event.
-            </p>
-          </div>
-        </div>
-
+      <section id="communityTheoriesSection" class="app-section">
         <div class="user-theories">
           <div class="section-head compact">
-            <h3 data-i18n="communityTheoriesTitle">Community Theories</h3>
+            <h2 data-i18n="communityTheoriesTitle">Community Theories</h2>
+
             <p data-i18n="communityTheoriesText">
-              Share one Zero Gravity theory per day.
+              Share your theory about the next PK XD update.
             </p>
           </div>
 
@@ -487,12 +347,14 @@
               maxlength="18"
               placeholder="Your name"
               autocomplete="off"
+              required
             />
 
             <textarea
               id="theoryText"
               maxlength="500"
-              placeholder="Your theory..."
+              placeholder="What do you think the next update will be about?"
+              required
             ></textarea>
 
             <button type="submit" id="theorySubmitBtn" data-i18n="submitTheoryBtn">
@@ -504,98 +366,15 @@
             </div>
           </form>
 
-          <div id="userTheoriesList" class="user-theories-list">
-            <div class="comment-empty" data-i18n="theoriesComingSoon">
-              Community theories will appear here soon.
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="communitySection" class="app-section">
-        <div class="community-comms">
-          <div class="comms-head">
-            <div class="comms-icon">💬</div>
-
-            <h3 data-i18n="communityCommsTitle">
-              Community Comms
-            </h3>
-
-            <p data-i18n="communityCommsText">
-              Write a message for the Zero Gravity community.
-            </p>
-          </div>
-
-          <div class="chat-tabs">
-            <button type="button" class="chat-tab active" data-chat-room="general" data-i18n="generalChatTab">
-              General Chat
-            </button>
-
-            <button type="button" class="chat-tab team-chat-tab" id="teamChatTab" data-chat-room="team" data-i18n="teamChatTab">
-              Team Chat
-            </button>
-          </div>
-
-          <div id="teamChatLocked" class="team-chat-locked">
-            <span data-i18n="chooseTeamToUnlockChat">
-              Choose a team to unlock your team chat.
-            </span>
-          </div>
-
-          <div id="communityRating" class="community-rating">
-            <div class="community-rating-title" data-i18n="communityRatingTitle">
-              Community Rating
-            </div>
-
-            <div class="community-rating-main">
-              <span id="averageStars">☆☆☆☆☆</span>
-              <strong id="averageRating">0.0 / 5</strong>
-            </div>
-
-            <div id="ratingCount" class="rating-count">
-              Based on 0 messages
-            </div>
-          </div>
-
-          <form id="commentForm" class="comment-form">
-            <input
-              type="text"
-              id="commentName"
-              maxlength="18"
-              placeholder="Your name"
-              autocomplete="off"
-              required
-            />
-
-            <textarea
-              id="commentText"
-              maxlength="300"
-              placeholder="Message..."
-              required
-            ></textarea>
-
-            <div class="rating-box" aria-label="Rating">
-              <button type="button" class="rating-star" data-rating="1">★</button>
-              <button type="button" class="rating-star" data-rating="2">★</button>
-              <button type="button" class="rating-star" data-rating="3">★</button>
-              <button type="button" class="rating-star" data-rating="4">★</button>
-              <button type="button" class="rating-star" data-rating="5">★</button>
-            </div>
-
-            <button type="submit" id="commentSubmitBtn" aria-label="Send comment">
-              ➤
-            </button>
-
-            <div class="comment-counter">
-              <span id="commentCounter">0 / 300</span>
-            </div>
-          </form>
-
-          <p class="comments-note" data-i18n="commentsLocalNote">
-            Messages are visible to everyone after sending.
+          <p class="comments-note" data-i18n="theoryNote">
+            Fan theories are public after sending. Please stay respectful.
           </p>
 
-          <div id="commentsList" class="comments-list"></div>
+          <div id="userTheoriesList" class="user-theories-list">
+            <div class="comment-empty" data-i18n="theoriesComingSoon">
+              No theories yet. Be the first to share one.
+            </div>
+          </div>
         </div>
       </section>
 
@@ -604,52 +383,28 @@
 
         <div class="site-info-content">
           <p data-i18n="disclaimer">
-            This is a fan-made countdown created by PK XD PORTAL for the community.
-            PK XD, the PK XD logo, the background image and the music belong to Afterverse.
-            This site is not official and is not affiliated with Afterverse.
+            This is a fan-made countdown project created by PK XD PORTAL for the community.
+            PK XD and related assets belong to Afterverse. This website is not official and is not affiliated with Afterverse.
           </p>
 
           <p data-i18n="dateNote">
-            The countdown date is based on community speculation and logical observation,
-            since Zero Gravity events usually appear in June. The date may change if official information is announced.
+            The countdown date is based on community speculation and previous update patterns.
+            Dates may change if official information is announced.
           </p>
 
           <p data-i18n="feedbackText">
-            For website improvements, new languages, questions, or contact requests,
-            message us through one of our social links above.
+            For feedback, questions or contact requests, please use one of our social links above.
           </p>
 
           <p data-i18n="afterverseContact">
-            If someone from Afterverse sees this site and wants us to change, credit, remove, or adjust anything,
-            please contact us through our social links. We will gladly cooperate to keep the project respectful and within the rules.
+            If requested by Afterverse, we are happy to make adjustments to keep this project respectful and community-friendly.
           </p>
         </div>
       </details>
-
-      <audio id="bgMusic" loop>
-        <source src="nevesomost.mp3" type="audio/mpeg" />
-      </audio>
     </section>
   </main>
 
-  <div id="teamPopup" class="team-popup" aria-hidden="true">
-    <button type="button" id="closePopup" class="close-popup">×</button>
-
-    <div id="popupIcon" class="popup-icon"></div>
-
-    <h2 id="popupTitle"></h2>
-    <p id="popupText"></p>
-
-    <button type="button" id="chooseTeamBtn" class="choose-team-btn" data-i18n="chooseTeamBtn">
-      Choose Team
-    </button>
-  </div>
-
-  <div id="teamActivatedToast" class="team-activated-toast" aria-hidden="true">
-    TEAM ACTIVATED
-  </div>
-
-  <script src="translations.js?v=67"></script>
-  <script src="script.js?v=67"></script>
+  <script src="translations.js?v=68"></script>
+  <script src="script.js?v=68"></script>
 </body>
 </html>
