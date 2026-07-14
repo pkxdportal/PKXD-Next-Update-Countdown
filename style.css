@@ -1920,3 +1920,169 @@ h1 {
     right: 14px;
   }
 }
+
+/* =========================
+   NEXT UPDATE CLEAN VISUAL THEME
+   Removes old team / Zero Gravity color language
+========================= */
+
+/* Убираем три бывшие командные иконки и вращающиеся орбиты */
+.update-orbit,
+.signs-orbit,
+.orbit-line,
+.update-sign,
+.sign {
+  display: none !important;
+}
+
+/* Чуть компенсируем место после удаления орбиты */
+#countdownSection .event-date {
+  margin-bottom: 34px;
+}
+
+#countdownSection h1 {
+  margin-top: 10px;
+}
+
+/* Новая палитра: не команды, а "астральное обновление" */
+:root {
+  --update-white: #fffaf0;
+  --update-gold: #ffd66d;
+  --update-violet: #d7b7ff;
+  --update-cyan: #b9f2ff;
+  --update-dark: #111327;
+}
+
+/* Главный заголовок без красно-зелёно-синей командной темы */
+.title-main {
+  background: linear-gradient(
+    90deg,
+    var(--update-white),
+    var(--update-gold),
+    var(--update-violet),
+    var(--update-cyan),
+    var(--update-white)
+  ) !important;
+  background-size: 260% auto !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+  filter:
+    drop-shadow(0 0 12px rgba(255,255,255,0.72))
+    drop-shadow(0 0 28px rgba(255,214,109,0.34))
+    drop-shadow(0 0 36px rgba(215,183,255,0.22)) !important;
+}
+
+.title-small {
+  color: var(--update-white);
+  text-shadow:
+    0 0 12px rgba(255,255,255,0.72),
+    0 0 28px rgba(255,214,109,0.22);
+}
+
+/* Активные кнопки без зелёно-красно-синего ощущения */
+.main-nav-btn.active,
+.mode-btn.active,
+.lang-btn.active,
+.download-menu a,
+.portal-menu a,
+.video-section-head a,
+#theorySubmitBtn,
+#skipIntroBtn {
+  color: var(--update-dark) !important;
+  background: linear-gradient(
+    90deg,
+    var(--update-white),
+    var(--update-gold),
+    var(--update-violet),
+    var(--update-cyan)
+  ) !important;
+  box-shadow:
+    0 0 22px rgba(255,214,109,0.24),
+    0 0 34px rgba(185,242,255,0.18),
+    inset 0 0 14px rgba(255,255,255,0.22) !important;
+}
+
+/* Дата */
+.event-date {
+  color: var(--update-white);
+  border-color: rgba(255, 214, 109, 0.28);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255,214,109,0.12), transparent 60%),
+    rgba(255,255,255,0.08);
+  box-shadow:
+    0 0 24px rgba(255,214,109,0.16),
+    0 0 34px rgba(185,242,255,0.10);
+}
+
+/* Прогресс-бар без командных цветов */
+.progress-fill {
+  background: linear-gradient(
+    90deg,
+    var(--update-white),
+    var(--update-gold),
+    var(--update-violet),
+    var(--update-cyan)
+  ) !important;
+  box-shadow:
+    0 0 18px rgba(255,214,109,0.48),
+    0 0 34px rgba(185,242,255,0.28) !important;
+}
+
+/* Цифры отсчёта — больше не Volts / Flame / Leaf */
+.time-card:nth-child(1) span {
+  color: var(--update-white) !important;
+  text-shadow:
+    0 0 16px rgba(255,255,255,0.82),
+    0 0 38px rgba(185,242,255,0.38) !important;
+}
+
+.time-card:nth-child(2) span {
+  color: var(--update-gold) !important;
+  text-shadow:
+    0 0 16px rgba(255,214,109,0.82),
+    0 0 38px rgba(255,214,109,0.34) !important;
+}
+
+.time-card:nth-child(3) span {
+  color: var(--update-violet) !important;
+  text-shadow:
+    0 0 16px rgba(215,183,255,0.82),
+    0 0 38px rgba(215,183,255,0.34) !important;
+}
+
+.time-card:nth-child(4) span {
+  color: var(--update-cyan) !important;
+  text-shadow:
+    0 0 16px rgba(185,242,255,0.82),
+    0 0 38px rgba(185,242,255,0.34) !important;
+}
+
+/* Карточки таймера чуть спокойнее */
+.time-card {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255,214,109,0.08), transparent 60%),
+    linear-gradient(180deg, rgba(255,255,255,0.15), rgba(255,255,255,0.045)) !important;
+  border-color: rgba(255,255,255,0.16);
+  box-shadow:
+    0 0 30px rgba(185,242,255,0.10),
+    inset 0 0 26px rgba(255,255,255,0.035) !important;
+}
+
+/* Hover тоже без старого RGB-настроения */
+.main-nav-btn:hover,
+.mode-btn:hover {
+  background: rgba(255, 214, 109, 0.10);
+}
+
+/* На телефоне после удаления орбиты заголовок поднимаем аккуратнее */
+@media (max-width: 760px) {
+  #countdownSection .event-date {
+    margin-bottom: 24px;
+  }
+
+  #countdownSection h1 {
+    margin-top: 6px;
+  }
+}
