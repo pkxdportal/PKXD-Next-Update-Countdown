@@ -29,6 +29,8 @@ const COMMENTS_API_URL =
 
 const THEORY_MAX_LENGTH = 500;
 const TEAM_VOTE_ROOM = "glitch_vs_nimda_2026";
+const TEAM_VOTE_STORAGE_ROOM = "theories";
+const TEAM_VOTE_PREFIX = "__PKXD_TEAM_VOTE__:";
 const TEAM_VOTE_KEY = "pkxdPortalTeamVote";
 let isSendingTeamVote = false;
 let isLoadingTeamVotes = false;
@@ -398,29 +400,38 @@ function updateTeamVoteSelection() {
   });
 }
 
+function getTeamVoteMessage(team) {
+  return TEAM_VOTE_PREFIX + normalizeTeamVote(team);
+}
+
+function extractTeamVote(record) {
+  const message = String(record?.message || record?.text || "").trim();
+
+  if (message.startsWith(TEAM_VOTE_PREFIX)) {
+    return normalizeTeamVote(message.slice(TEAM_VOTE_PREFIX.length));
+  }
+
+  if (String(record?.parentId || "") === TEAM_VOTE_ROOM) {
+    return normalizeTeamVote(record?.team || record?.vote || message);
+  }
+
+  return "";
+}
+
+function isTeamVoteRecord(record) {
+  return Boolean(extractTeamVote(record));
+}
+
 async function getCommunityTeamVotes() {
-  const url =
-    COMMENTS_API_URL +
-    "?cache=" + Date.now() +
-    "&room=" + encodeURIComponent(TEAM_VOTE_ROOM);
-
-  const response = await fetch(url);
-  if (!response.ok) throw new Error("Could not load team votes");
-
-  const data = await response.json();
-  return Array.isArray(data) ? data : [];
+  const records = await getStoredTheories();
+  return records.filter(isTeamVoteRecord);
 }
 
 function calculateTeamVoteStats(records) {
   const latestVoteByUser = new Map();
 
   records.forEach((record, index) => {
-    const recordRoom = String(record?.room || "").trim();
-    if (recordRoom && recordRoom !== TEAM_VOTE_ROOM) return;
-
-    const team = normalizeTeamVote(
-      record?.team || record?.message || record?.vote || record?.text
-    );
+    const team = extractTeamVote(record);
 
     const voter = String(
       record?.userKey ||
@@ -456,8 +467,13 @@ function calculateTeamVoteStats(records) {
     if (vote.team === "nimda") nimda += 1;
   });
 
-  return { glitch, nimda, total: glitch + nimda };
+  return {
+    glitch,
+    nimda,
+    total: glitch + nimda
+  };
 }
+
 function paintTeamVoteStats(stats) {
   const total = Number(stats?.total || 0);
   const glitch = Number(stats?.glitch || 0);
@@ -479,6 +495,24 @@ function paintTeamVoteStats(stats) {
   if (nimdaVoteFill) {
     nimdaVoteFill.style.width = total > 0 ? nimdaPercent + "%" : "50%";
   }
+}
+
+function paintOptimisticTeamVote(team) {
+  const previous = getStoredTeamVote();
+  let glitch = Number(glitchVoteCount?.textContent || 0);
+  let nimda = Number(nimdaVoteCount?.textContent || 0);
+
+  if (previous === "glitch" && team !== "glitch") glitch = Math.max(0, glitch - 1);
+  if (previous === "nimda" && team !== "nimda") nimda = Math.max(0, nimda - 1);
+
+  if (team === "glitch" && previous !== "glitch") glitch += 1;
+  if (team === "nimda" && previous !== "nimda") nimda += 1;
+
+  paintTeamVoteStats({
+    glitch,
+    nimda,
+    total: glitch + nimda
+  });
 }
 
 async function renderTeamVote() {
@@ -510,9 +544,9 @@ async function sendTeamVote(team) {
   const normalized = normalizeTeamVote(team);
   if (!normalized || isSendingTeamVote) return;
 
+  paintOptimisticTeamVote(normalized);
   setStoredTeamVote(normalized);
   updateTeamVoteSelection();
-  showToast(getText("teamVoteSaved"));
 
   isSendingTeamVote = true;
   teamVoteButtons.forEach((button) => {
@@ -527,20 +561,26 @@ async function sendTeamVote(team) {
         "Content-Type": "text/plain;charset=utf-8"
       },
       body: JSON.stringify({
-        name: COMMENT_USER_KEY,
-        message: normalized,
+        name: COMMENT_USER_KEY.slice(0, 18),
+        message: getTeamVoteMessage(normalized),
         rating: 0,
-        parentId: "",
-        room: TEAM_VOTE_ROOM,
-        team: normalized,
+        parentId: TEAM_VOTE_ROOM,
+        room: TEAM_VOTE_STORAGE_ROOM,
+        team: "",
         userKey: COMMENT_USER_KEY
       })
     });
 
-    window.setTimeout(() => renderTeamVote(), 1400);
-    window.setTimeout(() => renderTeamVote(), 3200);
+    showToast(getText("teamVoteSaved"));
+
+    window.setTimeout(() => renderTeamVote(), 1600);
+    window.setTimeout(() => renderTeamVote(), 3800);
   } catch (error) {
     console.warn("Team vote could not be sent:", error);
+
+    if (teamVoteStatus) {
+      teamVoteStatus.textContent = getText("teamVoteLoadError");
+    }
   } finally {
     window.setTimeout(() => {
       isSendingTeamVote = false;
@@ -807,12 +847,6 @@ function setActiveSection(sectionId) {
     section.classList.toggle("active", section.id === activeSection);
   });
 
-  teamVoteButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    sendTeamVote(button.dataset.teamVote);
-  });
-});
-
 mainNavButtons.forEach((button) => {
     button.classList.toggle("active", button.dataset.sectionTarget === activeSection);
   });
@@ -950,7 +984,7 @@ async function getStoredTheories() {
 async function renderTheories() {
   if (!userTheoriesList) return;
 
-  const theories = await getStoredTheories();
+  const theories = (await getStoredTheories()).filter((theory) => !isTeamVoteRecord(theory));
 
   if (!theories.length) {
     userTheoriesList.innerHTML = `
@@ -1168,6 +1202,12 @@ if (progressModeBtn) {
     setMode("progress");
   });
 }
+
+teamVoteButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    sendTeamVote(button.dataset.teamVote);
+  });
+});
 
 mainNavButtons.forEach((button) => {
   button.addEventListener("click", () => {
