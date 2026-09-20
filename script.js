@@ -193,6 +193,7 @@ function applyCustomBackground(imageUrl) {
     backgroundLayer.style.backgroundRepeat = "no-repeat";
     backgroundLayer.style.backgroundAttachment = "fixed";
     backgroundLayer.classList.add("has-custom-bg");
+    document.body.classList.add("has-custom-background");
   } else {
     backgroundLayer.style.backgroundImage = "";
     backgroundLayer.style.backgroundPosition = "";
@@ -200,6 +201,7 @@ function applyCustomBackground(imageUrl) {
     backgroundLayer.style.backgroundRepeat = "";
     backgroundLayer.style.backgroundAttachment = "";
     backgroundLayer.classList.remove("has-custom-bg");
+    document.body.classList.remove("has-custom-background");
   }
 }
 
