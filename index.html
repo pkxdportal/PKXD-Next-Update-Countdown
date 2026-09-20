@@ -2,409 +2,337 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
   />
-
+  <meta name="theme-color" content="#07091b" />
   <title>PK XD Next Update Countdown</title>
-
-  <link rel="stylesheet" href="style.css?v=73" />
+  <link rel="stylesheet" href="style.css?v=75" />
 </head>
 
 <body>
   <div id="dailyIntro" class="daily-intro" aria-hidden="true">
-    <div class="intro-bg-glow"></div>
+    <div class="intro-aurora intro-aurora-a"></div>
+    <div class="intro-aurora intro-aurora-b"></div>
+    <div class="intro-grid"></div>
 
     <div class="intro-orbit intro-orbit-one"></div>
     <div class="intro-orbit intro-orbit-two"></div>
     <div class="intro-orbit intro-orbit-three"></div>
 
-    <div class="intro-float intro-symbol intro-symbol-one">🎮</div>
-    <div class="intro-float intro-symbol intro-symbol-two">✨</div>
-    <div class="intro-float intro-symbol intro-symbol-three">🧩</div>
-
-    <div class="intro-crystal crystal-one"></div>
-    <div class="intro-crystal crystal-two"></div>
-    <div class="intro-crystal crystal-three"></div>
-    <div class="intro-crystal crystal-four"></div>
-
     <div class="intro-content">
+      <div class="intro-logo-shell">
+        <img src="PKXD.png?v=21" alt="PK XD" />
+      </div>
       <div class="intro-kicker">PK XD PORTAL</div>
-
-      <h1 data-i18n="introTitle">
-        Fan Countdown for the Next PK XD Update
-      </h1>
-
-      <p data-i18n="introSubtitle">
-        Follow the countdown. Watch updates. Share your theories.
-      </p>
-
-      <button type="button" id="skipIntroBtn" data-i18n="skipIntroBtn">
+      <h1 data-i18n="introTitle">Fan Countdown for the Next PK XD Update</h1>
+      <p data-i18n="introSubtitle">Follow the countdown. Watch updates. Share your theories.</p>
+      <button type="button" id="skipIntroBtn" class="intro-enter" data-i18n="skipIntroBtn">
         Enter Portal
       </button>
     </div>
   </div>
 
-  <div class="background"></div>
-  <div class="noise"></div>
-  <div class="particles"></div>
+  <div class="background" aria-hidden="true"></div>
+  <div class="background-vignette" aria-hidden="true"></div>
+  <div class="grid-floor" aria-hidden="true"></div>
+  <div class="particles" aria-hidden="true"></div>
+  <div class="cursor-glow" aria-hidden="true"></div>
 
-  <div class="top-actions">
-    <div class="action-block">
-      <div class="language-wrapper">
-        <button type="button" id="langToggle" class="lang-toggle" aria-label="Change language">
-          🌐
-        </button>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="PK XD PORTAL">
+      <span class="brand-logo">
+        <img src="PKXD.png?v=21" alt="PK XD" />
+      </span>
+      <span class="brand-copy">
+        <strong>PK XD PORTAL</strong>
+        <small data-i18n="fanCountdown">Fan countdown for PK XD</small>
+      </span>
+    </a>
 
-        <div id="languageMenu" class="language-menu">
-          <button type="button" class="lang-btn active" data-lang="en">🇺🇸 EN</button>
-          <button type="button" class="lang-btn" data-lang="ru">🇷🇺 RU</button>
-          <button type="button" class="lang-btn" data-lang="pt">🇧🇷 PT</button>
-          <button type="button" class="lang-btn" data-lang="tr">🇹🇷 TR</button>
-          <button type="button" class="lang-btn" data-lang="id">🇮🇩 ID</button>
-          <button type="button" class="lang-btn" data-lang="es">🇲🇽 ES</button>
-          <button type="button" class="lang-btn" data-lang="hi">🇮🇳 HI</button>
-          <button type="button" class="lang-btn" data-lang="de">🇩🇪 DE</button>
-          <button type="button" class="lang-btn" data-lang="fr">🇫🇷 FR</button>
-          <button type="button" class="lang-btn" data-lang="pl">🇵🇱 PL</button>
-        </div>
-      </div>
-
-      <span class="action-label" data-i18n="languageLabel">Language</span>
-    </div>
-
-    <div class="action-block">
-      <div class="download-wrapper">
-        <button type="button" id="downloadToggle" class="download-toggle" aria-label="Download or update PK XD">
-          ⬇️
-        </button>
-
-        <div id="downloadMenu" class="download-menu">
-          <div class="download-title" data-i18n="downloadTitle">
-            Download / Update PK XD
-          </div>
-
-          <a
-            href="https://play.google.com/store/apps/details?id=com.movile.playkids.pkxd"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-i18n="googlePlayBtn"
-          >
-            Google Play
-          </a>
-
-          <a
-            href="https://apps.apple.com/us/app/pk-xd-fun-friends-games/id1449842729"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-i18n="appStoreBtn"
-          >
-            App Store
-          </a>
-        </div>
-      </div>
-
-      <span class="action-label" data-i18n="downloadLabel">Download</span>
-    </div>
-
-    <div class="action-block">
-      <button type="button" id="shareBtn" class="share-toggle" aria-label="Copy website link">
-        🔗
+    <nav class="main-nav" aria-label="Main website sections">
+      <button type="button" class="main-nav-btn active" data-section-target="countdownSection">
+        <span class="nav-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 8v5l3 2M9 3h6M12 5a8 8 0 1 0 8 8 8 8 0 0 0-8-8Z"/></svg>
+        </span>
+        <span data-i18n="nextUpdateCountdownNav">Next Update Countdown</span>
       </button>
 
-      <span class="action-label" data-i18n="shareLabel">Share</span>
-    </div>
+      <button type="button" class="main-nav-btn" data-section-target="mediaSection">
+        <span class="nav-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="m10 8 6 4-6 4V8ZM5 5h14v14H5z"/></svg>
+        </span>
+        <span data-i18n="mediaHubNav">Media Hub</span>
+      </button>
 
-    <div class="action-block">
-      <div class="portal-wrapper">
-        <button type="button" id="portalToggle" class="portal-toggle" aria-label="Open PK XD PORTAL links">
-          ▶️
+      <button type="button" class="main-nav-btn" data-section-target="communityTheoriesSection">
+        <span class="nav-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M7 8h10M7 12h7M5 4h14v13H9l-4 3V4Z"/></svg>
+        </span>
+        <span data-i18n="communityTheoriesNav">Community Theories</span>
+      </button>
+    </nav>
+
+    <div class="action-dock">
+      <div class="action-block language-wrapper">
+        <button type="button" id="langToggle" class="dock-btn" aria-label="Change language">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0c2.2 0 4-4 4-9s-1.8-9-4-9-4 4-4 9 1.8 9 4 9ZM3 12h18"/></svg>
         </button>
+        <span class="action-label" data-i18n="languageLabel">Language</span>
 
-        <div id="portalMenu" class="portal-menu">
-          <a
-            href="https://www.youtube.com/@pkxdportal"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-i18n="youtubeBtn"
-          >
-            YouTube
-          </a>
+        <div id="languageMenu" class="floating-menu language-menu">
+          <button type="button" class="lang-btn active" data-lang="en">🇺🇸 <span>EN</span></button>
+          <button type="button" class="lang-btn" data-lang="ru">🇷🇺 <span>RU</span></button>
+          <button type="button" class="lang-btn" data-lang="pt">🇧🇷 <span>PT</span></button>
+          <button type="button" class="lang-btn" data-lang="tr">🇹🇷 <span>TR</span></button>
+          <button type="button" class="lang-btn" data-lang="id">🇮🇩 <span>ID</span></button>
+          <button type="button" class="lang-btn" data-lang="es">🇲🇽 <span>ES</span></button>
+          <button type="button" class="lang-btn" data-lang="hi">🇮🇳 <span>HI</span></button>
+          <button type="button" class="lang-btn" data-lang="de">🇩🇪 <span>DE</span></button>
+          <button type="button" class="lang-btn" data-lang="fr">🇫🇷 <span>FR</span></button>
+          <button type="button" class="lang-btn" data-lang="pl">🇵🇱 <span>PL</span></button>
+        </div>
+      </div>
 
+      <div class="action-block download-wrapper">
+        <button type="button" id="downloadToggle" class="dock-btn" aria-label="Download or update PK XD">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 19h14"/></svg>
+        </button>
+        <span class="action-label" data-i18n="downloadLabel">Download</span>
+
+        <div id="downloadMenu" class="floating-menu download-menu">
+          <div class="menu-kicker" data-i18n="downloadTitle">Download / Update PK XD</div>
+          <a href="https://play.google.com/store/apps/details?id=com.movile.playkids.pkxd" target="_blank" rel="noopener noreferrer" data-i18n="googlePlayBtn">Google Play</a>
+          <a href="https://apps.apple.com/us/app/pk-xd-fun-friends-games/id1449842729" target="_blank" rel="noopener noreferrer" data-i18n="appStoreBtn">App Store</a>
+        </div>
+      </div>
+
+      <div class="action-block">
+        <button type="button" id="shareBtn" class="dock-btn" aria-label="Copy website link">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.1.1l2-2a5 5 0 0 0-7.1-7.1l-1.2 1.2M14 11a5 5 0 0 0-7.1-.1l-2 2A5 5 0 0 0 12 20l1.2-1.2"/></svg>
+        </button>
+        <span class="action-label" data-i18n="shareLabel">Share</span>
+      </div>
+
+      <div class="action-block portal-wrapper">
+        <button type="button" id="portalToggle" class="dock-btn portal-dock-btn" aria-label="Open PK XD PORTAL links">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 7 8 5-8 5V7Z"/></svg>
+        </button>
+        <span class="action-label" data-i18n="portalLabel">Portal</span>
+
+        <div id="portalMenu" class="floating-menu portal-menu">
+          <a href="https://www.youtube.com/@pkxdportal" target="_blank" rel="noopener noreferrer" data-i18n="youtubeBtn">YouTube</a>
           <button type="button" class="portal-soon" disabled>
             <span data-i18n="discordBtn">Discord</span>
             <small data-i18n="soonLabel">Soon</small>
           </button>
         </div>
       </div>
-
-      <span class="action-label" data-i18n="portalLabel">Portal</span>
     </div>
-  </div>
+  </header>
 
   <main class="scene">
-    <section class="hero">
-      <div class="pkxd-badge">
-        <img src="PKXD.png?v=21" alt="PK XD" />
-        <span data-i18n="fanCountdown">Fan countdown for PK XD</span>
-      </div>
-
-      <nav class="main-nav" aria-label="Main website sections">
-        <button
-          type="button"
-          class="main-nav-btn active"
-          data-section-target="countdownSection"
-          data-i18n="nextUpdateCountdownNav"
-        >
-          Next Update Countdown
-        </button>
-
-        <button
-          type="button"
-          class="main-nav-btn"
-          data-section-target="mediaSection"
-          data-i18n="mediaHubNav"
-        >
-          Media Hub
-        </button>
-
-        <button
-          type="button"
-          class="main-nav-btn"
-          data-section-target="communityTheoriesSection"
-          data-i18n="communityTheoriesNav"
-        >
-          Community Theories
-        </button>
-      </nav>
-
+    <div class="app-shell">
       <section id="countdownSection" class="app-section active">
-        <div class="event-date" data-i18n="eventDate">
-          NEXT UPDATE DATE • FAN ESTIMATE
-        </div>
+        <div class="countdown-layout">
+          <article class="countdown-stage glass-panel" data-tilt>
+            <div class="panel-glow panel-glow-a"></div>
+            <div class="panel-glow panel-glow-b"></div>
 
-        <div class="update-orbit">
-          <div class="orbit-line orbit-blue"></div>
-          <div class="orbit-line orbit-red"></div>
-          <div class="orbit-line orbit-green"></div>
+            <div class="stage-topline">
+              <div class="live-pill">
+                <span class="live-dot"></span>
+                <span>PK XD PORTAL</span>
+              </div>
+              <div class="event-date" data-i18n="eventDate">NEXT UPDATE DATE • FAN ESTIMATE</div>
+            </div>
 
-          <div class="update-sign update-sign-one">🎮</div>
-          <div class="update-sign update-sign-two">✨</div>
-          <div class="update-sign update-sign-three">🧩</div>
-        </div>
+            <div class="update-core" aria-hidden="true">
+              <div class="core-ring core-ring-1"></div>
+              <div class="core-ring core-ring-2"></div>
+              <div class="core-ring core-ring-3"></div>
+              <div class="core-orb"></div>
+            </div>
 
-        <h1>
-          <span class="title-small" data-i18n="titleTop">Until</span>
-          <span class="title-main" data-i18n="titleMain">Next PK XD Update</span>
-        </h1>
+            <div class="title-wrap">
+              <span class="title-small" data-i18n="titleTop">Until</span>
+              <h1 class="title-main" data-i18n="titleMain">Next PK XD Update</h1>
+              <p class="hero-subtitle" data-i18n="heroSubtitle">A fan-made countdown based on community speculation and update patterns.</p>
+            </div>
 
-        <p class="hero-subtitle" data-i18n="heroSubtitle">
-          A fan-made countdown based on community speculation and update patterns.
-        </p>
+            <div class="mode-switch" role="tablist" aria-label="Countdown display mode">
+              <button type="button" id="countdownModeBtn" class="mode-btn active" data-i18n="countdownMode">Countdown</button>
+              <button type="button" id="progressModeBtn" class="mode-btn" data-i18n="progressMode">Progress</button>
+            </div>
 
-        <div class="mode-switch">
-          <button type="button" id="countdownModeBtn" class="mode-btn active" data-i18n="countdownMode">
-            Countdown
-          </button>
+            <div id="timer" class="timer">
+              <div class="time-card">
+                <span class="time-value" id="days">00</span>
+                <p data-i18n="days">days</p>
+              </div>
+              <div class="time-separator" aria-hidden="true">:</div>
+              <div class="time-card">
+                <span class="time-value" id="hours">00</span>
+                <p data-i18n="hours">hours</p>
+              </div>
+              <div class="time-separator" aria-hidden="true">:</div>
+              <div class="time-card">
+                <span class="time-value" id="minutes">00</span>
+                <p data-i18n="minutes">minutes</p>
+              </div>
+              <div class="time-separator" aria-hidden="true">:</div>
+              <div class="time-card">
+                <span class="time-value" id="seconds">00</span>
+                <p data-i18n="seconds">seconds</p>
+              </div>
+            </div>
 
-          <button type="button" id="progressModeBtn" class="mode-btn" data-i18n="progressMode">
-            Progress
-          </button>
-        </div>
+            <div id="progressPanel" class="progress-panel">
+              <div class="progress-ring-wrap">
+                <svg class="progress-ring" viewBox="0 0 160 160" aria-hidden="true">
+                  <circle class="progress-ring-track" cx="80" cy="80" r="66"></circle>
+                  <circle class="progress-ring-value" cx="80" cy="80" r="66"></circle>
+                </svg>
+                <div class="progress-ring-label">
+                  <strong id="progressPercent">0%</strong>
+                  <span data-i18n="progressPassed">Passed</span>
+                </div>
+              </div>
 
-        <div id="timer" class="timer">
-          <div class="time-card">
-            <span id="days">00</span>
-            <p data-i18n="days">days</p>
-          </div>
+              <div class="progress-detail">
+                <div class="progress-info">
+                  <span data-i18n="progressPassed">Passed</span>
+                  <span class="progress-line"></span>
+                  <span data-i18n="progressLeft">Left</span>
+                </div>
+                <div class="progress-bar">
+                  <div id="progressFill" class="progress-fill"></div>
+                </div>
+                <p id="progressText" class="progress-text"></p>
+              </div>
+            </div>
+          </article>
 
-          <div class="time-card">
-            <span id="hours">00</span>
-            <p data-i18n="hours">hours</p>
-          </div>
+          <aside class="countdown-sidebar">
+            <section class="side-card side-card-primary glass-panel" data-tilt>
+              <div class="side-card-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M12 2 4 6v6c0 5 3.4 8.7 8 10 4.6-1.3 8-5 8-10V6l-8-4Zm-3 10 2 2 4-5"/></svg>
+              </div>
+              <div>
+                <span class="side-label" data-i18n="countdownNoteTitle">Fan Estimate</span>
+                <p data-i18n="countdownNoteText">This countdown is not official. It is based on community observation and may change when new official information appears.</p>
+              </div>
+            </section>
 
-          <div class="time-card">
-            <span id="minutes">00</span>
-            <p data-i18n="minutes">minutes</p>
-          </div>
+            <section class="mini-dashboard glass-panel">
+              <div class="mini-dashboard-head">
+                <span data-i18n="progressMode">Progress</span>
+                <span class="status-signal"><i></i><i></i><i></i></span>
+              </div>
+              <div class="mini-track">
+                <div class="mini-track-glow"></div>
+                <span class="mini-node mini-node-a"></span>
+                <span class="mini-node mini-node-b"></span>
+                <span class="mini-node mini-node-c"></span>
+              </div>
+              <div class="mini-dashboard-foot">
+                <span data-i18n="progressPassed">Passed</span>
+                <span data-i18n="progressLeft">Left</span>
+              </div>
+            </section>
 
-          <div class="time-card">
-            <span id="seconds">00</span>
-            <p data-i18n="seconds">seconds</p>
-          </div>
-        </div>
-
-        <div id="progressPanel" class="progress-panel">
-          <div class="progress-info">
-            <span data-i18n="progressPassed">Passed</span>
-            <span id="progressPercent">0%</span>
-            <span data-i18n="progressLeft">Left</span>
-          </div>
-
-          <div class="progress-bar">
-            <div id="progressFill" class="progress-fill"></div>
-          </div>
-
-          <p id="progressText" class="progress-text"></p>
-        </div>
-
-        <div class="countdown-note">
-          <h2 data-i18n="countdownNoteTitle">Fan Estimate</h2>
-
-          <p data-i18n="countdownNoteText">
-            This countdown is not official. It is based on community observation and may change when new official information appears.
-          </p>
+            <section class="portal-card glass-panel">
+              <div class="portal-card-copy">
+                <span>PK XD PORTAL</span>
+                <strong data-i18n="mediaHubTitle">MEDIA HUB</strong>
+              </div>
+              <button type="button" class="portal-card-action" data-section-jump="mediaSection" aria-label="Open Media Hub">
+                <svg viewBox="0 0 24 24"><path d="m9 7 8 5-8 5V7Z"/></svg>
+              </button>
+            </section>
+          </aside>
         </div>
       </section>
 
       <section id="mediaSection" class="app-section">
-        <div class="section-head">
+        <div class="section-hero glass-panel">
+          <div class="section-eyebrow">PK XD PORTAL</div>
           <h2 data-i18n="mediaHubTitle">MEDIA HUB</h2>
-
-          <p data-i18n="mediaHubText">
-            Watch PK XD PORTAL videos and follow news about upcoming PK XD updates.
-          </p>
+          <p data-i18n="mediaHubText">Watch PK XD PORTAL videos and follow news about upcoming PK XD updates.</p>
         </div>
 
         <div class="video-hub">
-          <section class="video-section">
+          <section class="video-section glass-panel">
             <div class="video-section-head">
-              <h3 data-i18n="portalVideosTitle">PK XD PORTAL Videos</h3>
-
-              <a
-                href="https://www.youtube.com/@pkxdportal/videos"
-                target="_blank"
-                rel="noopener noreferrer"
-                data-i18n="portalVideosBtn"
-              >
-                View all
-              </a>
+              <div>
+                <span class="section-eyebrow">VIDEO FEED</span>
+                <h3 data-i18n="portalVideosTitle">PK XD PORTAL Videos</h3>
+              </div>
+              <a class="view-all-btn" href="https://www.youtube.com/@pkxdportal/videos" target="_blank" rel="noopener noreferrer" data-i18n="portalVideosBtn">View all</a>
             </div>
-
-            <div class="video-grid">
-              <a
-                class="video-card"
-                href="https://youtu.be/sZszBFUDbt0?si=EeKDuwUQBumjEq5B"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <img
-                  src="https://img.youtube.com/vi/sZszBFUDbt0/hqdefault.jpg"
-                  alt="PK XD PORTAL video"
-                  loading="lazy"
-                />
-                <span class="video-card-title">WELCOME TO PK XD PORTAL</span>
-              </a>
-
-              <a
-                class="video-card"
-                href="https://youtube.com/shorts/cSBDn6gM2Fc?si=QGCXKXqoG852Sw6p"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <img
-                  src="https://img.youtube.com/vi/cSBDn6gM2Fc/hqdefault.jpg"
-                  alt="PK XD PORTAL video"
-                  loading="lazy"
-                />
-                <span class="video-card-title">PK XD Update Watch</span>
-              </a>
-
-              <a
-                class="video-card"
-                href="https://youtube.com/shorts/8-JdJ_r6qZQ?si=lFu3fKhWuJ8_ozTt"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <img
-                  src="https://img.youtube.com/vi/8-JdJ_r6qZQ/hqdefault.jpg"
-                  alt="PK XD PORTAL video"
-                  loading="lazy"
-                />
-                <span class="video-card-title">PK XD Fan Theory</span>
-              </a>
-            </div>
+            <div class="video-grid"></div>
           </section>
         </div>
       </section>
 
       <section id="communityTheoriesSection" class="app-section">
-        <div class="user-theories">
-          <div class="section-head compact">
+        <div class="community-layout">
+          <section class="theory-compose glass-panel">
+            <div class="section-eyebrow">PK XD PORTAL</div>
             <h2 data-i18n="communityTheoriesTitle">Community Theories</h2>
+            <p data-i18n="communityTheoriesText">Share your theory about the next PK XD update.</p>
 
-            <p data-i18n="communityTheoriesText">
-              Share your theory about the next PK XD update.
-            </p>
-          </div>
+            <form id="theoryForm" class="theory-form">
+              <label class="input-shell">
+                <span class="input-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm-7 8a7 7 0 0 1 14 0"/></svg>
+                </span>
+                <input type="text" id="theoryName" maxlength="18" placeholder="Your name" autocomplete="off" required />
+              </label>
 
-          <form id="theoryForm" class="theory-form">
-            <input
-              type="text"
-              id="theoryName"
-              maxlength="18"
-              placeholder="Your name"
-              autocomplete="off"
-              required
-            />
+              <label class="textarea-shell">
+                <textarea id="theoryText" maxlength="500" placeholder="What do you think the next update will be about?" required></textarea>
+                <div class="theory-counter"><span id="theoryCounter">0 / 500</span></div>
+              </label>
 
-            <textarea
-              id="theoryText"
-              maxlength="500"
-              placeholder="What do you think the next update will be about?"
-              required
-            ></textarea>
+              <button type="submit" id="theorySubmitBtn" class="submit-theory-btn" data-i18n="submitTheoryBtn">Submit Theory</button>
+            </form>
 
-            <button type="submit" id="theorySubmitBtn" data-i18n="submitTheoryBtn">
-              Submit Theory
-            </button>
+            <p class="comments-note" data-i18n="theoryNote">Fan theories are public after sending. Please stay respectful.</p>
+          </section>
 
-            <div class="theory-counter">
-              <span id="theoryCounter">0 / 500</span>
+          <section class="theory-feed glass-panel">
+            <div class="feed-head">
+              <div>
+                <span class="section-eyebrow">COMMUNITY FEED</span>
+                <h3 data-i18n="communityTheoriesTitle">Community Theories</h3>
+              </div>
+              <span class="feed-live"><i></i> LIVE</span>
             </div>
-          </form>
 
-          <p class="comments-note" data-i18n="theoryNote">
-            Fan theories are public after sending. Please stay respectful.
-          </p>
-
-          <div id="userTheoriesList" class="user-theories-list">
-            <div class="comment-empty" data-i18n="theoriesComingSoon">
-              No theories yet. Be the first to share one.
+            <div id="userTheoriesList" class="user-theories-list">
+              <div class="comment-empty" data-i18n="theoriesComingSoon">No theories yet. Be the first to share one.</div>
             </div>
-          </div>
+          </section>
         </div>
       </section>
 
-      <details class="site-info">
+      <details class="site-info glass-panel">
         <summary data-i18n="fanProjectInfoTitle">Fan Project Info</summary>
-
         <div class="site-info-content">
-          <p data-i18n="disclaimer">
-            This is a fan-made countdown project created by PK XD PORTAL for the community.
-            PK XD and related assets belong to Afterverse. This website is not official and is not affiliated with Afterverse.
-          </p>
-
-          <p data-i18n="dateNote">
-            The countdown date is based on community speculation and previous update patterns.
-            Dates may change if official information is announced.
-          </p>
-
-          <p data-i18n="feedbackText">
-            For feedback, questions or contact requests, please use one of our social links above.
-          </p>
-
-          <p data-i18n="afterverseContact">
-            If requested by Afterverse, we are happy to make adjustments to keep this project respectful and community-friendly.
-          </p>
+          <p data-i18n="disclaimer">This is a fan-made countdown project created by PK XD PORTAL for the community. PK XD and related assets belong to Afterverse. This website is not official and is not affiliated with Afterverse.</p>
+          <p data-i18n="dateNote">The countdown date is based on community speculation and previous update patterns. Dates may change if official information is announced.</p>
+          <p data-i18n="feedbackText">For feedback, questions or contact requests, please use one of our social links above.</p>
+          <p data-i18n="afterverseContact">If requested by Afterverse, we are happy to make adjustments to keep this project respectful and community-friendly.</p>
         </div>
       </details>
-    </section>
+    </div>
   </main>
 
-  <script src="translations.js?v=74"></script>
-  <script src="script.js?v=74"></script>
+  <div id="portalToast" class="portal-toast" role="status" aria-live="polite"></div>
+
+  <script src="translations.js?v=75"></script>
+  <script src="script.js?v=75"></script>
 </body>
 </html>
