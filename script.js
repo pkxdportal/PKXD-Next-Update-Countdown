@@ -186,24 +186,19 @@ async function initializeOwnerMode() {
 function applyCustomBackground(imageUrl) {
   if (!backgroundLayer) return;
 
-  const gradients = [
-    "radial-gradient(circle at 18% 12%, rgba(124, 233, 255, 0.2), transparent 25%)",
-    "radial-gradient(circle at 82% 18%, rgba(255, 107, 214, 0.17), transparent 26%)",
-    "radial-gradient(circle at 55% 92%, rgba(120, 255, 175, 0.1), transparent 24%)",
-    "linear-gradient(140deg, rgba(5, 6, 17, 0.58), rgba(9, 10, 30, 0.86))"
-  ];
-
   if (imageUrl) {
-    backgroundLayer.style.backgroundImage = `${gradients.join(", ")}, url(${imageUrl})`;
-    backgroundLayer.style.backgroundPosition = "center";
+    backgroundLayer.style.backgroundImage = `url("${imageUrl}")`;
+    backgroundLayer.style.backgroundPosition = "center center";
     backgroundLayer.style.backgroundSize = "cover";
     backgroundLayer.style.backgroundRepeat = "no-repeat";
+    backgroundLayer.style.backgroundAttachment = "fixed";
     backgroundLayer.classList.add("has-custom-bg");
   } else {
     backgroundLayer.style.backgroundImage = "";
     backgroundLayer.style.backgroundPosition = "";
     backgroundLayer.style.backgroundSize = "";
     backgroundLayer.style.backgroundRepeat = "";
+    backgroundLayer.style.backgroundAttachment = "";
     backgroundLayer.classList.remove("has-custom-bg");
   }
 }
