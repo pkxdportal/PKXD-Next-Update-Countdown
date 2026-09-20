@@ -920,10 +920,17 @@ async function getStoredTheories() {
   }
 }
 
+function isLegacyTeamVoteTheory(theory) {
+  const message = String(theory?.message || theory?.text || "").trim();
+  return message.startsWith("__PKXD_TEAM_VOTE__:");
+}
+
 async function renderTheories() {
   if (!userTheoriesList) return;
 
-  const theories = await getStoredTheories();
+  const theories = (await getStoredTheories()).filter(
+    (theory) => !isLegacyTeamVoteTheory(theory)
+  );
 
   if (!theories.length) {
     userTheoriesList.innerHTML = `
