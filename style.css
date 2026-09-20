@@ -15,6 +15,8 @@
   --green: #78ffaf;
   --orange: #ffb35c;
   --danger: #ff6b8a;
+  --accent-red: #ff3f63;
+  --accent-purple: #8a57ff;
   --team-glitch-icon: url("glitch_team_icon.png?v=86");
   --team-nimda-icon: url("nimda_team_icon.png?v=86");
   --radius-xl: 34px;
@@ -349,7 +351,7 @@ svg {
   border: 0;
   border-radius: 999px;
   color: #06111a;
-  background: linear-gradient(110deg, var(--cyan), #a9f7ff 45%, var(--green));
+  background: linear-gradient(110deg, var(--accent-red), #ff6f85 45%, var(--accent-purple));
   font-weight: 950;
   cursor: pointer;
   box-shadow: 0 14px 34px rgba(124,233,255,.2), 0 0 38px rgba(124,233,255,.15);
@@ -466,7 +468,7 @@ svg {
 
 .main-nav-btn.active {
   color: #08111b;
-  background: linear-gradient(120deg, var(--cyan), #aaf3ff 48%, var(--green));
+  background: linear-gradient(120deg, var(--accent-red), #ff6b7f 48%, var(--accent-purple));
   box-shadow: 0 8px 24px rgba(124,233,255,.17);
 }
 
@@ -507,10 +509,10 @@ svg {
 .dock-btn svg { width: 20px; height: 20px; }
 
 .dock-btn:hover {
-  color: var(--cyan);
-  border-color: rgba(124,233,255,.24);
-  background: rgba(124,233,255,.075);
-  box-shadow: 0 8px 22px rgba(0,0,0,.18), 0 0 22px rgba(124,233,255,.08);
+  color: #ff9db0;
+  border-color: rgba(177,107,255,.28);
+  background: linear-gradient(135deg, rgba(255,63,99,.11), rgba(138,87,255,.13));
+  box-shadow: 0 8px 22px rgba(0,0,0,.18), 0 0 22px rgba(138,87,255,.1);
   transform: translateY(-2px);
 }
 
@@ -632,7 +634,7 @@ svg {
 .lang-btn.active {
   color: #07111a;
   border-color: transparent;
-  background: linear-gradient(120deg, var(--cyan), var(--green));
+  background: linear-gradient(120deg, var(--accent-red), var(--accent-purple));
 }
 
 .download-menu,
@@ -895,7 +897,7 @@ body.has-custom-background .floating-menu {
 
 .mode-btn.active {
   color: #07101a;
-  background: linear-gradient(120deg, var(--cyan), #b3f4ff 48%, var(--green));
+  background: linear-gradient(120deg, var(--accent-red), #ff7287 48%, var(--accent-purple));
   box-shadow: 0 8px 24px rgba(124,233,255,.14);
 }
 
@@ -1220,7 +1222,7 @@ body.has-custom-background .floating-menu {
   border: 0;
   border-radius: 15px;
   color: #08111a;
-  background: linear-gradient(135deg, var(--pink), #ffc2ef);
+  background: linear-gradient(135deg, var(--accent-red), var(--accent-purple));
   cursor: pointer;
   box-shadow: 0 10px 24px rgba(255,107,214,.17);
   transition: transform .22s var(--ease), filter .22s ease;
@@ -1308,7 +1310,7 @@ body.has-custom-background .floating-menu {
   transition: transform .2s var(--ease), background .2s ease, border-color .2s ease;
 }
 
-.view-all-btn:hover { transform: translateY(-2px); background: rgba(124,233,255,.1); border-color: rgba(124,233,255,.28); }
+.view-all-btn:hover { transform: translateY(-2px); color: #f4eaff; background: linear-gradient(135deg, rgba(255,63,99,.12), rgba(138,87,255,.15)); border-color: rgba(177,107,255,.3); }
 
 .video-grid {
   display: grid;
@@ -1350,7 +1352,7 @@ body.has-custom-background .floating-menu {
   border: 1px solid rgba(255,255,255,.14);
   border-radius: 14px;
   color: #06101a;
-  background: linear-gradient(135deg, var(--cyan), var(--green));
+  background: linear-gradient(135deg, var(--accent-red), var(--accent-purple));
   box-shadow: 0 10px 22px rgba(0,0,0,.25);
   font-size: 13px;
   transition: transform .25s var(--ease);
@@ -1492,7 +1494,7 @@ body.has-custom-background .theory-feed {
   border: 0;
   border-radius: 16px;
   color: #061019;
-  background: linear-gradient(110deg, var(--cyan), #b8f6ff 48%, var(--green));
+  background: linear-gradient(110deg, var(--accent-red), #ff7085 48%, var(--accent-purple));
   font-size: 12px;
   font-weight: 950;
   cursor: pointer;
@@ -1500,7 +1502,7 @@ body.has-custom-background .theory-feed {
   transition: transform .22s var(--ease), filter .22s ease, box-shadow .22s ease;
 }
 
-.submit-theory-btn:hover { transform: translateY(-3px); filter: brightness(1.05); box-shadow: 0 18px 34px rgba(124,233,255,.18); }
+.submit-theory-btn:hover { transform: translateY(-3px); filter: brightness(1.05); box-shadow: 0 18px 34px rgba(138,87,255,.22); }
 .submit-theory-btn:disabled { opacity: .55; cursor: default; transform: none; }
 
 .comments-note {
@@ -1607,16 +1609,16 @@ body.has-custom-background .theory-feed {
 
 .theory-reaction-btn:hover {
   color: #eef6ff;
-  border-color: rgba(124,233,255,.22);
-  background: rgba(124,233,255,.08);
+  border-color: rgba(177,107,255,.28);
+  background: linear-gradient(135deg, rgba(255,63,99,.09), rgba(138,87,255,.12));
   transform: translateY(-1px);
 }
 
 .theory-reaction-btn.active {
   color: white;
   border-color: rgba(255,255,255,.12);
-  background: linear-gradient(135deg, rgba(124,233,255,.2), rgba(165,124,255,.16), rgba(255,107,214,.12));
-  box-shadow: 0 8px 22px rgba(0,0,0,.18), 0 0 18px rgba(124,233,255,.08);
+  background: linear-gradient(135deg, rgba(255,63,99,.24), rgba(138,87,255,.22));
+  box-shadow: 0 8px 22px rgba(0,0,0,.18), 0 0 18px rgba(138,87,255,.12);
 }
 
 .reaction-icon {
@@ -2486,4 +2488,16 @@ body.near-1 .live-dot { background: var(--orange); box-shadow: 0 0 0 4px rgba(25
     padding-right: 11px;
     font-size: 11px;
   }
+}
+
+
+/* v87 red-purple interaction */
+button:not(.team-vote-btn):active {
+  filter: brightness(1.08) saturate(1.08);
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid rgba(177,107,255,.78);
+  outline-offset: 3px;
 }
