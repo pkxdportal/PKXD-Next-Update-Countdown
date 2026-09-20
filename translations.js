@@ -1,6 +1,6 @@
 const translations = {
   en: {
-    eventDate: "JULY 30, 2026 • 09:00 NEW YORK",
+    eventDate: "NEXT UPDATE DATE • FAN ESTIMATE",
     titleTop: "Until",
     titleMain: "Next PK XD Update",
     heroSubtitle: "A fan-made countdown for the next PK XD update.",
@@ -46,7 +46,7 @@ const translations = {
 
     fanProjectInfoTitle: "Fan Project Info",
     disclaimer: "This is a fan-made countdown project created by PK XD PORTAL for the community. PK XD and related assets belong to Afterverse. This website is not official and is not affiliated with Afterverse.",
-    dateNote: "The countdown date is currently set to July 30, 2026 based on community information and update expectations. Dates may change if official information is announced.",
+    dateNote: "The countdown date is calculated automatically from the expected three-week update cycle. It may change if official information is announced.",
     feedbackText: "For feedback, questions or contact requests, please use one of our social links above.",
     afterverseContact: "If requested by Afterverse, we are happy to make adjustments to keep this project respectful and community-friendly.",
 
@@ -65,7 +65,7 @@ const translations = {
   },
 
   ru: {
-    eventDate: "30 ИЮЛЯ 2026 • 16:00 МОСКВА",
+    eventDate: "ДАТА СЛЕДУЮЩЕГО ОБНОВЛЕНИЯ • ФАНАТСКАЯ ОЦЕНКА",
     titleTop: "До",
     titleMain: "следующего обновления PK XD",
     heroSubtitle: "Фанатский отсчёт до следующего обновления PK XD.",
@@ -111,7 +111,7 @@ const translations = {
 
     fanProjectInfoTitle: "Информация о фан-проекте",
     disclaimer: "Это фанатский проект отсчёта, созданный PK XD PORTAL для сообщества. PK XD и связанные материалы принадлежат Afterverse. Этот сайт не является официальным и не связан с Afterverse.",
-    dateNote: "Дата отсчёта сейчас установлена на 30 июля 2026 года на основе информации сообщества и ожиданий обновления. Дата может измениться, если появится официальная информация.",
+    dateNote: "Дата отсчёта рассчитывается автоматически по ожидаемому трёхнедельному циклу обновлений. Она может измениться, если появится официальная информация.",
     feedbackText: "Для обратной связи, вопросов или связи с нами используйте одну из социальных ссылок выше.",
     afterverseContact: "Если Afterverse попросит внести изменения, мы готовы всё скорректировать, чтобы проект оставался уважительным и дружелюбным к сообществу.",
 
@@ -132,7 +132,7 @@ const translations = {
 
 const languageOverrides = {
   de: {
-    eventDate: "30. JULI 2026 • 15:00 BERLIN",
+    eventDate: "NÄCHSTES UPDATE • FAN-EINSCHÄTZUNG",
     titleTop: "Bis",
     titleMain: "zum nächsten PK XD Update",
     heroSubtitle: "Ein Fan-Countdown für das nächste PK XD Update.",
@@ -168,7 +168,7 @@ const languageOverrides = {
     theoryNote: "Fan-Theorien sind nach dem Senden öffentlich. Bitte bleib respektvoll.",
     commentNamePlaceholder: "Dein Name",
     fanProjectInfoTitle: "Fan-Projekt-Info",
-    dateNote: "Das Countdown-Datum ist aktuell auf den 30. Juli 2026 gesetzt, basierend auf Community-Informationen und Update-Erwartungen. Daten können sich ändern, wenn offizielle Informationen angekündigt werden.",
+    dateNote: "Das Countdown-Datum wird automatisch anhand des erwarteten Drei-Wochen-Updatezyklus berechnet. Es kann sich ändern, wenn offizielle Informationen erscheinen.",
     feedbackText: "Für Feedback, Fragen oder Kontaktanfragen nutzt bitte einen unserer Social-Links oben.",
     afterverseContact: "Wenn Afterverse Änderungen wünscht, nehmen wir diese gerne vor, damit das Projekt respektvoll und community-freundlich bleibt.",
     downloadTitle: "PK XD herunterladen / aktualisieren",
@@ -181,7 +181,7 @@ const languageOverrides = {
   },
 
   fr: {
-    eventDate: "30 JUILLET 2026 • 15:00 PARIS",
+    eventDate: "PROCHAINE MISE À JOUR • ESTIMATION FAN",
     titleTop: "Jusqu’à",
     titleMain: "la prochaine mise à jour PK XD",
     heroSubtitle: "Un compte à rebours de fan pour la prochaine mise à jour de PK XD.",
@@ -217,7 +217,7 @@ const languageOverrides = {
     theoryNote: "Les théories de fans sont publiques après l’envoi. Merci de rester respectueux.",
     commentNamePlaceholder: "Ton nom",
     fanProjectInfoTitle: "Infos du projet fan",
-    dateNote: "La date du compte à rebours est actuellement fixée au 30 juillet 2026 selon les informations de la communauté et les attentes de mise à jour. Les dates peuvent changer si des informations officielles sont annoncées.",
+    dateNote: "La date du compte à rebours est calculée automatiquement selon le cycle de mise à jour attendu de trois semaines. Elle peut changer si des informations officielles sont annoncées.",
     feedbackText: "Pour des retours, des questions ou des demandes de contact, utilisez l’un de nos liens sociaux ci-dessus.",
     afterverseContact: "Si Afterverse demande des modifications, nous serons heureux de les effectuer afin de garder ce projet respectueux et adapté à la communauté.",
     downloadTitle: "Télécharger / Mettre à jour PK XD",
@@ -230,7 +230,7 @@ const languageOverrides = {
   },
 
   pl: {
-    eventDate: "30 LIPCA 2026 • 15:00 WARSZAWA",
+    eventDate: "NASTĘPNA AKTUALIZACJA • SZACUNEK FANÓW",
     titleTop: "Do",
     titleMain: "następnej aktualizacji PK XD",
     heroSubtitle: "Fanowskie odliczanie do następnej aktualizacji PK XD.",
@@ -266,7 +266,7 @@ const languageOverrides = {
     theoryNote: "Teorie fanów są publiczne po wysłaniu. Zachowaj szacunek.",
     commentNamePlaceholder: "Twoje imię",
     fanProjectInfoTitle: "Informacje o projekcie fanowskim",
-    dateNote: "Data odliczania jest obecnie ustawiona na 30 lipca 2026 na podstawie informacji społeczności i oczekiwań aktualizacji. Daty mogą się zmienić, jeśli pojawią się oficjalne informacje.",
+    dateNote: "Data odliczania jest obliczana automatycznie na podstawie oczekiwanego trzytygodniowego cyklu aktualizacji. Może się zmienić, jeśli pojawią się oficjalne informacje.",
     feedbackText: "W sprawie opinii, pytań lub kontaktu skorzystaj z jednego z naszych linków społecznościowych powyżej.",
     afterverseContact: "Jeśli Afterverse poprosi o zmiany, chętnie je wprowadzimy, aby projekt pozostał pełen szacunku i przyjazny społeczności.",
     downloadTitle: "Pobierz / Zaktualizuj PK XD",
@@ -279,7 +279,7 @@ const languageOverrides = {
   },
 
   pt: {
-    eventDate: "30 JULHO 2026 • 10:00 BRASÍLIA",
+    eventDate: "PRÓXIMA ATUALIZAÇÃO • ESTIMATIVA DOS FÃS",
     titleTop: "Até",
     titleMain: "a próxima atualização do PK XD",
     heroSubtitle: "Contagem regressiva de fãs para a próxima atualização do PK XD.",
@@ -315,7 +315,7 @@ const languageOverrides = {
     theoryNote: "As teorias de fãs ficam públicas após o envio. Seja respeitoso.",
     commentNamePlaceholder: "Seu nome",
     fanProjectInfoTitle: "Informações do projeto de fãs",
-    dateNote: "A data da contagem regressiva está atualmente definida para 30 de julho de 2026 com base em informações da comunidade e expectativas de atualização. As datas podem mudar se informações oficiais forem anunciadas.",
+    dateNote: "A data da contagem regressiva é calculada automaticamente com base no ciclo esperado de atualizações de três semanas. Ela pode mudar se informações oficiais forem anunciadas.",
     feedbackText: "Para feedback, perguntas ou pedidos de contato, use um dos nossos links sociais acima.",
     afterverseContact: "Se a Afterverse solicitar alterações, teremos prazer em ajustar o projeto para mantê-lo respeitoso e amigável para a comunidade.",
     downloadTitle: "Baixar / Atualizar PK XD",
@@ -328,7 +328,7 @@ const languageOverrides = {
   },
 
   tr: {
-    eventDate: "30 TEMMUZ 2026 • 16:00 İSTANBUL",
+    eventDate: "SONRAKİ GÜNCELLEME • HAYRAN TAHMİNİ",
     titleTop: "Kalan Süre",
     titleMain: "sonraki PK XD güncellemesi",
     heroSubtitle: "Sonraki PK XD güncellemesi için hayran geri sayımı.",
@@ -364,7 +364,7 @@ const languageOverrides = {
     theoryNote: "Hayran teorileri gönderildikten sonra herkese açık olur. Lütfen saygılı ol.",
     commentNamePlaceholder: "Adın",
     fanProjectInfoTitle: "Hayran projesi bilgisi",
-    dateNote: "Geri sayım tarihi şu anda topluluk bilgileri ve güncelleme beklentilerine göre 30 Temmuz 2026 olarak ayarlanmıştır. Resmi bilgi açıklanırsa tarihler değişebilir.",
+    dateNote: "Geri sayım tarihi beklenen üç haftalık güncelleme döngüsüne göre otomatik olarak hesaplanır. Resmî bilgi açıklanırsa değişebilir.",
     feedbackText: "Geri bildirim, sorular veya iletişim talepleri için lütfen yukarıdaki sosyal bağlantılarımızdan birini kullanın.",
     afterverseContact: "Afterverse tarafından talep edilirse, bu projeyi saygılı ve topluluk dostu tutmak için gerekli düzenlemeleri yapmaktan memnuniyet duyarız.",
     downloadTitle: "PK XD indir / güncelle",
@@ -377,7 +377,7 @@ const languageOverrides = {
   },
 
   id: {
-    eventDate: "30 JULI 2026 • 20:00 JAKARTA",
+    eventDate: "UPDATE BERIKUTNYA • PERKIRAAN PENGGEMAR",
     titleTop: "Menuju",
     titleMain: "update PK XD berikutnya",
     heroSubtitle: "Hitung mundur penggemar untuk update PK XD berikutnya.",
@@ -413,7 +413,7 @@ const languageOverrides = {
     theoryNote: "Teori penggemar akan menjadi publik setelah dikirim. Harap tetap sopan.",
     commentNamePlaceholder: "Nama kamu",
     fanProjectInfoTitle: "Info proyek penggemar",
-    dateNote: "Tanggal hitung mundur saat ini ditetapkan pada 30 Juli 2026 berdasarkan informasi komunitas dan ekspektasi update. Tanggal dapat berubah jika informasi resmi diumumkan.",
+    dateNote: "Tanggal hitung mundur dihitung otomatis berdasarkan siklus update tiga minggu yang diperkirakan. Tanggal dapat berubah jika informasi resmi diumumkan.",
     feedbackText: "Untuk masukan, pertanyaan, atau permintaan kontak, silakan gunakan salah satu tautan sosial kami di atas.",
     afterverseContact: "Jika diminta oleh Afterverse, kami dengan senang hati akan melakukan penyesuaian agar proyek ini tetap sopan dan ramah komunitas.",
     downloadTitle: "Unduh / Perbarui PK XD",
@@ -426,7 +426,7 @@ const languageOverrides = {
   },
 
   es: {
-    eventDate: "30 JULIO 2026 • 07:00 MEXICO CITY",
+    eventDate: "PRÓXIMA ACTUALIZACIÓN • ESTIMACIÓN FAN",
     titleTop: "Hasta",
     titleMain: "la próxima actualización de PK XD",
     heroSubtitle: "Cuenta regresiva hecha por fans para la próxima actualización de PK XD.",
@@ -462,7 +462,7 @@ const languageOverrides = {
     theoryNote: "Las teorías de fans son públicas después de enviarlas. Mantén el respeto.",
     commentNamePlaceholder: "Tu nombre",
     fanProjectInfoTitle: "Información del proyecto fan",
-    dateNote: "La fecha de la cuenta regresiva está establecida actualmente para el 30 de julio de 2026 según información de la comunidad y expectativas de actualización. Las fechas pueden cambiar si se anuncia información oficial.",
+    dateNote: "La fecha de la cuenta regresiva se calcula automáticamente según el ciclo esperado de actualizaciones de tres semanas. Puede cambiar si se anuncia información oficial.",
     feedbackText: "Para comentarios, preguntas o solicitudes de contacto, usa uno de nuestros enlaces sociales de arriba.",
     afterverseContact: "Si Afterverse lo solicita, estaremos encantados de hacer ajustes para mantener este proyecto respetuoso y amigable para la comunidad.",
     downloadTitle: "Descargar / Actualizar PK XD",
@@ -475,7 +475,7 @@ const languageOverrides = {
   },
 
   hi: {
-    eventDate: "30 जुलाई 2026 • 18:30 NEW DELHI",
+    eventDate: "अगला अपडेट • फैन अनुमान",
     titleTop: "शुरू होने तक",
     titleMain: "अगला PK XD अपडेट",
     heroSubtitle: "अगले PK XD अपडेट के लिए फैन काउंटडाउन।",
@@ -511,7 +511,7 @@ const languageOverrides = {
     theoryNote: "भेजने के बाद फैन थ्योरी सार्वजनिक होती हैं। कृपया सम्मानजनक रहें।",
     commentNamePlaceholder: "आपका नाम",
     fanProjectInfoTitle: "फैन प्रोजेक्ट जानकारी",
-    dateNote: "काउंटडाउन की तारीख अभी समुदाय की जानकारी और अपडेट अपेक्षाओं के आधार पर 30 जुलाई 2026 तय की गई है। आधिकारिक जानकारी आने पर तारीख बदल सकती है।",
+    dateNote: "काउंटडाउन की तारीख अनुमानित तीन-सप्ताह के अपडेट चक्र के आधार पर अपने आप तय होती है। आधिकारिक जानकारी आने पर यह बदल सकती है।",
     feedbackText: "फीडबैक, सवालों या संपर्क अनुरोधों के लिए कृपया ऊपर दिए गए हमारे किसी सोशल लिंक का उपयोग करें।",
     afterverseContact: "अगर Afterverse अनुरोध करता है, तो हम इस प्रोजेक्ट को सम्मानजनक और कम्युनिटी-फ्रेंडली बनाए रखने के लिए बदलाव करने में खुशी महसूस करेंगे।",
     downloadTitle: "PK XD डाउनलोड / अपडेट करें",
