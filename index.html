@@ -8,7 +8,7 @@
   />
   <meta name="theme-color" content="#07091b" />
   <title>PK XD Next Update Countdown</title>
-  <link rel="stylesheet" href="style.css?v=75" />
+  <link rel="stylesheet" href="style.css?v=76" />
 </head>
 
 <body>
@@ -105,6 +105,20 @@
           <div class="menu-kicker" data-i18n="downloadTitle">Download / Update PK XD</div>
           <a href="https://play.google.com/store/apps/details?id=com.movile.playkids.pkxd" target="_blank" rel="noopener noreferrer" data-i18n="googlePlayBtn">Google Play</a>
           <a href="https://apps.apple.com/us/app/pk-xd-fun-friends-games/id1449842729" target="_blank" rel="noopener noreferrer" data-i18n="appStoreBtn">App Store</a>
+        </div>
+      </div>
+
+
+      <div class="action-block background-wrapper">
+        <button type="button" id="backgroundToggle" class="dock-btn" aria-label="Change background image">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7a2 2 0 0 1 2-2h3l1.2 1.4H18a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7Z"/><path d="m8 15 2.5-2.5 2 2L15.5 11 18 14"/></svg>
+        </button>
+        <span class="action-label" data-i18n="backgroundLabel">Background</span>
+
+        <div id="backgroundMenu" class="floating-menu background-menu">
+          <div class="menu-kicker" data-i18n="backgroundTitle">Portal Background</div>
+          <button type="button" id="uploadBackgroundBtn" class="menu-action-btn" data-i18n="uploadBackgroundBtn">Upload background</button>
+          <button type="button" id="resetBackgroundBtn" class="menu-action-btn" data-i18n="resetBackgroundBtn">Reset background</button>
         </div>
       </div>
 
@@ -330,9 +344,11 @@
     </div>
   </main>
 
+  <input type="file" id="backgroundFileInput" accept="image/*" hidden />
+
   <div id="portalToast" class="portal-toast" role="status" aria-live="polite"></div>
 
-  <script src="translations.js?v=75"></script>
-  <script src="script.js?v=75"></script>
+  <script src="translations.js?v=76"></script>
+  <script src="script.js?v=76"></script>
 </body>
 </html>
