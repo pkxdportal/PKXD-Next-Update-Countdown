@@ -402,8 +402,7 @@ async function getCommunityTeamVotes() {
   const url =
     COMMENTS_API_URL +
     "?cache=" + Date.now() +
-    "&room=" + encodeURIComponent(TEAM_VOTE_ROOM) +
-    "&userKey=" + encodeURIComponent(COMMENT_USER_KEY);
+    "&room=" + encodeURIComponent(TEAM_VOTE_ROOM);
 
   const response = await fetch(url);
   if (!response.ok) throw new Error("Could not load team votes");
@@ -416,13 +415,16 @@ function calculateTeamVoteStats(records) {
   const latestVoteByUser = new Map();
 
   records.forEach((record, index) => {
+    const recordRoom = String(record?.room || "").trim();
+    if (recordRoom && recordRoom !== TEAM_VOTE_ROOM) return;
+
     const team = normalizeTeamVote(
-      record?.message || record?.team || record?.vote || record?.text
+      record?.team || record?.message || record?.vote || record?.text
     );
 
     const voter = String(
-      record?.name ||
       record?.userKey ||
+      record?.name ||
       record?.voter ||
       record?.author ||
       ""
@@ -430,10 +432,20 @@ function calculateTeamVoteStats(records) {
 
     if (!team || !voter) return;
 
-    latestVoteByUser.set(voter, {
-      team,
-      index
-    });
+    const rawTime =
+      record?.time ||
+      record?.createdAt ||
+      record?.timestamp ||
+      record?.date ||
+      "";
+
+    const parsedTime = new Date(rawTime).getTime();
+    const order = Number.isFinite(parsedTime) ? parsedTime : index;
+    const previous = latestVoteByUser.get(voter);
+
+    if (!previous || order >= previous.order) {
+      latestVoteByUser.set(voter, { team, order });
+    }
   });
 
   let glitch = 0;
@@ -444,13 +456,8 @@ function calculateTeamVoteStats(records) {
     if (vote.team === "nimda") nimda += 1;
   });
 
-  return {
-    glitch,
-    nimda,
-    total: glitch + nimda
-  };
+  return { glitch, nimda, total: glitch + nimda };
 }
-
 function paintTeamVoteStats(stats) {
   const total = Number(stats?.total || 0);
   const glitch = Number(stats?.glitch || 0);
@@ -530,9 +537,8 @@ async function sendTeamVote(team) {
       })
     });
 
-    window.setTimeout(() => {
-      renderTeamVote();
-    }, 1800);
+    window.setTimeout(() => renderTeamVote(), 1400);
+    window.setTimeout(() => renderTeamVote(), 3200);
   } catch (error) {
     console.warn("Team vote could not be sent:", error);
   } finally {
@@ -1321,7 +1327,7 @@ async function bootPortal() {
 
   countdownInterval = setInterval(updateCountdown, 1000);
   setInterval(renderTheories, 60000);
-  setInterval(renderTeamVote, 30000);
+  setInterval(renderTeamVote, 15000);
 }
 
 bootPortal();
