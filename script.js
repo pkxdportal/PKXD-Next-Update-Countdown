@@ -1,5 +1,22 @@
-const targetDate = new Date("2026-07-30T13:00:00Z");
-const eventStartDate = new Date("2026-07-09T00:00:00Z");
+const FIRST_TARGET_DATE = new Date("2026-07-30T13:00:00Z");
+const UPDATE_CYCLE_DAYS = 21;
+const UPDATE_CYCLE_MS = UPDATE_CYCLE_DAYS * 24 * 60 * 60 * 1000;
+
+const UPDATE_DATE_DISPLAY = {
+  en: { locale: "en-US", timeZone: "America/New_York", city: "NEW YORK" },
+  ru: { locale: "ru-RU", timeZone: "Europe/Moscow", city: "МОСКВА" },
+  de: { locale: "de-DE", timeZone: "Europe/Berlin", city: "BERLIN" },
+  fr: { locale: "fr-FR", timeZone: "Europe/Paris", city: "PARIS" },
+  pl: { locale: "pl-PL", timeZone: "Europe/Warsaw", city: "WARSZAWA" },
+  pt: { locale: "pt-BR", timeZone: "America/Sao_Paulo", city: "BRASÍLIA" },
+  tr: { locale: "tr-TR", timeZone: "Europe/Istanbul", city: "İSTANBUL" },
+  id: { locale: "id-ID", timeZone: "Asia/Jakarta", city: "JAKARTA" },
+  es: { locale: "es-MX", timeZone: "America/Mexico_City", city: "MEXICO CITY" },
+  hi: { locale: "hi-IN", timeZone: "Asia/Kolkata", city: "NEW DELHI" }
+};
+
+let targetDate = new Date(FIRST_TARGET_DATE.getTime());
+let eventStartDate = new Date(targetDate.getTime() - UPDATE_CYCLE_MS);
 
 let currentLang = "en";
 let lastSeconds = null;
@@ -31,10 +48,13 @@ const PORTAL_VIDEOS = [
 ];
 
 const timer = document.getElementById("timer");
-const daysEl = document.getElementById("days");
-const hoursEl = document.getElementById("hours");
-const minutesEl = document.getElementById("minutes");
-const secondsEl = document.getElementById("seconds");
+const countdownTimerMarkup = timer?.innerHTML || "";
+
+let daysEl = document.getElementById("days");
+let hoursEl = document.getElementById("hours");
+let minutesEl = document.getElementById("minutes");
+let secondsEl = document.getElementById("seconds");
+let isReleaseMessageVisible = false;
 
 const langToggle = document.getElementById("langToggle");
 const languageMenu = document.getElementById("languageMenu");
@@ -106,24 +126,134 @@ function formatTheoryTime(timestamp) {
   return `${diffDays}d ago`;
 }
 
+function getNextMondayAfter(date) {
+  const nextMonday = new Date(date);
+  nextMonday.setHours(0, 0, 0, 0);
+
+  const day = nextMonday.getDay();
+  const daysUntilMonday = (8 - day) % 7 || 7;
+
+  nextMonday.setDate(nextMonday.getDate() + daysUntilMonday);
+  return nextMonday;
+}
+
+function getCurrentUpdateCycle(now) {
+  const firstTargetTime = FIRST_TARGET_DATE.getTime();
+  const nowTime = now.getTime();
+
+  if (nowTime < firstTargetTime) {
+    const target = new Date(firstTargetTime);
+
+    return {
+      target,
+      start: new Date(target.getTime() - UPDATE_CYCLE_MS),
+      updateReleased: false
+    };
+  }
+
+  const completedCycles = Math.floor(
+    (nowTime - firstTargetTime) / UPDATE_CYCLE_MS
+  );
+
+  const latestTarget = new Date(
+    firstTargetTime + completedCycles * UPDATE_CYCLE_MS
+  );
+
+  const restartDate = getNextMondayAfter(latestTarget);
+
+  if (nowTime < restartDate.getTime()) {
+    return {
+      target: latestTarget,
+      start: new Date(latestTarget.getTime() - UPDATE_CYCLE_MS),
+      updateReleased: true
+    };
+  }
+
+  return {
+    target: new Date(latestTarget.getTime() + UPDATE_CYCLE_MS),
+    start: restartDate,
+    updateReleased: false
+  };
+}
+
+function syncCurrentCycle(now = new Date()) {
+  const cycle = getCurrentUpdateCycle(now);
+
+  targetDate = cycle.target;
+  eventStartDate = cycle.start;
+
+  return cycle;
+}
+
+function formatUpdateDate(date, lang = currentLang) {
+  const config = UPDATE_DATE_DISPLAY[lang] || UPDATE_DATE_DISPLAY.en;
+
+  const datePart = new Intl.DateTimeFormat(config.locale, {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: config.timeZone
+  }).format(date);
+
+  const timePart = new Intl.DateTimeFormat(config.locale, {
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23",
+    timeZone: config.timeZone
+  }).format(date);
+
+  return `${datePart.toLocaleUpperCase(config.locale)} • ${timePart} ${config.city}`;
+}
+
+function updateDynamicEventDate() {
+  const eventDateEl = document.querySelector('[data-i18n="eventDate"]');
+
+  if (!eventDateEl || !targetDate) return;
+
+  eventDateEl.textContent = formatUpdateDate(targetDate);
+}
+
+function restoreCountdownTimer() {
+  if (!timer || !isReleaseMessageVisible) return;
+
+  timer.innerHTML = countdownTimerMarkup;
+
+  daysEl = document.getElementById("days");
+  hoursEl = document.getElementById("hours");
+  minutesEl = document.getElementById("minutes");
+  secondsEl = document.getElementById("seconds");
+
+  isReleaseMessageVisible = false;
+  lastSeconds = null;
+}
+
+function showUpdateReleased() {
+  if (!timer) return;
+
+  if (!isReleaseMessageVisible) {
+    timer.innerHTML = `<div class="started"></div>`;
+    isReleaseMessageVisible = true;
+  }
+
+  const startedEl = timer.querySelector(".started");
+  if (startedEl) startedEl.textContent = getText("started");
+}
+
 function updateCountdown() {
   const now = new Date();
-  const distance = targetDate.getTime() - now.getTime();
+  const cycle = syncCurrentCycle(now);
 
-  if (distance <= 0) {
-    if (countdownInterval) clearInterval(countdownInterval);
+  updateDynamicEventDate();
 
-    if (timer) {
-      timer.innerHTML = `
-        <div class="started">
-          ${getText("started")}
-        </div>
-      `;
-    }
-
+  if (cycle.updateReleased) {
+    showUpdateReleased();
     updateProgress();
     return;
   }
+
+  restoreCountdownTimer();
+
+  const distance = targetDate.getTime() - now.getTime();
 
   const days = Math.floor(distance / (1000 * 60 * 60 * 24));
   const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
@@ -155,6 +285,13 @@ function updateProgress() {
 
   const total = end - start;
   const passed = now - start;
+
+  if (total <= 0) {
+    progressFill.style.width = "100%";
+    progressPercent.textContent = "100%";
+    progressText.textContent = getText("progressText");
+    return;
+  }
 
   let percent = Math.round((passed / total) * 100);
   percent = Math.max(0, Math.min(100, percent));
@@ -205,6 +342,8 @@ function setLanguage(lang) {
     button.classList.toggle("active", button.dataset.lang === currentLang);
   });
 
+  syncCurrentCycle();
+  updateDynamicEventDate();
   updateProgress();
   updateTheoryCounter();
   renderVideoHub();
