@@ -77,6 +77,7 @@ const progressPanel = document.getElementById("progressPanel");
 const progressFill = document.getElementById("progressFill");
 const progressPercent = document.getElementById("progressPercent");
 const progressText = document.getElementById("progressText");
+const progressRingValue = document.querySelector(".progress-ring-value");
 
 const theoryName = document.getElementById("theoryName");
 const theoryText = document.getElementById("theoryText");
@@ -87,6 +88,8 @@ const userTheoriesList = document.getElementById("userTheoriesList");
 
 const dailyIntro = document.getElementById("dailyIntro");
 const skipIntroBtn = document.getElementById("skipIntroBtn");
+const portalToast = document.getElementById("portalToast");
+const cursorGlow = document.querySelector(".cursor-glow");
 
 const COMMENT_USER_KEY =
   localStorage.getItem("commentUserKey") ||
@@ -105,6 +108,21 @@ function escapeHtml(value) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
+}
+
+let toastTimeout = null;
+
+function showToast(message) {
+  if (!portalToast || !message) return;
+
+  portalToast.textContent = message;
+  portalToast.classList.add("show");
+
+  if (toastTimeout) window.clearTimeout(toastTimeout);
+
+  toastTimeout = window.setTimeout(() => {
+    portalToast.classList.remove("show");
+  }, 2200);
 }
 
 function formatTheoryTime(timestamp) {
@@ -286,19 +304,25 @@ function updateProgress() {
   const total = end - start;
   const passed = now - start;
 
-  if (total <= 0) {
-    progressFill.style.width = "100%";
-    progressPercent.textContent = "100%";
-    progressText.textContent = getText("progressText");
-    return;
-  }
+  let percent = 100;
 
-  let percent = Math.round((passed / total) * 100);
-  percent = Math.max(0, Math.min(100, percent));
+  if (total > 0) {
+    percent = Math.round((passed / total) * 100);
+    percent = Math.max(0, Math.min(100, percent));
+  }
 
   progressFill.style.width = percent + "%";
   progressPercent.textContent = percent + "%";
   progressText.textContent = getText("progressText");
+
+  if (progressRingValue) {
+    const radius = Number(progressRingValue.getAttribute("r")) || 66;
+    const circumference = 2 * Math.PI * radius;
+    const offset = circumference * (1 - percent / 100);
+
+    progressRingValue.style.strokeDasharray = String(circumference);
+    progressRingValue.style.strokeDashoffset = String(offset);
+  }
 }
 
 function updateAtmosphere(daysLeft) {
@@ -638,10 +662,10 @@ if (shareBtn) {
 
     try {
       await navigator.clipboard.writeText(url);
-      alert(getText("shareCopied"));
+      showToast(getText("shareCopied"));
     } catch (error) {
       console.warn("Could not copy link:", error);
-      alert(getText("shareCopied"));
+      showToast(getText("shareCopied"));
     }
   });
 }
@@ -674,6 +698,41 @@ mainNavButtons.forEach((button) => {
   });
 });
 
+document.querySelectorAll("[data-section-jump]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const sectionId = button.dataset.sectionJump;
+    if (sectionId) setActiveSection(sectionId);
+  });
+});
+
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+const canUsePointerEffects = window.matchMedia("(pointer: fine)");
+
+if (cursorGlow && canUsePointerEffects.matches && !prefersReducedMotion.matches) {
+  window.addEventListener("pointermove", (event) => {
+    cursorGlow.style.left = event.clientX + "px";
+    cursorGlow.style.top = event.clientY + "px";
+  }, { passive: true });
+}
+
+if (canUsePointerEffects.matches && !prefersReducedMotion.matches) {
+  document.querySelectorAll("[data-tilt]").forEach((card) => {
+    card.addEventListener("pointermove", (event) => {
+      const rect = card.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width - 0.5;
+      const y = (event.clientY - rect.top) / rect.height - 0.5;
+      const rotateX = y * -1.8;
+      const rotateY = x * 1.8;
+
+      card.style.transform = `perspective(1100px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    });
+
+    card.addEventListener("pointerleave", () => {
+      card.style.transform = "";
+    });
+  });
+}
+
 if (theoryName) {
   const savedName = localStorage.getItem("portalUserName") || "";
 
@@ -699,7 +758,7 @@ if (theoryForm && theoryName && theoryText) {
     const lastTheoryDate = localStorage.getItem("lastTheoryDate");
 
     if (lastTheoryDate === today) {
-      alert(getText("oneTheoryPerDay"));
+      showToast(getText("oneTheoryPerDay"));
       return;
     }
 
