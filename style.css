@@ -841,10 +841,10 @@ body.has-custom-background .floating-menu {
   margin-bottom: 12px;
   color: #ffffff;
   font-size: clamp(24px, 3vw, 42px);
-  font-weight: 950;
+  font-weight: 900;
   line-height: .95;
-  letter-spacing: -.025em;
-  text-transform: none;
+  letter-spacing: .03em;
+  text-transform: uppercase;
   text-shadow: 0 10px 34px rgba(0,0,0,.3), 0 0 28px rgba(138,87,255,.16);
 }
 
@@ -853,8 +853,9 @@ body.has-custom-background .floating-menu {
   color: white;
   font-size: clamp(58px, 7.6vw, 124px);
   line-height: .88;
-  font-weight: 950;
-  letter-spacing: -.07em;
+  font-weight: 900;
+  letter-spacing: -.055em;
+  text-transform: uppercase;
   text-wrap: balance;
   text-shadow: 0 14px 48px rgba(0,0,0,.34), 0 0 52px rgba(138,87,255,.14), 0 0 34px rgba(255,63,99,.1);
 }
