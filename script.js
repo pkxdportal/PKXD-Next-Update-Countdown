@@ -99,6 +99,11 @@ const portalToast = document.getElementById("portalToast");
 const cursorGlow = document.querySelector(".cursor-glow");
 
 const CUSTOM_BACKGROUND_KEY = "portalCustomBackground";
+const OWNER_MODE_KEY = "pkxdPortalOwnerMode";
+const OWNER_QUERY_PARAM = "ownerKey";
+const OWNER_KEY_HASH = "8a66f2428ac63682e0b48c89e142b7c7a762255823e06c47f8d7591c0d12c649";
+const ownerBackgroundControl = document.getElementById("ownerBackgroundControl");
+let isOwnerMode = false;
 const THEORY_REACTIONS_KEY = "portalTheoryReactions";
 const THEORY_REACTION_TYPES = [
   { key: "eyes", icon: "icon-eyes.png", emoji: "👀" },
@@ -141,24 +146,81 @@ function showToast(message) {
 }
 
 
+async function sha256(value) {
+  const bytes = new TextEncoder().encode(String(value || ""));
+  const digest = await crypto.subtle.digest("SHA-256", bytes);
+  return Array.from(new Uint8Array(digest))
+    .map((byte) => byte.toString(16).padStart(2, "0"))
+    .join("");
+}
+
+function setOwnerMode(enabled) {
+  isOwnerMode = Boolean(enabled);
+
+  if (ownerBackgroundControl) {
+    ownerBackgroundControl.hidden = !isOwnerMode;
+  }
+}
+
+async function initializeOwnerMode() {
+  const params = new URLSearchParams(window.location.search);
+  const ownerKey = params.get(OWNER_QUERY_PARAM);
+
+  if (ownerKey && window.crypto?.subtle) {
+    try {
+      const hash = await sha256(ownerKey);
+      if (hash === OWNER_KEY_HASH) localStorage.setItem(OWNER_MODE_KEY, "1");
+    } catch (error) {
+      console.warn("Owner mode could not be verified:", error);
+    }
+
+    params.delete(OWNER_QUERY_PARAM);
+    const cleanQuery = params.toString();
+    const cleanUrl = window.location.pathname + (cleanQuery ? `?${cleanQuery}` : "") + window.location.hash;
+    window.history.replaceState({}, document.title, cleanUrl);
+  }
+
+  setOwnerMode(localStorage.getItem(OWNER_MODE_KEY) === "1");
+}
+
 function applyCustomBackground(imageUrl) {
   if (!backgroundLayer) return;
 
+  const gradients = [
+    "radial-gradient(circle at 18% 12%, rgba(124, 233, 255, 0.2), transparent 25%)",
+    "radial-gradient(circle at 82% 18%, rgba(255, 107, 214, 0.17), transparent 26%)",
+    "radial-gradient(circle at 55% 92%, rgba(120, 255, 175, 0.1), transparent 24%)",
+    "linear-gradient(140deg, rgba(5, 6, 17, 0.58), rgba(9, 10, 30, 0.86))"
+  ];
+
   if (imageUrl) {
-    backgroundLayer.style.setProperty("--portal-bg-image", `url("${imageUrl}")`);
+    backgroundLayer.style.backgroundImage = `${gradients.join(", ")}, url(${imageUrl})`;
+    backgroundLayer.style.backgroundPosition = "center";
+    backgroundLayer.style.backgroundSize = "cover";
+    backgroundLayer.style.backgroundRepeat = "no-repeat";
     backgroundLayer.classList.add("has-custom-bg");
   } else {
-    backgroundLayer.style.removeProperty("--portal-bg-image");
+    backgroundLayer.style.backgroundImage = "";
+    backgroundLayer.style.backgroundPosition = "";
+    backgroundLayer.style.backgroundSize = "";
+    backgroundLayer.style.backgroundRepeat = "";
     backgroundLayer.classList.remove("has-custom-bg");
   }
 }
 
 function loadSavedBackground() {
+  if (!isOwnerMode) {
+    applyCustomBackground("");
+    return;
+  }
+
   const savedImage = localStorage.getItem(CUSTOM_BACKGROUND_KEY);
   if (savedImage) applyCustomBackground(savedImage);
 }
 
 function saveCustomBackground(imageUrl) {
+  if (!isOwnerMode) return;
+
   try {
     localStorage.setItem(CUSTOM_BACKGROUND_KEY, imageUrl);
     applyCustomBackground(imageUrl);
@@ -170,9 +232,40 @@ function saveCustomBackground(imageUrl) {
 }
 
 function resetCustomBackground() {
+  if (!isOwnerMode) return;
+
   localStorage.removeItem(CUSTOM_BACKGROUND_KEY);
   applyCustomBackground("");
   showToast(getText("backgroundReset"));
+}
+
+function optimizeBackgroundFile(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = () => reject(reader.error || new Error("File read failed"));
+    reader.onload = () => {
+      const image = new Image();
+      image.onerror = () => reject(new Error("Image load failed"));
+      image.onload = () => {
+        const maxSide = 2560;
+        const scale = Math.min(1, maxSide / Math.max(image.naturalWidth, image.naturalHeight));
+        const width = Math.max(1, Math.round(image.naturalWidth * scale));
+        const height = Math.max(1, Math.round(image.naturalHeight * scale));
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const context = canvas.getContext("2d");
+        if (!context) {
+          reject(new Error("Canvas unavailable"));
+          return;
+        }
+        context.drawImage(image, 0, 0, width, height);
+        resolve(canvas.toDataURL("image/jpeg", 0.86));
+      };
+      image.src = String(reader.result || "");
+    };
+    reader.readAsDataURL(file);
+  });
 }
 
 function getStoredTheoryReactions() {
@@ -785,6 +878,7 @@ if (downloadToggle) {
 
 if (backgroundToggle) {
   backgroundToggle.addEventListener("click", (event) => {
+    if (!isOwnerMode) return;
     event.stopPropagation();
     backgroundMenu?.classList.toggle("open");
     languageMenu?.classList.remove("open");
@@ -795,6 +889,7 @@ if (backgroundToggle) {
 
 if (uploadBackgroundBtn) {
   uploadBackgroundBtn.addEventListener("click", () => {
+    if (!isOwnerMode) return;
     backgroundFileInput?.click();
     backgroundMenu?.classList.remove("open");
   });
@@ -802,23 +897,28 @@ if (uploadBackgroundBtn) {
 
 if (resetBackgroundBtn) {
   resetBackgroundBtn.addEventListener("click", () => {
+    if (!isOwnerMode) return;
     resetCustomBackground();
     backgroundMenu?.classList.remove("open");
   });
 }
 
 if (backgroundFileInput) {
-  backgroundFileInput.addEventListener("change", () => {
+  backgroundFileInput.addEventListener("change", async () => {
+    if (!isOwnerMode) return;
+
     const file = backgroundFileInput.files?.[0];
     if (!file) return;
 
-    const reader = new FileReader();
-    reader.onload = () => {
-      const result = typeof reader.result === "string" ? reader.result : "";
-      if (result) saveCustomBackground(result);
-    };
-    reader.readAsDataURL(file);
-    backgroundFileInput.value = "";
+    try {
+      const optimizedImage = await optimizeBackgroundFile(file);
+      saveCustomBackground(optimizedImage);
+    } catch (error) {
+      console.warn("Background image could not be processed:", error);
+      showToast(getText("backgroundTooLarge"));
+    } finally {
+      backgroundFileInput.value = "";
+    }
   });
 }
 
@@ -1007,15 +1107,20 @@ document.addEventListener("keydown", (event) => {
 
 const savedLang = localStorage.getItem("selectedLang") || "en";
 
-loadSavedBackground();
-setLanguage(savedLang);
-renderVideoHub();
-renderTheories();
-updateCountdown();
-updateTheoryCounter();
-setMode("countdown");
-setActiveSection(activeSection);
-showDailyIntro();
+async function bootPortal() {
+  await initializeOwnerMode();
+  loadSavedBackground();
+  setLanguage(savedLang);
+  renderVideoHub();
+  renderTheories();
+  updateCountdown();
+  updateTheoryCounter();
+  setMode("countdown");
+  setActiveSection(activeSection);
+  showDailyIntro();
 
-countdownInterval = setInterval(updateCountdown, 1000);
-setInterval(renderTheories, 60000);
+  countdownInterval = setInterval(updateCountdown, 1000);
+  setInterval(renderTheories, 60000);
+}
+
+bootPortal();
