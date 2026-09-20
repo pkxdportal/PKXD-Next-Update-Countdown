@@ -62,6 +62,13 @@ const languageMenu = document.getElementById("languageMenu");
 const downloadToggle = document.getElementById("downloadToggle");
 const downloadMenu = document.getElementById("downloadMenu");
 
+const backgroundToggle = document.getElementById("backgroundToggle");
+const backgroundMenu = document.getElementById("backgroundMenu");
+const uploadBackgroundBtn = document.getElementById("uploadBackgroundBtn");
+const resetBackgroundBtn = document.getElementById("resetBackgroundBtn");
+const backgroundFileInput = document.getElementById("backgroundFileInput");
+const backgroundLayer = document.querySelector(".background");
+
 const shareBtn = document.getElementById("shareBtn");
 
 const portalToggle = document.getElementById("portalToggle");
@@ -90,6 +97,14 @@ const dailyIntro = document.getElementById("dailyIntro");
 const skipIntroBtn = document.getElementById("skipIntroBtn");
 const portalToast = document.getElementById("portalToast");
 const cursorGlow = document.querySelector(".cursor-glow");
+
+const CUSTOM_BACKGROUND_KEY = "portalCustomBackground";
+const THEORY_REACTIONS_KEY = "portalTheoryReactions";
+const THEORY_REACTION_TYPES = [
+  { key: "eyes", icon: "icon-eyes.png", emoji: "👀" },
+  { key: "love", icon: "icon-love.png", emoji: "❤️" },
+  { key: "laugh", icon: "icon-laugh.png", emoji: "😂" }
+];
 
 const COMMENT_USER_KEY =
   localStorage.getItem("commentUserKey") ||
@@ -123,6 +138,107 @@ function showToast(message) {
   toastTimeout = window.setTimeout(() => {
     portalToast.classList.remove("show");
   }, 2200);
+}
+
+
+function applyCustomBackground(imageUrl) {
+  if (!backgroundLayer) return;
+
+  if (imageUrl) {
+    backgroundLayer.style.setProperty("--portal-bg-image", `url("${imageUrl}")`);
+    backgroundLayer.classList.add("has-custom-bg");
+  } else {
+    backgroundLayer.style.removeProperty("--portal-bg-image");
+    backgroundLayer.classList.remove("has-custom-bg");
+  }
+}
+
+function loadSavedBackground() {
+  const savedImage = localStorage.getItem(CUSTOM_BACKGROUND_KEY);
+  if (savedImage) applyCustomBackground(savedImage);
+}
+
+function saveCustomBackground(imageUrl) {
+  try {
+    localStorage.setItem(CUSTOM_BACKGROUND_KEY, imageUrl);
+    applyCustomBackground(imageUrl);
+    showToast(getText("backgroundSaved"));
+  } catch (error) {
+    console.warn("Background could not be saved:", error);
+    showToast(getText("backgroundTooLarge"));
+  }
+}
+
+function resetCustomBackground() {
+  localStorage.removeItem(CUSTOM_BACKGROUND_KEY);
+  applyCustomBackground("");
+  showToast(getText("backgroundReset"));
+}
+
+function getStoredTheoryReactions() {
+  try {
+    return JSON.parse(localStorage.getItem(THEORY_REACTIONS_KEY) || "{}");
+  } catch (error) {
+    return {};
+  }
+}
+
+function saveStoredTheoryReactions(data) {
+  localStorage.setItem(THEORY_REACTIONS_KEY, JSON.stringify(data));
+}
+
+function simpleHash(value) {
+  let hash = 0;
+  const source = String(value || "");
+
+  for (let i = 0; i < source.length; i += 1) {
+    hash = (hash << 5) - hash + source.charCodeAt(i);
+    hash |= 0;
+  }
+
+  return Math.abs(hash).toString(36);
+}
+
+function getTheoryKey(theory, index = 0) {
+  return String(
+    theory.id ||
+    theory.commentId ||
+    theory._id ||
+    theory.time ||
+    theory.createdAt ||
+    theory.timestamp ||
+    theory.date ||
+    `theory_${index}_${simpleHash(`${theory.name || ""}|${theory.message || theory.text || ""}`)}`
+  );
+}
+
+function getTheoryReactionCount(theory, reactionKey, theoryKey) {
+  const reactions = theory?.reactions;
+  let count = 0;
+
+  if (reactions && typeof reactions === "object") {
+    count = Number(reactions[reactionKey] || 0);
+  }
+
+  if (!count) {
+    count = Number(
+      theory?.[`${reactionKey}Count`] ||
+      theory?.[reactionKey] ||
+      0
+    );
+  }
+
+  const stored = getStoredTheoryReactions();
+  if (stored[theoryKey] === reactionKey) count += 1;
+
+  return count;
+}
+
+function renderReactionIcon(type) {
+  return `
+    <img src="${type.icon}" alt="" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';" />
+    <span class="reaction-emoji">${type.emoji}</span>
+  `;
 }
 
 function formatTheoryTime(timestamp) {
@@ -375,6 +491,7 @@ function setLanguage(lang) {
 
   if (languageMenu) languageMenu.classList.remove("open");
   if (downloadMenu) downloadMenu.classList.remove("open");
+  if (backgroundMenu) backgroundMenu.classList.remove("open");
   if (portalMenu) portalMenu.classList.remove("open");
 }
 
@@ -549,7 +666,7 @@ async function renderTheories() {
   userTheoriesList.innerHTML = theories
     .slice(-50)
     .reverse()
-    .map((theory) => {
+    .map((theory, index) => {
       const name = theory.name || "Player";
       const message = theory.message || theory.text || "";
       const createdAt =
@@ -558,6 +675,20 @@ async function renderTheories() {
         theory.timestamp ||
         theory.date ||
         "";
+      const theoryKey = getTheoryKey(theory, index);
+      const userReaction = getStoredTheoryReactions()[theoryKey] || "";
+
+      const reactionsMarkup = THEORY_REACTION_TYPES.map((type) => {
+        const count = getTheoryReactionCount(theory, type.key, theoryKey);
+        const activeClass = userReaction === type.key ? " active" : "";
+
+        return `
+          <button type="button" class="theory-reaction-btn${activeClass}" data-theory-key="${escapeHtml(theoryKey)}" data-reaction="${type.key}" aria-label="${type.key}">
+            <span class="reaction-icon">${renderReactionIcon(type)}</span>
+            <span class="reaction-count">${count}</span>
+          </button>
+        `;
+      }).join("");
 
       return `
         <div class="comm-message theory-message">
@@ -567,6 +698,10 @@ async function renderTheories() {
           </div>
 
           <p>${escapeHtml(message)}</p>
+
+          <div class="theory-reactions">
+            ${reactionsMarkup}
+          </div>
         </div>
       `;
     })
@@ -643,7 +778,47 @@ if (downloadToggle) {
     event.stopPropagation();
     downloadMenu?.classList.toggle("open");
     languageMenu?.classList.remove("open");
+    backgroundMenu?.classList.remove("open");
     portalMenu?.classList.remove("open");
+  });
+}
+
+if (backgroundToggle) {
+  backgroundToggle.addEventListener("click", (event) => {
+    event.stopPropagation();
+    backgroundMenu?.classList.toggle("open");
+    languageMenu?.classList.remove("open");
+    downloadMenu?.classList.remove("open");
+    portalMenu?.classList.remove("open");
+  });
+}
+
+if (uploadBackgroundBtn) {
+  uploadBackgroundBtn.addEventListener("click", () => {
+    backgroundFileInput?.click();
+    backgroundMenu?.classList.remove("open");
+  });
+}
+
+if (resetBackgroundBtn) {
+  resetBackgroundBtn.addEventListener("click", () => {
+    resetCustomBackground();
+    backgroundMenu?.classList.remove("open");
+  });
+}
+
+if (backgroundFileInput) {
+  backgroundFileInput.addEventListener("change", () => {
+    const file = backgroundFileInput.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      const result = typeof reader.result === "string" ? reader.result : "";
+      if (result) saveCustomBackground(result);
+    };
+    reader.readAsDataURL(file);
+    backgroundFileInput.value = "";
   });
 }
 
@@ -653,6 +828,7 @@ if (portalToggle) {
     portalMenu?.classList.toggle("open");
     languageMenu?.classList.remove("open");
     downloadMenu?.classList.remove("open");
+    backgroundMenu?.classList.remove("open");
   });
 }
 
@@ -733,6 +909,26 @@ if (canUsePointerEffects.matches && !prefersReducedMotion.matches) {
   });
 }
 
+if (userTheoriesList) {
+  userTheoriesList.addEventListener("click", (event) => {
+    const reactionBtn = event.target.closest(".theory-reaction-btn");
+    if (!reactionBtn) return;
+
+    const theoryKey = reactionBtn.dataset.theoryKey || "";
+    const reaction = reactionBtn.dataset.reaction || "";
+
+    if (!theoryKey || !reaction) return;
+
+    const stored = getStoredTheoryReactions();
+    stored[theoryKey] = stored[theoryKey] === reaction ? "" : reaction;
+    if (!stored[theoryKey]) {
+      delete stored[theoryKey];
+    }
+    saveStoredTheoryReactions(stored);
+    renderTheories();
+  });
+}
+
 if (theoryName) {
   const savedName = localStorage.getItem("portalUserName") || "";
 
@@ -780,6 +976,7 @@ if (theoryForm && theoryName && theoryText) {
 document.addEventListener("click", (event) => {
   const clickedInsideLang = event.target.closest(".language-wrapper");
   const clickedInsideDownload = event.target.closest(".download-wrapper");
+  const clickedInsideBackground = event.target.closest(".background-wrapper");
   const clickedInsidePortal = event.target.closest(".portal-wrapper");
 
   if (!clickedInsideLang && languageMenu) {
@@ -788,6 +985,10 @@ document.addEventListener("click", (event) => {
 
   if (!clickedInsideDownload && downloadMenu) {
     downloadMenu.classList.remove("open");
+  }
+
+  if (!clickedInsideBackground && backgroundMenu) {
+    backgroundMenu.classList.remove("open");
   }
 
   if (!clickedInsidePortal && portalMenu) {
@@ -799,12 +1000,14 @@ document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
     if (languageMenu) languageMenu.classList.remove("open");
     if (downloadMenu) downloadMenu.classList.remove("open");
+    if (backgroundMenu) backgroundMenu.classList.remove("open");
     if (portalMenu) portalMenu.classList.remove("open");
   }
 });
 
 const savedLang = localStorage.getItem("selectedLang") || "en";
 
+loadSavedBackground();
 setLanguage(savedLang);
 renderVideoHub();
 renderTheories();
