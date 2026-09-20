@@ -27,10 +27,10 @@ let isSendingTheory = false;
 const COMMENTS_API_URL =
   "https://script.google.com/macros/s/AKfycbyApSkcMeOYFBS88Ich9qX18M4_3o9IunaY-NpecRVeLsF4koKWgy6Xc7bU8MF6XLUl/exec";
 
+const TEAM_VOTE_API_URL =
+  "https://script.google.com/macros/s/AKfycbwgnEafZHXZa3rmWyel0MLGmY58O8lcn4kW7FCx7NDTGGVcNAwpj9xF5-DMZl_B4oC_/exec";
+
 const THEORY_MAX_LENGTH = 500;
-const TEAM_VOTE_ROOM = "glitch_vs_nimda_2026";
-const TEAM_VOTE_STORAGE_ROOM = "theories";
-const TEAM_VOTE_PREFIX = "__PKXD_TEAM_VOTE__:";
 const TEAM_VOTE_KEY = "pkxdPortalTeamVote";
 let isSendingTeamVote = false;
 let isLoadingTeamVotes = false;
@@ -400,77 +400,21 @@ function updateTeamVoteSelection() {
   });
 }
 
-function getTeamVoteMessage(team) {
-  return TEAM_VOTE_PREFIX + normalizeTeamVote(team);
-}
-
-function extractTeamVote(record) {
-  const message = String(record?.message || record?.text || "").trim();
-
-  if (message.startsWith(TEAM_VOTE_PREFIX)) {
-    return normalizeTeamVote(message.slice(TEAM_VOTE_PREFIX.length));
-  }
-
-  if (String(record?.parentId || "") === TEAM_VOTE_ROOM) {
-    return normalizeTeamVote(record?.team || record?.vote || message);
-  }
-
-  return "";
-}
-
-function isTeamVoteRecord(record) {
-  return Boolean(extractTeamVote(record));
-}
-
 async function getCommunityTeamVotes() {
-  const records = await getStoredTheories();
-  return records.filter(isTeamVoteRecord);
-}
-
-function calculateTeamVoteStats(records) {
-  const latestVoteByUser = new Map();
-
-  records.forEach((record, index) => {
-    const team = extractTeamVote(record);
-
-    const voter = String(
-      record?.userKey ||
-      record?.name ||
-      record?.voter ||
-      record?.author ||
-      ""
-    ).trim();
-
-    if (!team || !voter) return;
-
-    const rawTime =
-      record?.time ||
-      record?.createdAt ||
-      record?.timestamp ||
-      record?.date ||
-      "";
-
-    const parsedTime = new Date(rawTime).getTime();
-    const order = Number.isFinite(parsedTime) ? parsedTime : index;
-    const previous = latestVoteByUser.get(voter);
-
-    if (!previous || order >= previous.order) {
-      latestVoteByUser.set(voter, { team, order });
-    }
+  const response = await fetch(TEAM_VOTE_API_URL + "?cache=" + Date.now(), {
+    cache: "no-store"
   });
 
-  let glitch = 0;
-  let nimda = 0;
+  if (!response.ok) {
+    throw new Error("Could not load team votes");
+  }
 
-  latestVoteByUser.forEach((vote) => {
-    if (vote.team === "glitch") glitch += 1;
-    if (vote.team === "nimda") nimda += 1;
-  });
+  const data = await response.json();
 
   return {
-    glitch,
-    nimda,
-    total: glitch + nimda
+    glitch: Number(data?.glitch || 0),
+    nimda: Number(data?.nimda || 0),
+    total: Number(data?.total || 0)
   };
 }
 
@@ -523,8 +467,8 @@ async function renderTeamVote() {
   isLoadingTeamVotes = true;
 
   try {
-    const records = await getCommunityTeamVotes();
-    paintTeamVoteStats(calculateTeamVoteStats(records));
+    const stats = await getCommunityTeamVotes();
+    paintTeamVoteStats(stats);
 
     if (teamVoteStatus) {
       teamVoteStatus.textContent = getText("communityVoteNote");
@@ -554,27 +498,22 @@ async function sendTeamVote(team) {
   });
 
   try {
-    await fetch(COMMENTS_API_URL, {
+    await fetch(TEAM_VOTE_API_URL, {
       method: "POST",
       mode: "no-cors",
       headers: {
         "Content-Type": "text/plain;charset=utf-8"
       },
       body: JSON.stringify({
-        name: COMMENT_USER_KEY.slice(0, 18),
-        message: getTeamVoteMessage(normalized),
-        rating: 0,
-        parentId: TEAM_VOTE_ROOM,
-        room: TEAM_VOTE_STORAGE_ROOM,
-        team: "",
-        userKey: COMMENT_USER_KEY
+        userKey: COMMENT_USER_KEY,
+        team: normalized
       })
     });
 
     showToast(getText("teamVoteSaved"));
 
-    window.setTimeout(() => renderTeamVote(), 1600);
-    window.setTimeout(() => renderTeamVote(), 3800);
+    window.setTimeout(() => renderTeamVote(), 1200);
+    window.setTimeout(() => renderTeamVote(), 3000);
   } catch (error) {
     console.warn("Team vote could not be sent:", error);
 
@@ -587,7 +526,7 @@ async function sendTeamVote(team) {
       teamVoteButtons.forEach((button) => {
         button.disabled = false;
       });
-    }, 900);
+    }, 800);
   }
 }
 
@@ -984,7 +923,7 @@ async function getStoredTheories() {
 async function renderTheories() {
   if (!userTheoriesList) return;
 
-  const theories = (await getStoredTheories()).filter((theory) => !isTeamVoteRecord(theory));
+  const theories = await getStoredTheories();
 
   if (!theories.length) {
     userTheoriesList.innerHTML = `
