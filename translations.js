@@ -61,7 +61,14 @@ const translations = {
     youtubeBtn: "YouTube",
     discordBtn: "Discord",
     soonLabel: "Soon",
-    portalLabel: "Portal"
+    portalLabel: "Portal",
+    backgroundLabel: "Background",
+    backgroundTitle: "Portal Background",
+    uploadBackgroundBtn: "Upload background",
+    resetBackgroundBtn: "Reset background",
+    backgroundSaved: "Background updated!",
+    backgroundReset: "Background reset!",
+    backgroundTooLarge: "Image is too large to save"
   },
 
   ru: {
@@ -126,7 +133,14 @@ const translations = {
     youtubeBtn: "YouTube",
     discordBtn: "Discord",
     soonLabel: "Скоро",
-    portalLabel: "Портал"
+    portalLabel: "Портал",
+    backgroundLabel: "Фон",
+    backgroundTitle: "Фон портала",
+    uploadBackgroundBtn: "Загрузить фон",
+    resetBackgroundBtn: "Сбросить фон",
+    backgroundSaved: "Фон обновлён!",
+    backgroundReset: "Фон сброшен!",
+    backgroundTooLarge: "Картинка слишком большая"
   }
 };
 
@@ -177,7 +191,14 @@ const languageOverrides = {
     shareLabel: "Teilen",
     shareCopied: "Link kopiert!",
     soonLabel: "Bald",
-    portalLabel: "Portal"
+    portalLabel: "Portal",
+    backgroundLabel: "Hintergrund",
+    backgroundTitle: "Portal-Hintergrund",
+    uploadBackgroundBtn: "Hintergrund hochladen",
+    resetBackgroundBtn: "Hintergrund zurücksetzen",
+    backgroundSaved: "Hintergrund aktualisiert!",
+    backgroundReset: "Hintergrund zurückgesetzt!",
+    backgroundTooLarge: "Bild ist zu groß"
   },
 
   fr: {
