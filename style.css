@@ -1997,3 +1997,8 @@ body.near-1 .live-dot { background: var(--orange); box-shadow: 0 0 0 4px rgba(25
 
   .cursor-glow { display: none; }
 }
+
+
+.background-wrapper[hidden] {
+  display: none !important;
+}
