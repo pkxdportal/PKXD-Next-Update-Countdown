@@ -8,7 +8,7 @@
   />
   <meta name="theme-color" content="#07091b" />
   <title>PK XD Next Update Countdown</title>
-  <link rel="stylesheet" href="style.css?v=82" />
+  <link rel="stylesheet" href="style.css?v=83" />
 </head>
 
 <body>
@@ -57,6 +57,13 @@
           <svg viewBox="0 0 24 24"><path d="M12 8v5l3 2M9 3h6M12 5a8 8 0 1 0 8 8 8 8 0 0 0-8-8Z"/></svg>
         </span>
         <span data-i18n="nextUpdateCountdownNav">Next Update Countdown</span>
+      </button>
+
+      <button type="button" class="main-nav-btn battle-nav-btn" data-section-target="teamBattleSection">
+        <span class="nav-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M7 4 4 7l4 4-4 4 3 3 4-4 4 4 5-5-4-4 4-4-3-3-4 4-4-4-2 2Z"/></svg>
+        </span>
+        <span data-i18n="teamBattleNav">Glitch vs Nimda</span>
       </button>
 
       <button type="button" class="main-nav-btn" data-section-target="mediaSection">
@@ -245,6 +252,147 @@
         </div>
       </section>
 
+      <section id="teamBattleSection" class="app-section">
+        <div class="battle-shell">
+          <section class="battle-hero glass-panel">
+            <div class="battle-eyebrow">
+              <span class="battle-live-dot"></span>
+              <span data-i18n="teamBattleEyebrow">COMMUNITY VOTE</span>
+            </div>
+
+            <h2 class="battle-title" aria-label="Glitch versus Nimda">
+              <span class="battle-title-glitch">GLITCH</span>
+              <span class="battle-title-vs">VS</span>
+              <span class="battle-title-nimda">NIMDA</span>
+            </h2>
+
+            <p class="battle-intro" data-i18n="teamBattleIntro">The PK XD universe is split between two sides. Which team are you with?</p>
+
+            <div class="battle-common-quote">
+              <strong data-i18n="teamBattleCommonQuoteTitle">Both sides are calling for players</strong>
+              <p data-i18n="teamBattleCommonQuote">Join my team and let's figure all of this out together! We need to keep playing so our home stays protected. I'm counting on you!</p>
+            </div>
+
+            <p class="battle-portal-note" data-i18n="teamBattlePortalNote">This is a PK XD PORTAL community poll. Your vote here does not change your in-game team.</p>
+          </section>
+
+          <div class="team-choice-grid">
+            <article class="team-choice-card team-choice-glitch">
+              <div class="team-choice-top">
+                <div class="team-emblem team-emblem-glitch">G</div>
+                <div>
+                  <span class="team-side-label">TEAM</span>
+                  <h3>GLITCH</h3>
+                </div>
+              </div>
+
+              <p class="team-question" data-i18n="teamGlitchQuestion">Want to join Team Glitch?</p>
+              <blockquote data-i18n="teamGlitchQuote">Tired of always doing the same thing? The PK XD universe is too tidy, too predictable... and we can change that right now! Join me!</blockquote>
+
+              <button type="button" class="team-vote-btn team-vote-glitch" data-team-vote="glitch">
+                <span data-i18n="voteGlitch">Vote for Glitch</span>
+              </button>
+
+              <div class="team-selected-badge" data-team-selected="glitch">
+                <span>✓</span>
+                <span data-i18n="yourChoice">Your choice</span>
+              </div>
+            </article>
+
+            <div class="battle-versus" aria-hidden="true">
+              <span>VS</span>
+            </div>
+
+            <article class="team-choice-card team-choice-nimda">
+              <div class="team-choice-top">
+                <div class="team-emblem team-emblem-nimda">N</div>
+                <div>
+                  <span class="team-side-label">TEAM</span>
+                  <h3>NIMDA</h3>
+                </div>
+              </div>
+
+              <p class="team-question" data-i18n="teamNimdaQuestion">Want to join Team Nimda?</p>
+              <blockquote data-i18n="teamNimdaQuote">Hello, citizen! Our PK XD universe is an incredible place, full of friends and fun, but it needs our protection.</blockquote>
+
+              <button type="button" class="team-vote-btn team-vote-nimda" data-team-vote="nimda">
+                <span data-i18n="voteNimda">Vote for Nimda</span>
+              </button>
+
+              <div class="team-selected-badge" data-team-selected="nimda">
+                <span>✓</span>
+                <span data-i18n="yourChoice">Your choice</span>
+              </div>
+            </article>
+          </div>
+
+          <section class="battle-results glass-panel">
+            <div class="battle-results-head">
+              <div>
+                <span class="section-eyebrow" data-i18n="communityVoteLabel">LIVE RESULTS</span>
+                <h3 data-i18n="communityVoteTitle">PK XD PORTAL community vote</h3>
+              </div>
+              <div class="battle-total">
+                <strong id="teamVoteTotal">0</strong>
+                <span data-i18n="totalVotesLabel">total votes</span>
+              </div>
+            </div>
+
+            <div class="battle-result-row">
+              <div class="battle-result-team glitch-result">
+                <span class="result-dot"></span>
+                <strong>GLITCH</strong>
+                <span id="glitchVoteCount">0</span>
+                <small data-i18n="votesLabel">votes</small>
+              </div>
+
+              <div class="battle-result-team nimda-result">
+                <span class="result-dot"></span>
+                <strong>NIMDA</strong>
+                <span id="nimdaVoteCount">0</span>
+                <small data-i18n="votesLabel">votes</small>
+              </div>
+            </div>
+
+            <div class="battle-meter" aria-label="Community vote result">
+              <div id="glitchVoteFill" class="battle-meter-fill battle-meter-glitch"></div>
+              <div id="nimdaVoteFill" class="battle-meter-fill battle-meter-nimda"></div>
+              <div class="battle-meter-vs">VS</div>
+            </div>
+
+            <div class="battle-percent-row">
+              <strong id="glitchVotePercent">0%</strong>
+              <span id="teamVoteStatus" data-i18n="communityVoteNote">You can change your portal vote at any time.</span>
+              <strong id="nimdaVotePercent">0%</strong>
+            </div>
+          </section>
+
+          <div class="battle-info-grid">
+            <section class="battle-info-card glass-panel">
+              <span class="battle-info-icon">👕</span>
+              <div>
+                <h3 data-i18n="teamRewardsTitle">Choosing a team in PK XD</h3>
+                <p data-i18n="teamRewardsText">After choosing a team in the game, you immediately receive that team's shirt and a badge next to your nickname.</p>
+                <p class="battle-info-note" data-i18n="teamChangeNote">You can change teams as many times as you want. To get both shirts, choose one team first, then the other.</p>
+              </div>
+            </section>
+
+            <section class="battle-info-card glass-panel">
+              <span class="battle-info-icon">📈</span>
+              <div>
+                <h3 data-i18n="battleProgressTitle">How the in-game battle bar moves</h3>
+                <p data-i18n="battleProgressText">The bar advances from points earned by players in mini-games.</p>
+                <div class="star-points">
+                  <span>⭐⭐⭐ <b>→ 3</b> <i>🔴 / 🟣</i></span>
+                  <span>⭐⭐ <b>→ 2</b> <i>🔴 / 🟣</i></span>
+                  <span>⭐ <b>→ 1</b> <i>🔴 / 🟣</i></span>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
+
       <section id="mediaSection" class="app-section">
         <div class="section-hero glass-panel">
           <div class="section-eyebrow">PK XD PORTAL</div>
@@ -321,7 +469,7 @@
 
   <div id="portalToast" class="portal-toast" role="status" aria-live="polite"></div>
 
-  <script src="translations.js?v=79"></script>
-  <script src="script.js?v=79"></script>
+  <script src="translations.js?v=83"></script>
+  <script src="script.js?v=83"></script>
 </body>
 </html>

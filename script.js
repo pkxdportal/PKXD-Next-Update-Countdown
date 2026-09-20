@@ -28,6 +28,10 @@ const COMMENTS_API_URL =
   "https://script.google.com/macros/s/AKfycbyApSkcMeOYFBS88Ich9qX18M4_3o9IunaY-NpecRVeLsF4koKWgy6Xc7bU8MF6XLUl/exec";
 
 const THEORY_MAX_LENGTH = 500;
+const TEAM_VOTE_ROOM = "glitch_vs_nimda_2026";
+const TEAM_VOTE_KEY = "pkxdPortalTeamVote";
+let isSendingTeamVote = false;
+let isLoadingTeamVotes = false;
 
 const PORTAL_VIDEOS = [
   {
@@ -92,6 +96,17 @@ const theoryCounter = document.getElementById("theoryCounter");
 const theoryForm = document.getElementById("theoryForm");
 const theorySubmitBtn = document.getElementById("theorySubmitBtn");
 const userTheoriesList = document.getElementById("userTheoriesList");
+
+const teamVoteButtons = document.querySelectorAll("[data-team-vote]");
+const teamSelectedBadges = document.querySelectorAll("[data-team-selected]");
+const glitchVoteCount = document.getElementById("glitchVoteCount");
+const nimdaVoteCount = document.getElementById("nimdaVoteCount");
+const glitchVotePercent = document.getElementById("glitchVotePercent");
+const nimdaVotePercent = document.getElementById("nimdaVotePercent");
+const glitchVoteFill = document.getElementById("glitchVoteFill");
+const nimdaVoteFill = document.getElementById("nimdaVoteFill");
+const teamVoteTotal = document.getElementById("teamVoteTotal");
+const teamVoteStatus = document.getElementById("teamVoteStatus");
 
 const dailyIntro = document.getElementById("dailyIntro");
 const skipIntroBtn = document.getElementById("skipIntroBtn");
@@ -350,6 +365,186 @@ function formatTheoryTime(timestamp) {
   return `${diffDays}d ago`;
 }
 
+function normalizeTeamVote(value) {
+  const team = String(value || "").trim().toLowerCase();
+  if (team === "glitch" || team === "nimda") return team;
+  return "";
+}
+
+function getStoredTeamVote() {
+  return normalizeTeamVote(localStorage.getItem(TEAM_VOTE_KEY));
+}
+
+function setStoredTeamVote(team) {
+  const normalized = normalizeTeamVote(team);
+  if (normalized) localStorage.setItem(TEAM_VOTE_KEY, normalized);
+}
+
+function updateTeamVoteSelection() {
+  const selected = getStoredTeamVote();
+
+  teamVoteButtons.forEach((button) => {
+    const team = normalizeTeamVote(button.dataset.teamVote);
+    const active = Boolean(selected && team === selected);
+    button.classList.toggle("active", active);
+    button.setAttribute("aria-pressed", active ? "true" : "false");
+  });
+
+  teamSelectedBadges.forEach((badge) => {
+    badge.classList.toggle(
+      "show",
+      normalizeTeamVote(badge.dataset.teamSelected) === selected
+    );
+  });
+}
+
+async function getCommunityTeamVotes() {
+  const url =
+    COMMENTS_API_URL +
+    "?cache=" + Date.now() +
+    "&room=" + encodeURIComponent(TEAM_VOTE_ROOM) +
+    "&userKey=" + encodeURIComponent(COMMENT_USER_KEY);
+
+  const response = await fetch(url);
+  if (!response.ok) throw new Error("Could not load team votes");
+
+  const data = await response.json();
+  return Array.isArray(data) ? data : [];
+}
+
+function calculateTeamVoteStats(records) {
+  const latestVoteByUser = new Map();
+
+  records.forEach((record, index) => {
+    const team = normalizeTeamVote(
+      record?.message || record?.team || record?.vote || record?.text
+    );
+
+    const voter = String(
+      record?.name ||
+      record?.userKey ||
+      record?.voter ||
+      record?.author ||
+      ""
+    ).trim();
+
+    if (!team || !voter) return;
+
+    latestVoteByUser.set(voter, {
+      team,
+      index
+    });
+  });
+
+  let glitch = 0;
+  let nimda = 0;
+
+  latestVoteByUser.forEach((vote) => {
+    if (vote.team === "glitch") glitch += 1;
+    if (vote.team === "nimda") nimda += 1;
+  });
+
+  return {
+    glitch,
+    nimda,
+    total: glitch + nimda
+  };
+}
+
+function paintTeamVoteStats(stats) {
+  const total = Number(stats?.total || 0);
+  const glitch = Number(stats?.glitch || 0);
+  const nimda = Number(stats?.nimda || 0);
+
+  const glitchPercent = total > 0 ? Math.round((glitch / total) * 100) : 0;
+  const nimdaPercent = total > 0 ? 100 - glitchPercent : 0;
+
+  if (glitchVoteCount) glitchVoteCount.textContent = String(glitch);
+  if (nimdaVoteCount) nimdaVoteCount.textContent = String(nimda);
+  if (teamVoteTotal) teamVoteTotal.textContent = String(total);
+  if (glitchVotePercent) glitchVotePercent.textContent = glitchPercent + "%";
+  if (nimdaVotePercent) nimdaVotePercent.textContent = nimdaPercent + "%";
+
+  if (glitchVoteFill) {
+    glitchVoteFill.style.width = total > 0 ? glitchPercent + "%" : "50%";
+  }
+
+  if (nimdaVoteFill) {
+    nimdaVoteFill.style.width = total > 0 ? nimdaPercent + "%" : "50%";
+  }
+}
+
+async function renderTeamVote() {
+  updateTeamVoteSelection();
+
+  if (!teamVoteTotal || isLoadingTeamVotes) return;
+
+  isLoadingTeamVotes = true;
+
+  try {
+    const records = await getCommunityTeamVotes();
+    paintTeamVoteStats(calculateTeamVoteStats(records));
+
+    if (teamVoteStatus) {
+      teamVoteStatus.textContent = getText("communityVoteNote");
+    }
+  } catch (error) {
+    console.warn("Team votes could not be loaded:", error);
+
+    if (teamVoteStatus) {
+      teamVoteStatus.textContent = getText("teamVoteLoadError");
+    }
+  } finally {
+    isLoadingTeamVotes = false;
+  }
+}
+
+async function sendTeamVote(team) {
+  const normalized = normalizeTeamVote(team);
+  if (!normalized || isSendingTeamVote) return;
+
+  setStoredTeamVote(normalized);
+  updateTeamVoteSelection();
+  showToast(getText("teamVoteSaved"));
+
+  isSendingTeamVote = true;
+  teamVoteButtons.forEach((button) => {
+    button.disabled = true;
+  });
+
+  try {
+    await fetch(COMMENTS_API_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify({
+        name: COMMENT_USER_KEY,
+        message: normalized,
+        rating: 0,
+        parentId: "",
+        room: TEAM_VOTE_ROOM,
+        team: normalized,
+        userKey: COMMENT_USER_KEY
+      })
+    });
+
+    window.setTimeout(() => {
+      renderTeamVote();
+    }, 1800);
+  } catch (error) {
+    console.warn("Team vote could not be sent:", error);
+  } finally {
+    window.setTimeout(() => {
+      isSendingTeamVote = false;
+      teamVoteButtons.forEach((button) => {
+        button.disabled = false;
+      });
+    }, 900);
+  }
+}
+
 function getNextMondayAfter(date) {
   const nextMonday = new Date(date);
   nextMonday.setHours(0, 0, 0, 0);
@@ -578,6 +773,7 @@ function setLanguage(lang) {
   updateTheoryCounter();
   renderVideoHub();
   renderTheories();
+  renderTeamVote();
 
   if (languageMenu) languageMenu.classList.remove("open");
   if (downloadMenu) downloadMenu.classList.remove("open");
@@ -605,7 +801,13 @@ function setActiveSection(sectionId) {
     section.classList.toggle("active", section.id === activeSection);
   });
 
-  mainNavButtons.forEach((button) => {
+  teamVoteButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    sendTeamVote(button.dataset.teamVote);
+  });
+});
+
+mainNavButtons.forEach((button) => {
     button.classList.toggle("active", button.dataset.sectionTarget === activeSection);
   });
 
@@ -1110,6 +1312,7 @@ async function bootPortal() {
   setLanguage(savedLang);
   renderVideoHub();
   renderTheories();
+  renderTeamVote();
   updateCountdown();
   updateTheoryCounter();
   setMode("countdown");
@@ -1118,6 +1321,7 @@ async function bootPortal() {
 
   countdownInterval = setInterval(updateCountdown, 1000);
   setInterval(renderTheories, 60000);
+  setInterval(renderTeamVote, 30000);
 }
 
 bootPortal();
