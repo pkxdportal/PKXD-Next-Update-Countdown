@@ -28,7 +28,7 @@ const COMMENTS_API_URL =
   "https://script.google.com/macros/s/AKfycbyApSkcMeOYFBS88Ich9qX18M4_3o9IunaY-NpecRVeLsF4koKWgy6Xc7bU8MF6XLUl/exec";
 
 const TEAM_VOTE_API_URL =
-  "https://script.google.com/macros/s/AKfycbwgnEafZHXZa3rmWyel0MLGmY58O8lcn4kW7FCx7NDTGGVcNAwpj9xF5-DMZl_B4oC_/exec";
+  "https://script.google.com/macros/s/AKfycbynqTG0S907i41yaFvMndgRVOaL-s4mw9T_35QX2KkOSrUpAdpLpdDqAzliMNicgIym/exec";
 
 const THEORY_MAX_LENGTH = 500;
 const TEAM_VOTE_KEY = "pkxdPortalTeamVote";
@@ -208,7 +208,8 @@ function applyCustomBackground(imageUrl) {
     backgroundLayer.style.backgroundPosition = "center center";
     backgroundLayer.style.backgroundSize = "cover";
     backgroundLayer.style.backgroundRepeat = "no-repeat";
-    backgroundLayer.style.backgroundAttachment = "fixed";
+    backgroundLayer.style.backgroundAttachment =
+      window.matchMedia("(max-width: 900px)").matches ? "scroll" : "fixed";
     backgroundLayer.classList.add("has-custom-bg");
     document.body.classList.add("has-custom-background");
   } else {
@@ -222,35 +223,107 @@ function applyCustomBackground(imageUrl) {
   }
 }
 
-function loadSavedBackground() {
-  if (!isOwnerMode) {
-    applyCustomBackground("");
-    return;
+async function loadSavedBackground() {
+  const cachedImage = localStorage.getItem(CUSTOM_BACKGROUND_KEY) || "";
+
+  if (cachedImage) {
+    applyCustomBackground(cachedImage);
   }
 
-  const savedImage = localStorage.getItem(CUSTOM_BACKGROUND_KEY);
-  if (savedImage) applyCustomBackground(savedImage);
+  try {
+    const response = await fetch(
+      TEAM_VOTE_API_URL + "?action=background&cache=" + Date.now(),
+      { cache: "no-store" }
+    );
+
+    if (!response.ok) {
+      throw new Error("Could not load shared background");
+    }
+
+    const data = await response.json();
+    const sharedImage =
+      data?.ok && typeof data.background === "string"
+        ? data.background
+        : "";
+
+    if (sharedImage) {
+      try {
+        localStorage.setItem(CUSTOM_BACKGROUND_KEY, sharedImage);
+      } catch (error) {
+        console.warn("Background cache could not be saved:", error);
+      }
+
+      applyCustomBackground(sharedImage);
+    } else {
+      localStorage.removeItem(CUSTOM_BACKGROUND_KEY);
+      applyCustomBackground("");
+    }
+  } catch (error) {
+    console.warn("Shared background could not be loaded:", error);
+
+    if (!cachedImage) {
+      applyCustomBackground("");
+    }
+  }
 }
 
-function saveCustomBackground(imageUrl) {
+async function saveCustomBackground(imageUrl) {
   if (!isOwnerMode) return;
 
   try {
-    localStorage.setItem(CUSTOM_BACKGROUND_KEY, imageUrl);
+    try {
+      localStorage.setItem(CUSTOM_BACKGROUND_KEY, imageUrl);
+    } catch (error) {
+      console.warn("Background cache could not be saved:", error);
+    }
+
     applyCustomBackground(imageUrl);
+
+    await fetch(TEAM_VOTE_API_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify({
+        action: "background",
+        image: imageUrl
+      })
+    });
+
     showToast(getText("backgroundSaved"));
+
+    window.setTimeout(() => loadSavedBackground(), 1500);
+    window.setTimeout(() => loadSavedBackground(), 3500);
   } catch (error) {
     console.warn("Background could not be saved:", error);
     showToast(getText("backgroundTooLarge"));
   }
 }
 
-function resetCustomBackground() {
+async function resetCustomBackground() {
   if (!isOwnerMode) return;
 
   localStorage.removeItem(CUSTOM_BACKGROUND_KEY);
   applyCustomBackground("");
-  showToast(getText("backgroundReset"));
+
+  try {
+    await fetch(TEAM_VOTE_API_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify({
+        action: "resetBackground"
+      })
+    });
+
+    showToast(getText("backgroundReset"));
+    window.setTimeout(() => loadSavedBackground(), 1500);
+  } catch (error) {
+    console.warn("Background could not be reset:", error);
+  }
 }
 
 function optimizeBackgroundFile(file) {
