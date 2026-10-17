@@ -593,10 +593,72 @@ svg {
 }
 
 
-.background-menu {
-  width: 240px;
+.background-menu,
+.update-date-menu {
+  width: 260px;
   display: grid;
   gap: 8px;
+}
+
+.update-date-current-row {
+  display: grid;
+  gap: 5px;
+  padding: 10px 11px;
+  border: 1px solid rgba(255,255,255,.065);
+  border-radius: 13px;
+  background: rgba(255,255,255,.025);
+}
+
+.update-date-current-row span,
+.update-date-field > span {
+  color: #7786a5;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+
+.update-date-current-row strong {
+  color: #eef4ff;
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+.update-date-field {
+  display: grid;
+  gap: 6px;
+  padding: 2px 2px 0;
+}
+
+.update-date-field input {
+  width: 100%;
+  min-height: 42px;
+  padding: 0 10px;
+  border: 1px solid rgba(255,255,255,.09);
+  border-radius: 12px;
+  color: #eef4ff;
+  background: rgba(4,7,20,.58);
+  font: inherit;
+  font-size: 11px;
+  color-scheme: dark;
+  outline: none;
+}
+
+.update-date-field input:focus {
+  border-color: rgba(177,107,255,.5);
+  box-shadow: 0 0 0 3px rgba(138,87,255,.09);
+}
+
+.update-date-note {
+  padding: 0 3px 2px;
+  color: #64738f;
+  font-size: 9px;
+  line-height: 1.45;
+}
+
+.update-date-save {
+  border-color: rgba(177,107,255,.22);
+  background: linear-gradient(115deg, rgba(255,63,99,.16), rgba(138,87,255,.18));
 }
 
 .menu-kicker {
@@ -1877,7 +1939,8 @@ body.near-1 .live-dot { background: var(--orange); box-shadow: 0 0 0 4px rgba(25
 }
 
 
-.background-wrapper[hidden] {
+.background-wrapper[hidden],
+.update-date-wrapper[hidden] {
   display: none !important;
 }
 
