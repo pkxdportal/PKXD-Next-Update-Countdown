@@ -8,7 +8,7 @@
   />
   <meta name="theme-color" content="#07091b" />
   <title>PK XD Next Update Countdown</title>
-  <link rel="stylesheet" href="style.css?v=97" />
+  <link rel="stylesheet" href="style.css?v=100" />
 </head>
 
 <body>
@@ -145,6 +145,44 @@
 
           <button type="button" id="saveUpdateDateBtn" class="menu-action-btn update-date-save" data-i18n="saveUpdateDateBtn">Save date</button>
           <button type="button" id="resetUpdateDateBtn" class="menu-action-btn" data-i18n="resetUpdateDateBtn">Return to automatic date</button>
+        </div>
+      </div>
+
+      <div class="action-block theme-wrapper" id="ownerThemeControl" hidden>
+        <button type="button" id="themeToggle" class="dock-btn" aria-label="Change portal colors">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18h1.5a2.5 2.5 0 0 0 0-5H12a4 4 0 0 1 0-8h1.5A2.5 2.5 0 0 0 16 5.5 2.5 2.5 0 0 0 13.5 3H12Z"/><circle cx="7.5" cy="11" r="1"/><circle cx="9.5" cy="7.5" r="1"/><circle cx="15.5" cy="8" r="1"/></svg>
+        </button>
+        <span class="action-label" data-i18n="themeLabel">Colors</span>
+
+        <div id="themeMenu" class="floating-menu theme-menu">
+          <div class="menu-kicker" data-i18n="themeTitle">Portal colors</div>
+
+          <div class="theme-picker-grid">
+            <label class="theme-color-field">
+              <span data-i18n="themePrimaryLabel">Color 1</span>
+              <div class="theme-color-row">
+                <input id="themePrimaryInput" type="color" value="#ff3f63">
+                <code id="themePrimaryValue">#FF3F63</code>
+              </div>
+            </label>
+
+            <label class="theme-color-field">
+              <span data-i18n="themeSecondaryLabel">Color 2</span>
+              <div class="theme-color-row">
+                <input id="themeSecondaryInput" type="color" value="#8a57ff">
+                <code id="themeSecondaryValue">#8A57FF</code>
+              </div>
+            </label>
+          </div>
+
+          <div class="theme-preview" aria-hidden="true">
+            <span></span>
+          </div>
+
+          <small class="theme-note" data-i18n="themeNote">These colors are used for active buttons and main accents.</small>
+
+          <button type="button" id="saveThemeBtn" class="menu-action-btn theme-save" data-i18n="saveThemeBtn">Save colors</button>
+          <button type="button" id="resetThemeBtn" class="menu-action-btn" data-i18n="resetThemeBtn">Restore default colors</button>
         </div>
       </div>
 
@@ -347,7 +385,7 @@
 
   <div id="portalToast" class="portal-toast" role="status" aria-live="polite"></div>
 
-  <script src="translations.js?v=98"></script>
-  <script src="script.js?v=99"></script>
+  <script src="translations.js?v=100"></script>
+  <script src="script.js?v=100"></script>
 </body>
 </html>
