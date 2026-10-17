@@ -113,8 +113,6 @@ const theoryForm = document.getElementById("theoryForm");
 const theorySubmitBtn = document.getElementById("theorySubmitBtn");
 const userTheoriesList = document.getElementById("userTheoriesList");
 
-const dailyIntro = document.getElementById("dailyIntro");
-const skipIntroBtn = document.getElementById("skipIntroBtn");
 const portalToast = document.getElementById("portalToast");
 const cursorGlow = document.querySelector(".cursor-glow");
 
@@ -1162,49 +1160,6 @@ mainNavButtons.forEach((button) => {
   });
 }
 
-function getTodayKey() {
-  return new Date().toISOString().slice(0, 10);
-}
-
-function shouldShowIntroToday() {
-  const today = getTodayKey();
-  const lastIntroDate = localStorage.getItem("nextUpdateIntroDate");
-
-  return lastIntroDate !== today;
-}
-
-function hideDailyIntro() {
-  if (!dailyIntro) return;
-
-  dailyIntro.classList.remove("show");
-  dailyIntro.classList.add("hide");
-  dailyIntro.setAttribute("aria-hidden", "true");
-
-  localStorage.setItem("nextUpdateIntroDate", getTodayKey());
-
-  window.setTimeout(() => {
-    dailyIntro.style.display = "none";
-  }, 650);
-}
-
-function showDailyIntro() {
-  if (!dailyIntro) return;
-
-  if (!shouldShowIntroToday()) {
-    dailyIntro.style.display = "none";
-    return;
-  }
-
-  dailyIntro.style.display = "grid";
-  dailyIntro.classList.remove("hide");
-  dailyIntro.classList.add("show");
-  dailyIntro.setAttribute("aria-hidden", "false");
-
-  window.setTimeout(() => {
-    hideDailyIntro();
-  }, 4200);
-}
-
 function getYoutubeThumbnail(videoId) {
   if (!videoId) return "";
 
@@ -1559,12 +1514,6 @@ if (shareBtn) {
   });
 }
 
-if (skipIntroBtn) {
-  skipIntroBtn.addEventListener("click", () => {
-    hideDailyIntro();
-  });
-}
-
 if (countdownModeBtn) {
   countdownModeBtn.addEventListener("click", () => {
     setMode("countdown");
@@ -1744,7 +1693,6 @@ async function bootPortal() {
   updateTheoryCounter();
   setMode("countdown");
   setActiveSection(activeSection);
-  showDailyIntro();
 
   countdownInterval = setInterval(updateCountdown, 1000);
   setInterval(renderTheories, 60000);
