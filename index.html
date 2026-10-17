@@ -8,7 +8,7 @@
   />
   <meta name="theme-color" content="#07091b" />
   <title>PK XD Next Update Countdown</title>
-  <link rel="stylesheet" href="style.css?v=95" />
+  <link rel="stylesheet" href="style.css?v=97" />
 </head>
 
 <body>
@@ -119,6 +119,32 @@
           <div class="menu-kicker" data-i18n="backgroundTitle">Portal Background</div>
           <button type="button" id="uploadBackgroundBtn" class="menu-action-btn" data-i18n="uploadBackgroundBtn">Upload background</button>
           <button type="button" id="resetBackgroundBtn" class="menu-action-btn" data-i18n="resetBackgroundBtn">Reset background</button>
+        </div>
+      </div>
+
+      <div class="action-block update-date-wrapper" id="ownerUpdateDateControl" hidden>
+        <button type="button" id="updateDateToggle" class="dock-btn" aria-label="Set next PK XD update date">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3v3M18 3v3M4 9h16M5 5h14a2 2 0 0 1 2 2v12H3V7a2 2 0 0 1 2-2Z"/><path d="M8 13h3v3H8z"/></svg>
+        </button>
+        <span class="action-label" data-i18n="updateDateLabel">Update date</span>
+
+        <div id="updateDateMenu" class="floating-menu update-date-menu">
+          <div class="menu-kicker" data-i18n="updateDateTitle">Next PK XD update</div>
+
+          <div class="update-date-current-row">
+            <span data-i18n="updateDateCurrentLabel">Current date</span>
+            <strong id="updateDateCurrent">—</strong>
+          </div>
+
+          <label class="update-date-field">
+            <span data-i18n="updateDateFieldLabel">New date and time</span>
+            <input id="updateDateInput" type="datetime-local" step="60">
+          </label>
+
+          <small class="update-date-note" data-i18n="updateDateTimezoneNote">The time is taken from this device's time zone.</small>
+
+          <button type="button" id="saveUpdateDateBtn" class="menu-action-btn update-date-save" data-i18n="saveUpdateDateBtn">Save date</button>
+          <button type="button" id="resetUpdateDateBtn" class="menu-action-btn" data-i18n="resetUpdateDateBtn">Return to automatic date</button>
         </div>
       </div>
 
@@ -321,7 +347,7 @@
 
   <div id="portalToast" class="portal-toast" role="status" aria-live="polite"></div>
 
-  <script src="translations.js?v=95"></script>
-  <script src="script.js?v=96"></script>
+  <script src="translations.js?v=97"></script>
+  <script src="script.js?v=97"></script>
 </body>
 </html>
