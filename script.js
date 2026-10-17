@@ -27,13 +27,10 @@ let isSendingTheory = false;
 const COMMENTS_API_URL =
   "https://script.google.com/macros/s/AKfycbyApSkcMeOYFBS88Ich9qX18M4_3o9IunaY-NpecRVeLsF4koKWgy6Xc7bU8MF6XLUl/exec";
 
-const TEAM_VOTE_API_URL =
+const PORTAL_API_URL =
   "https://script.google.com/macros/s/AKfycbynqTG0S907i41yaFvMndgRVOaL-s4mw9T_35QX2KkOSrUpAdpLpdDqAzliMNicgIym/exec";
 
 const THEORY_MAX_LENGTH = 500;
-const TEAM_VOTE_KEY = "pkxdPortalTeamVote";
-let isSendingTeamVote = false;
-let isLoadingTeamVotes = false;
 
 const PORTAL_VIDEOS = [
   {
@@ -98,17 +95,6 @@ const theoryCounter = document.getElementById("theoryCounter");
 const theoryForm = document.getElementById("theoryForm");
 const theorySubmitBtn = document.getElementById("theorySubmitBtn");
 const userTheoriesList = document.getElementById("userTheoriesList");
-
-const teamVoteButtons = document.querySelectorAll("[data-team-vote]");
-const teamSelectedBadges = document.querySelectorAll("[data-team-selected]");
-const glitchVoteCount = document.getElementById("glitchVoteCount");
-const nimdaVoteCount = document.getElementById("nimdaVoteCount");
-const glitchVotePercent = document.getElementById("glitchVotePercent");
-const nimdaVotePercent = document.getElementById("nimdaVotePercent");
-const glitchVoteFill = document.getElementById("glitchVoteFill");
-const nimdaVoteFill = document.getElementById("nimdaVoteFill");
-const teamVoteTotal = document.getElementById("teamVoteTotal");
-const teamVoteStatus = document.getElementById("teamVoteStatus");
 
 const dailyIntro = document.getElementById("dailyIntro");
 const skipIntroBtn = document.getElementById("skipIntroBtn");
@@ -232,7 +218,7 @@ async function loadSavedBackground() {
 
   try {
     const response = await fetch(
-      TEAM_VOTE_API_URL + "?action=background&cache=" + Date.now(),
+      PORTAL_API_URL + "?action=background&cache=" + Date.now(),
       { cache: "no-store" }
     );
 
@@ -279,7 +265,7 @@ async function saveCustomBackground(imageUrl) {
 
     applyCustomBackground(imageUrl);
 
-    await fetch(TEAM_VOTE_API_URL, {
+    await fetch(PORTAL_API_URL, {
       method: "POST",
       mode: "no-cors",
       headers: {
@@ -308,7 +294,7 @@ async function resetCustomBackground() {
   applyCustomBackground("");
 
   try {
-    await fetch(TEAM_VOTE_API_URL, {
+    await fetch(PORTAL_API_URL, {
       method: "POST",
       mode: "no-cors",
       headers: {
@@ -438,169 +424,6 @@ function formatTheoryTime(timestamp) {
 
   const diffDays = Math.floor(diffHours / 24);
   return `${diffDays}d ago`;
-}
-
-function normalizeTeamVote(value) {
-  const team = String(value || "").trim().toLowerCase();
-  if (team === "glitch" || team === "nimda") return team;
-  return "";
-}
-
-function getStoredTeamVote() {
-  return normalizeTeamVote(localStorage.getItem(TEAM_VOTE_KEY));
-}
-
-function setStoredTeamVote(team) {
-  const normalized = normalizeTeamVote(team);
-  if (normalized) localStorage.setItem(TEAM_VOTE_KEY, normalized);
-}
-
-function updateTeamVoteSelection() {
-  const selected = getStoredTeamVote();
-
-  teamVoteButtons.forEach((button) => {
-    const team = normalizeTeamVote(button.dataset.teamVote);
-    const active = Boolean(selected && team === selected);
-    button.classList.toggle("active", active);
-    button.setAttribute("aria-pressed", active ? "true" : "false");
-  });
-
-  teamSelectedBadges.forEach((badge) => {
-    badge.classList.toggle(
-      "show",
-      normalizeTeamVote(badge.dataset.teamSelected) === selected
-    );
-  });
-}
-
-async function getCommunityTeamVotes() {
-  const response = await fetch(TEAM_VOTE_API_URL + "?cache=" + Date.now(), {
-    cache: "no-store"
-  });
-
-  if (!response.ok) {
-    throw new Error("Could not load team votes");
-  }
-
-  const data = await response.json();
-
-  return {
-    glitch: Number(data?.glitch || 0),
-    nimda: Number(data?.nimda || 0),
-    total: Number(data?.total || 0)
-  };
-}
-
-function paintTeamVoteStats(stats) {
-  const total = Number(stats?.total || 0);
-  const glitch = Number(stats?.glitch || 0);
-  const nimda = Number(stats?.nimda || 0);
-
-  const glitchPercent = total > 0 ? Math.round((glitch / total) * 100) : 0;
-  const nimdaPercent = total > 0 ? 100 - glitchPercent : 0;
-
-  if (glitchVoteCount) glitchVoteCount.textContent = String(glitch);
-  if (nimdaVoteCount) nimdaVoteCount.textContent = String(nimda);
-  if (teamVoteTotal) teamVoteTotal.textContent = String(total);
-  if (glitchVotePercent) glitchVotePercent.textContent = glitchPercent + "%";
-  if (nimdaVotePercent) nimdaVotePercent.textContent = nimdaPercent + "%";
-
-  if (glitchVoteFill) {
-    glitchVoteFill.style.width = total > 0 ? glitchPercent + "%" : "50%";
-  }
-
-  if (nimdaVoteFill) {
-    nimdaVoteFill.style.width = total > 0 ? nimdaPercent + "%" : "50%";
-  }
-}
-
-function paintOptimisticTeamVote(team) {
-  const previous = getStoredTeamVote();
-  let glitch = Number(glitchVoteCount?.textContent || 0);
-  let nimda = Number(nimdaVoteCount?.textContent || 0);
-
-  if (previous === "glitch" && team !== "glitch") glitch = Math.max(0, glitch - 1);
-  if (previous === "nimda" && team !== "nimda") nimda = Math.max(0, nimda - 1);
-
-  if (team === "glitch" && previous !== "glitch") glitch += 1;
-  if (team === "nimda" && previous !== "nimda") nimda += 1;
-
-  paintTeamVoteStats({
-    glitch,
-    nimda,
-    total: glitch + nimda
-  });
-}
-
-async function renderTeamVote() {
-  updateTeamVoteSelection();
-
-  if (!teamVoteTotal || isLoadingTeamVotes) return;
-
-  isLoadingTeamVotes = true;
-
-  try {
-    const stats = await getCommunityTeamVotes();
-    paintTeamVoteStats(stats);
-
-    if (teamVoteStatus) {
-      teamVoteStatus.textContent = getText("communityVoteNote");
-    }
-  } catch (error) {
-    console.warn("Team votes could not be loaded:", error);
-
-    if (teamVoteStatus) {
-      teamVoteStatus.textContent = getText("teamVoteLoadError");
-    }
-  } finally {
-    isLoadingTeamVotes = false;
-  }
-}
-
-async function sendTeamVote(team) {
-  const normalized = normalizeTeamVote(team);
-  if (!normalized || isSendingTeamVote) return;
-
-  paintOptimisticTeamVote(normalized);
-  setStoredTeamVote(normalized);
-  updateTeamVoteSelection();
-
-  isSendingTeamVote = true;
-  teamVoteButtons.forEach((button) => {
-    button.disabled = true;
-  });
-
-  try {
-    await fetch(TEAM_VOTE_API_URL, {
-      method: "POST",
-      mode: "no-cors",
-      headers: {
-        "Content-Type": "text/plain;charset=utf-8"
-      },
-      body: JSON.stringify({
-        userKey: COMMENT_USER_KEY,
-        team: normalized
-      })
-    });
-
-    showToast(getText("teamVoteSaved"));
-
-    window.setTimeout(() => renderTeamVote(), 1200);
-    window.setTimeout(() => renderTeamVote(), 3000);
-  } catch (error) {
-    console.warn("Team vote could not be sent:", error);
-
-    if (teamVoteStatus) {
-      teamVoteStatus.textContent = getText("teamVoteLoadError");
-    }
-  } finally {
-    window.setTimeout(() => {
-      isSendingTeamVote = false;
-      teamVoteButtons.forEach((button) => {
-        button.disabled = false;
-      });
-    }, 800);
-  }
 }
 
 function getNextMondayAfter(date) {
@@ -831,7 +654,6 @@ function setLanguage(lang) {
   updateTheoryCounter();
   renderVideoHub();
   renderTheories();
-  renderTeamVote();
 
   if (languageMenu) languageMenu.classList.remove("open");
   if (downloadMenu) downloadMenu.classList.remove("open");
@@ -850,7 +672,12 @@ function setMode(mode) {
 }
 
 function setActiveSection(sectionId) {
-  const targetId = sectionId || "countdownSection";
+  const requestedId = sectionId || "countdownSection";
+  const requestedSection = document.getElementById(requestedId);
+  const targetId =
+    requestedSection?.classList.contains("app-section")
+      ? requestedId
+      : "countdownSection";
 
   activeSection = targetId;
   localStorage.setItem("activeSection", activeSection);
@@ -993,7 +820,7 @@ async function getStoredTheories() {
   }
 }
 
-function isLegacyTeamVoteTheory(theory) {
+function isLegacyInternalTheoryRecord(theory) {
   const message = String(theory?.message || theory?.text || "").trim();
   return message.startsWith("__PKXD_TEAM_VOTE__:");
 }
@@ -1002,7 +829,7 @@ async function renderTheories() {
   if (!userTheoriesList) return;
 
   const theories = (await getStoredTheories()).filter(
-    (theory) => !isLegacyTeamVoteTheory(theory)
+    (theory) => !isLegacyInternalTheoryRecord(theory)
   );
 
   if (!theories.length) {
@@ -1222,12 +1049,6 @@ if (progressModeBtn) {
   });
 }
 
-teamVoteButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    sendTeamVote(button.dataset.teamVote);
-  });
-});
-
 mainNavButtons.forEach((button) => {
   button.addEventListener("click", () => {
     const sectionId = button.dataset.sectionTarget;
@@ -1377,7 +1198,6 @@ async function bootPortal() {
   setLanguage(savedLang);
   renderVideoHub();
   renderTheories();
-  renderTeamVote();
   updateCountdown();
   updateTheoryCounter();
   setMode("countdown");
@@ -1386,7 +1206,6 @@ async function bootPortal() {
 
   countdownInterval = setInterval(updateCountdown, 1000);
   setInterval(renderTheories, 60000);
-  setInterval(renderTeamVote, 15000);
 }
 
 bootPortal();
