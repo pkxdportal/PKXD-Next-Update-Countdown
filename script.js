@@ -822,7 +822,7 @@ async function getStoredTheories() {
 
 function isLegacyInternalTheoryRecord(theory) {
   const message = String(theory?.message || theory?.text || "").trim();
-  return message.startsWith("__PKXD_TEAM_VOTE__:");
+  return message.startsWith("__PKXD_");
 }
 
 async function renderTheories() {
