@@ -82,6 +82,17 @@ const translations = {
     updateDateReset: "Automatic date restored!",
     updateDateInvalid: "Choose a future date and time.",
     updateDateSaveError: "The update date could not be saved."
+  ,
+    themeLabel: "Colors",
+    themeTitle: "Portal colors",
+    themePrimaryLabel: "Color 1",
+    themeSecondaryLabel: "Color 2",
+    themeNote: "These colors are used for active buttons and main accents.",
+    saveThemeBtn: "Save colors",
+    resetThemeBtn: "Restore default colors",
+    themeSaved: "Portal colors saved!",
+    themeReset: "Default colors restored!",
+    themeSaveError: "The portal colors could not be saved."
   },
 
   ru: {
@@ -167,6 +178,17 @@ const translations = {
     updateDateReset: "Автоматическая дата восстановлена!",
     updateDateInvalid: "Выбери будущую дату и время.",
     updateDateSaveError: "Не удалось сохранить дату обновления."
+  ,
+    themeLabel: "Цвета",
+    themeTitle: "Цвета портала",
+    themePrimaryLabel: "Цвет 1",
+    themeSecondaryLabel: "Цвет 2",
+    themeNote: "Эти цвета используются для активных кнопок и основных акцентов.",
+    saveThemeBtn: "Сохранить цвета",
+    resetThemeBtn: "Вернуть стандартные цвета",
+    themeSaved: "Цвета портала сохранены!",
+    themeReset: "Стандартные цвета восстановлены!",
+    themeSaveError: "Не удалось сохранить цвета портала."
   }
 };
 
@@ -244,6 +266,17 @@ const languageOverrides = {
     updateDateReset: "Automatisches Datum wiederhergestellt!",
     updateDateInvalid: "Wähle ein zukünftiges Datum und eine Uhrzeit.",
     updateDateSaveError: "Das Update-Datum konnte nicht gespeichert werden."
+  ,
+    themeLabel: "Farben",
+    themeTitle: "Portal-Farben",
+    themePrimaryLabel: "Farbe 1",
+    themeSecondaryLabel: "Farbe 2",
+    themeNote: "Diese Farben werden für aktive Schaltflächen und Hauptakzente verwendet.",
+    saveThemeBtn: "Farben speichern",
+    resetThemeBtn: "Standardfarben wiederherstellen",
+    themeSaved: "Portal-Farben gespeichert!",
+    themeReset: "Standardfarben wiederhergestellt!",
+    themeSaveError: "Die Portal-Farben konnten nicht gespeichert werden."
   },
 
   fr: {
@@ -319,6 +352,17 @@ const languageOverrides = {
     updateDateReset: "Date automatique rétablie !",
     updateDateInvalid: "Choisis une date et une heure futures.",
     updateDateSaveError: "Impossible d’enregistrer la date de mise à jour."
+  ,
+    themeLabel: "Couleurs",
+    themeTitle: "Couleurs du portail",
+    themePrimaryLabel: "Couleur 1",
+    themeSecondaryLabel: "Couleur 2",
+    themeNote: "Ces couleurs sont utilisées pour les boutons actifs et les principaux accents.",
+    saveThemeBtn: "Enregistrer les couleurs",
+    resetThemeBtn: "Rétablir les couleurs par défaut",
+    themeSaved: "Couleurs du portail enregistrées !",
+    themeReset: "Couleurs par défaut rétablies !",
+    themeSaveError: "Impossible d’enregistrer les couleurs du portail."
   },
 
   pl: {
@@ -394,6 +438,17 @@ const languageOverrides = {
     updateDateReset: "Przywrócono datę automatyczną!",
     updateDateInvalid: "Wybierz przyszłą datę i godzinę.",
     updateDateSaveError: "Nie udało się zapisać daty aktualizacji."
+  ,
+    themeLabel: "Kolory",
+    themeTitle: "Kolory portalu",
+    themePrimaryLabel: "Kolor 1",
+    themeSecondaryLabel: "Kolor 2",
+    themeNote: "Te kolory są używane dla aktywnych przycisków i głównych akcentów.",
+    saveThemeBtn: "Zapisz kolory",
+    resetThemeBtn: "Przywróć domyślne kolory",
+    themeSaved: "Kolory portalu zapisane!",
+    themeReset: "Przywrócono domyślne kolory!",
+    themeSaveError: "Nie udało się zapisać kolorów portalu."
   },
 
   pt: {
@@ -469,6 +524,17 @@ const languageOverrides = {
     updateDateReset: "Data automática restaurada!",
     updateDateInvalid: "Escolha uma data e hora futuras.",
     updateDateSaveError: "Não foi possível salvar a data da atualização."
+  ,
+    themeLabel: "Cores",
+    themeTitle: "Cores do portal",
+    themePrimaryLabel: "Cor 1",
+    themeSecondaryLabel: "Cor 2",
+    themeNote: "Estas cores são usadas nos botões ativos e nos principais destaques.",
+    saveThemeBtn: "Salvar cores",
+    resetThemeBtn: "Restaurar cores padrão",
+    themeSaved: "Cores do portal salvas!",
+    themeReset: "Cores padrão restauradas!",
+    themeSaveError: "Não foi possível salvar as cores do portal."
   },
 
   tr: {
@@ -544,6 +610,17 @@ const languageOverrides = {
     updateDateReset: "Otomatik tarih geri yüklendi!",
     updateDateInvalid: "Gelecekte bir tarih ve saat seç.",
     updateDateSaveError: "Güncelleme tarihi kaydedilemedi."
+  ,
+    themeLabel: "Renkler",
+    themeTitle: "Portal renkleri",
+    themePrimaryLabel: "Renk 1",
+    themeSecondaryLabel: "Renk 2",
+    themeNote: "Bu renkler etkin düğmelerde ve ana vurgularda kullanılır.",
+    saveThemeBtn: "Renkleri kaydet",
+    resetThemeBtn: "Varsayılan renkleri geri yükle",
+    themeSaved: "Portal renkleri kaydedildi!",
+    themeReset: "Varsayılan renkler geri yüklendi!",
+    themeSaveError: "Portal renkleri kaydedilemedi."
   },
 
   id: {
@@ -619,6 +696,17 @@ const languageOverrides = {
     updateDateReset: "Tanggal otomatis dipulihkan!",
     updateDateInvalid: "Pilih tanggal dan waktu di masa depan.",
     updateDateSaveError: "Tanggal update tidak dapat disimpan."
+  ,
+    themeLabel: "Warna",
+    themeTitle: "Warna portal",
+    themePrimaryLabel: "Warna 1",
+    themeSecondaryLabel: "Warna 2",
+    themeNote: "Warna ini digunakan untuk tombol aktif dan aksen utama.",
+    saveThemeBtn: "Simpan warna",
+    resetThemeBtn: "Pulihkan warna default",
+    themeSaved: "Warna portal disimpan!",
+    themeReset: "Warna default dipulihkan!",
+    themeSaveError: "Warna portal tidak dapat disimpan."
   },
 
   es: {
@@ -694,6 +782,17 @@ const languageOverrides = {
     updateDateReset: "¡Fecha automática restaurada!",
     updateDateInvalid: "Elige una fecha y hora futuras.",
     updateDateSaveError: "No se pudo guardar la fecha de actualización."
+  ,
+    themeLabel: "Colores",
+    themeTitle: "Colores del portal",
+    themePrimaryLabel: "Color 1",
+    themeSecondaryLabel: "Color 2",
+    themeNote: "Estos colores se usan en los botones activos y los acentos principales.",
+    saveThemeBtn: "Guardar colores",
+    resetThemeBtn: "Restaurar colores predeterminados",
+    themeSaved: "¡Colores del portal guardados!",
+    themeReset: "¡Colores predeterminados restaurados!",
+    themeSaveError: "No se pudieron guardar los colores del portal."
   },
 
   hi: {
@@ -769,6 +868,17 @@ const languageOverrides = {
     updateDateReset: "ऑटोमैटिक तारीख बहाल हो गई!",
     updateDateInvalid: "भविष्य की तारीख और समय चुनें।",
     updateDateSaveError: "अपडेट की तारीख सेव नहीं हो सकी।"
+  ,
+    themeLabel: "रंग",
+    themeTitle: "पोर्टल के रंग",
+    themePrimaryLabel: "रंग 1",
+    themeSecondaryLabel: "रंग 2",
+    themeNote: "इन रंगों का उपयोग सक्रिय बटन और मुख्य एक्सेंट के लिए किया जाता है।",
+    saveThemeBtn: "रंग सेव करें",
+    resetThemeBtn: "डिफ़ॉल्ट रंग वापस लाएँ",
+    themeSaved: "पोर्टल के रंग सेव हो गए!",
+    themeReset: "डिफ़ॉल्ट रंग वापस आ गए!",
+    themeSaveError: "पोर्टल के रंग सेव नहीं हो सके।"
   }
 };
 
