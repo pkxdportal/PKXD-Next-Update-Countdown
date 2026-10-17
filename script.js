@@ -17,6 +17,7 @@ const UPDATE_DATE_DISPLAY = {
 
 let targetDate = new Date(FIRST_TARGET_DATE.getTime());
 let eventStartDate = new Date(targetDate.getTime() - UPDATE_CYCLE_MS);
+let manualCountdownConfig = null;
 
 let currentLang = "en";
 let lastSeconds = null;
@@ -72,6 +73,13 @@ const resetBackgroundBtn = document.getElementById("resetBackgroundBtn");
 const backgroundFileInput = document.getElementById("backgroundFileInput");
 const backgroundLayer = document.querySelector(".background");
 
+const updateDateToggle = document.getElementById("updateDateToggle");
+const updateDateMenu = document.getElementById("updateDateMenu");
+const updateDateInput = document.getElementById("updateDateInput");
+const updateDateCurrent = document.getElementById("updateDateCurrent");
+const saveUpdateDateBtn = document.getElementById("saveUpdateDateBtn");
+const resetUpdateDateBtn = document.getElementById("resetUpdateDateBtn");
+
 const shareBtn = document.getElementById("shareBtn");
 
 const portalToggle = document.getElementById("portalToggle");
@@ -102,10 +110,12 @@ const portalToast = document.getElementById("portalToast");
 const cursorGlow = document.querySelector(".cursor-glow");
 
 const CUSTOM_BACKGROUND_KEY = "portalCustomBackground";
+const COUNTDOWN_CONFIG_CACHE_KEY = "portalCountdownConfig";
 const OWNER_MODE_KEY = "pkxdPortalOwnerMode";
 const OWNER_QUERY_PARAM = "ownerKey";
 const OWNER_KEY_HASH = "8a66f2428ac63682e0b48c89e142b7c7a762255823e06c47f8d7591c0d12c649";
 const ownerBackgroundControl = document.getElementById("ownerBackgroundControl");
+const ownerUpdateDateControl = document.getElementById("ownerUpdateDateControl");
 let isOwnerMode = false;
 const THEORY_REACTIONS_KEY = "portalTheoryReactions";
 const THEORY_REACTION_TYPES = [
@@ -162,6 +172,10 @@ function setOwnerMode(enabled) {
 
   if (ownerBackgroundControl) {
     ownerBackgroundControl.hidden = !isOwnerMode;
+  }
+
+  if (ownerUpdateDateControl) {
+    ownerUpdateDateControl.hidden = !isOwnerMode;
   }
 }
 
@@ -426,6 +440,249 @@ function formatTheoryTime(timestamp) {
   return `${diffDays}d ago`;
 }
 
+function parseCountdownConfig(data) {
+  const target = new Date(data?.targetDate || "");
+  const start = new Date(data?.startDate || "");
+
+  if (
+    !Number.isFinite(target.getTime()) ||
+    !Number.isFinite(start.getTime()) ||
+    start.getTime() >= target.getTime()
+  ) {
+    return null;
+  }
+
+  return { target, start };
+}
+
+function cacheCountdownConfig(config) {
+  if (!config) {
+    localStorage.removeItem(COUNTDOWN_CONFIG_CACHE_KEY);
+    return;
+  }
+
+  try {
+    localStorage.setItem(
+      COUNTDOWN_CONFIG_CACHE_KEY,
+      JSON.stringify({
+        targetDate: config.target.toISOString(),
+        startDate: config.start.toISOString()
+      })
+    );
+  } catch (error) {
+    console.warn("Countdown config cache could not be saved:", error);
+  }
+}
+
+function applyManualCountdownConfig(config) {
+  manualCountdownConfig = config
+    ? {
+        target: new Date(config.target.getTime()),
+        start: new Date(config.start.getTime())
+      }
+    : null;
+
+  if (manualCountdownConfig) {
+    targetDate = new Date(manualCountdownConfig.target.getTime());
+    eventStartDate = new Date(manualCountdownConfig.start.getTime());
+  }
+
+  updateDynamicEventDate();
+  updateUpdateDateControl();
+}
+
+function getCachedCountdownConfig() {
+  try {
+    const raw = localStorage.getItem(COUNTDOWN_CONFIG_CACHE_KEY);
+    return raw ? parseCountdownConfig(JSON.parse(raw)) : null;
+  } catch (error) {
+    return null;
+  }
+}
+
+async function fetchSharedCountdownConfig() {
+  const response = await fetch(
+    PORTAL_API_URL + "?action=countdown&cache=" + Date.now(),
+    { cache: "no-store" }
+  );
+
+  if (!response.ok) {
+    throw new Error("Could not load countdown settings");
+  }
+
+  const data = await response.json();
+  return parseCountdownConfig(data);
+}
+
+async function loadSharedCountdownConfig() {
+  const cachedConfig = getCachedCountdownConfig();
+
+  if (cachedConfig) {
+    applyManualCountdownConfig(cachedConfig);
+  }
+
+  try {
+    const sharedConfig = await fetchSharedCountdownConfig();
+
+    if (sharedConfig) {
+      cacheCountdownConfig(sharedConfig);
+      applyManualCountdownConfig(sharedConfig);
+    } else {
+      cacheCountdownConfig(null);
+      applyManualCountdownConfig(null);
+    }
+  } catch (error) {
+    console.warn("Shared countdown date could not be loaded:", error);
+
+    if (!cachedConfig) {
+      applyManualCountdownConfig(null);
+    }
+  }
+}
+
+function toDateTimeLocalValue(date) {
+  if (!date || !Number.isFinite(date.getTime())) return "";
+
+  const pad = (value) => String(value).padStart(2, "0");
+
+  return (
+    date.getFullYear() +
+    "-" +
+    pad(date.getMonth() + 1) +
+    "-" +
+    pad(date.getDate()) +
+    "T" +
+    pad(date.getHours()) +
+    ":" +
+    pad(date.getMinutes())
+  );
+}
+
+function updateUpdateDateControl() {
+  if (updateDateCurrent && targetDate) {
+    updateDateCurrent.textContent = formatUpdateDate(targetDate);
+  }
+
+  if (updateDateInput && targetDate && document.activeElement !== updateDateInput) {
+    updateDateInput.value = toDateTimeLocalValue(targetDate);
+  }
+}
+
+function getStartForManualTarget(now = new Date()) {
+  const currentCycle = getCurrentUpdateCycle(now);
+
+  if (currentCycle.updateReleased) {
+    return new Date(currentCycle.target.getTime());
+  }
+
+  return new Date(currentCycle.start.getTime());
+}
+
+async function saveManualUpdateDate() {
+  if (!isOwnerMode || !updateDateInput) return;
+
+  const selectedDate = new Date(updateDateInput.value);
+  const now = new Date();
+
+  if (
+    !updateDateInput.value ||
+    !Number.isFinite(selectedDate.getTime()) ||
+    selectedDate.getTime() <= now.getTime()
+  ) {
+    showToast(getText("updateDateInvalid"));
+    return;
+  }
+
+  const candidate = {
+    target: selectedDate,
+    start: getStartForManualTarget(now)
+  };
+
+  if (candidate.start.getTime() >= candidate.target.getTime()) {
+    candidate.start = new Date(now.getTime());
+  }
+
+  if (saveUpdateDateBtn) saveUpdateDateBtn.disabled = true;
+
+  try {
+    await fetch(PORTAL_API_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify({
+        action: "setCountdownDate",
+        targetDate: candidate.target.toISOString(),
+        startDate: candidate.start.toISOString()
+      })
+    });
+
+    await new Promise((resolve) => window.setTimeout(resolve, 1200));
+
+    const verifiedConfig = await fetchSharedCountdownConfig();
+
+    if (
+      !verifiedConfig ||
+      Math.abs(verifiedConfig.target.getTime() - candidate.target.getTime()) > 60000
+    ) {
+      throw new Error("Countdown date was not stored by the backend");
+    }
+
+    cacheCountdownConfig(verifiedConfig);
+    applyManualCountdownConfig(verifiedConfig);
+    updateCountdown();
+    showToast(getText("updateDateSaved"));
+    updateDateMenu?.classList.remove("open");
+  } catch (error) {
+    console.warn("Countdown date could not be saved:", error);
+    showToast(getText("updateDateSaveError"));
+    await loadSharedCountdownConfig();
+    updateCountdown();
+  } finally {
+    if (saveUpdateDateBtn) saveUpdateDateBtn.disabled = false;
+  }
+}
+
+async function resetManualUpdateDate() {
+  if (!isOwnerMode) return;
+
+  if (resetUpdateDateBtn) resetUpdateDateBtn.disabled = true;
+
+  try {
+    await fetch(PORTAL_API_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify({
+        action: "resetCountdownDate"
+      })
+    });
+
+    await new Promise((resolve) => window.setTimeout(resolve, 900));
+
+    const verifiedConfig = await fetchSharedCountdownConfig();
+
+    if (verifiedConfig) {
+      throw new Error("Manual countdown date is still active");
+    }
+
+    cacheCountdownConfig(null);
+    applyManualCountdownConfig(null);
+    syncCurrentCycle();
+    updateCountdown();
+    showToast(getText("updateDateReset"));
+    updateDateMenu?.classList.remove("open");
+  } catch (error) {
+    console.warn("Countdown date could not be reset:", error);
+    showToast(getText("updateDateSaveError"));
+  } finally {
+    if (resetUpdateDateBtn) resetUpdateDateBtn.disabled = false;
+  }
+}
+
 function getNextMondayAfter(date) {
   const nextMonday = new Date(date);
   nextMonday.setHours(0, 0, 0, 0);
@@ -438,6 +695,17 @@ function getNextMondayAfter(date) {
 }
 
 function getCurrentUpdateCycle(now) {
+  if (manualCountdownConfig) {
+    const target = new Date(manualCountdownConfig.target.getTime());
+    const start = new Date(manualCountdownConfig.start.getTime());
+
+    return {
+      target,
+      start,
+      updateReleased: now.getTime() >= target.getTime()
+    };
+  }
+
   const firstTargetTime = FIRST_TARGET_DATE.getTime();
   const nowTime = now.getTime();
 
@@ -650,6 +918,7 @@ function setLanguage(lang) {
 
   syncCurrentCycle();
   updateDynamicEventDate();
+  updateUpdateDateControl();
   updateProgress();
   updateTheoryCounter();
   renderVideoHub();
@@ -947,6 +1216,8 @@ if (langToggle) {
     event.stopPropagation();
     languageMenu?.classList.toggle("open");
     downloadMenu?.classList.remove("open");
+    backgroundMenu?.classList.remove("open");
+    updateDateMenu?.classList.remove("open");
     portalMenu?.classList.remove("open");
   });
 }
@@ -957,6 +1228,7 @@ if (downloadToggle) {
     downloadMenu?.classList.toggle("open");
     languageMenu?.classList.remove("open");
     backgroundMenu?.classList.remove("open");
+    updateDateMenu?.classList.remove("open");
     portalMenu?.classList.remove("open");
   });
 }
@@ -968,7 +1240,33 @@ if (backgroundToggle) {
     backgroundMenu?.classList.toggle("open");
     languageMenu?.classList.remove("open");
     downloadMenu?.classList.remove("open");
+    updateDateMenu?.classList.remove("open");
     portalMenu?.classList.remove("open");
+  });
+}
+
+if (updateDateToggle) {
+  updateDateToggle.addEventListener("click", (event) => {
+    if (!isOwnerMode) return;
+    event.stopPropagation();
+    updateUpdateDateControl();
+    updateDateMenu?.classList.toggle("open");
+    languageMenu?.classList.remove("open");
+    downloadMenu?.classList.remove("open");
+    backgroundMenu?.classList.remove("open");
+    portalMenu?.classList.remove("open");
+  });
+}
+
+if (saveUpdateDateBtn) {
+  saveUpdateDateBtn.addEventListener("click", () => {
+    saveManualUpdateDate();
+  });
+}
+
+if (resetUpdateDateBtn) {
+  resetUpdateDateBtn.addEventListener("click", () => {
+    resetManualUpdateDate();
   });
 }
 
@@ -1014,6 +1312,7 @@ if (portalToggle) {
     languageMenu?.classList.remove("open");
     downloadMenu?.classList.remove("open");
     backgroundMenu?.classList.remove("open");
+    updateDateMenu?.classList.remove("open");
   });
 }
 
@@ -1162,6 +1461,7 @@ document.addEventListener("click", (event) => {
   const clickedInsideLang = event.target.closest(".language-wrapper");
   const clickedInsideDownload = event.target.closest(".download-wrapper");
   const clickedInsideBackground = event.target.closest(".background-wrapper");
+  const clickedInsideUpdateDate = event.target.closest(".update-date-wrapper");
   const clickedInsidePortal = event.target.closest(".portal-wrapper");
 
   if (!clickedInsideLang && languageMenu) {
@@ -1176,6 +1476,10 @@ document.addEventListener("click", (event) => {
     backgroundMenu.classList.remove("open");
   }
 
+  if (!clickedInsideUpdateDate && updateDateMenu) {
+    updateDateMenu.classList.remove("open");
+  }
+
   if (!clickedInsidePortal && portalMenu) {
     portalMenu.classList.remove("open");
   }
@@ -1186,6 +1490,7 @@ document.addEventListener("keydown", (event) => {
     if (languageMenu) languageMenu.classList.remove("open");
     if (downloadMenu) downloadMenu.classList.remove("open");
     if (backgroundMenu) backgroundMenu.classList.remove("open");
+    if (updateDateMenu) updateDateMenu.classList.remove("open");
     if (portalMenu) portalMenu.classList.remove("open");
   }
 });
@@ -1194,6 +1499,7 @@ const savedLang = localStorage.getItem("selectedLang") || "en";
 
 async function bootPortal() {
   await initializeOwnerMode();
+  await loadSharedCountdownConfig();
   loadSavedBackground();
   setLanguage(savedLang);
   renderVideoHub();
