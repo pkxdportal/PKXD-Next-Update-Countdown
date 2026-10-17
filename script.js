@@ -29,7 +29,7 @@ const COMMENTS_API_URL =
   "https://script.google.com/macros/s/AKfycbyApSkcMeOYFBS88Ich9qX18M4_3o9IunaY-NpecRVeLsF4koKWgy6Xc7bU8MF6XLUl/exec";
 
 const PORTAL_API_URL =
-  "https://script.google.com/macros/s/AKfycbynqTG0S907i41yaFvMndgRVOaL-s4mw9T_35QX2KkOSrUpAdpLpdDqAzliMNicgIym/exec";
+  "https://script.google.com/macros/s/AKfycbwr7FwALrxm-0NzD3dBFB_PsoVxbD_NB52rt_oNpnq5nFRMJq9cavrbwtxrMJAW3YqB/exec";
 
 const THEORY_MAX_LENGTH = 500;
 
