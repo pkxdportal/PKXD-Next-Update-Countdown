@@ -70,6 +70,18 @@ const translations = {
     backgroundSaved: "Background updated!",
     backgroundReset: "Background reset!",
     backgroundTooLarge: "Image is too large to save"
+  ,
+    updateDateLabel: "Update date",
+    updateDateTitle: "Next PK XD update",
+    updateDateCurrentLabel: "Current date",
+    updateDateFieldLabel: "New date and time",
+    updateDateTimezoneNote: "The time is taken from this device's time zone.",
+    saveUpdateDateBtn: "Save date",
+    resetUpdateDateBtn: "Return to automatic date",
+    updateDateSaved: "Update date saved!",
+    updateDateReset: "Automatic date restored!",
+    updateDateInvalid: "Choose a future date and time.",
+    updateDateSaveError: "The update date could not be saved."
   },
 
   ru: {
@@ -143,6 +155,18 @@ const translations = {
     backgroundSaved: "Фон обновлён!",
     backgroundReset: "Фон сброшен!",
     backgroundTooLarge: "Картинка слишком большая"
+  ,
+    updateDateLabel: "Дата обновления",
+    updateDateTitle: "Следующее обновление PK XD",
+    updateDateCurrentLabel: "Текущая дата",
+    updateDateFieldLabel: "Новая дата и время",
+    updateDateTimezoneNote: "Время берётся из часового пояса этого устройства.",
+    saveUpdateDateBtn: "Сохранить дату",
+    resetUpdateDateBtn: "Вернуть автоматическую дату",
+    updateDateSaved: "Дата обновления сохранена!",
+    updateDateReset: "Автоматическая дата восстановлена!",
+    updateDateInvalid: "Выбери будущую дату и время.",
+    updateDateSaveError: "Не удалось сохранить дату обновления."
   }
 };
 
@@ -208,6 +232,18 @@ const languageOverrides = {
     appStoreBtn: "App Store",
     youtubeBtn: "YouTube",
     discordBtn: "Discord"
+  ,
+    updateDateLabel: "Update-Datum",
+    updateDateTitle: "Nächstes PK XD Update",
+    updateDateCurrentLabel: "Aktuelles Datum",
+    updateDateFieldLabel: "Neues Datum und Uhrzeit",
+    updateDateTimezoneNote: "Die Uhrzeit wird aus der Zeitzone dieses Geräts übernommen.",
+    saveUpdateDateBtn: "Datum speichern",
+    resetUpdateDateBtn: "Automatisches Datum verwenden",
+    updateDateSaved: "Update-Datum gespeichert!",
+    updateDateReset: "Automatisches Datum wiederhergestellt!",
+    updateDateInvalid: "Wähle ein zukünftiges Datum und eine Uhrzeit.",
+    updateDateSaveError: "Das Update-Datum konnte nicht gespeichert werden."
   },
 
   fr: {
@@ -271,6 +307,18 @@ const languageOverrides = {
     backgroundSaved: "Arrière-plan mis à jour !",
     backgroundReset: "Arrière-plan réinitialisé !",
     backgroundTooLarge: "L’image est trop volumineuse pour être enregistrée"
+  ,
+    updateDateLabel: "Date de mise à jour",
+    updateDateTitle: "Prochaine mise à jour de PK XD",
+    updateDateCurrentLabel: "Date actuelle",
+    updateDateFieldLabel: "Nouvelle date et heure",
+    updateDateTimezoneNote: "L’heure utilise le fuseau horaire de cet appareil.",
+    saveUpdateDateBtn: "Enregistrer la date",
+    resetUpdateDateBtn: "Rétablir la date automatique",
+    updateDateSaved: "Date de mise à jour enregistrée !",
+    updateDateReset: "Date automatique rétablie !",
+    updateDateInvalid: "Choisis une date et une heure futures.",
+    updateDateSaveError: "Impossible d’enregistrer la date de mise à jour."
   },
 
   pl: {
@@ -334,6 +382,18 @@ const languageOverrides = {
     backgroundSaved: "Tło zaktualizowane!",
     backgroundReset: "Tło zresetowane!",
     backgroundTooLarge: "Obraz jest zbyt duży, aby go zapisać"
+  ,
+    updateDateLabel: "Data aktualizacji",
+    updateDateTitle: "Następna aktualizacja PK XD",
+    updateDateCurrentLabel: "Aktualna data",
+    updateDateFieldLabel: "Nowa data i godzina",
+    updateDateTimezoneNote: "Godzina jest pobierana ze strefy czasowej tego urządzenia.",
+    saveUpdateDateBtn: "Zapisz datę",
+    resetUpdateDateBtn: "Przywróć datę automatyczną",
+    updateDateSaved: "Data aktualizacji zapisana!",
+    updateDateReset: "Przywrócono datę automatyczną!",
+    updateDateInvalid: "Wybierz przyszłą datę i godzinę.",
+    updateDateSaveError: "Nie udało się zapisać daty aktualizacji."
   },
 
   pt: {
@@ -397,6 +457,18 @@ const languageOverrides = {
     backgroundSaved: "Plano de fundo atualizado!",
     backgroundReset: "Plano de fundo redefinido!",
     backgroundTooLarge: "A imagem é grande demais para ser salva"
+  ,
+    updateDateLabel: "Data da atualização",
+    updateDateTitle: "Próxima atualização do PK XD",
+    updateDateCurrentLabel: "Data atual",
+    updateDateFieldLabel: "Nova data e hora",
+    updateDateTimezoneNote: "O horário usa o fuso horário deste dispositivo.",
+    saveUpdateDateBtn: "Salvar data",
+    resetUpdateDateBtn: "Voltar à data automática",
+    updateDateSaved: "Data da atualização salva!",
+    updateDateReset: "Data automática restaurada!",
+    updateDateInvalid: "Escolha uma data e hora futuras.",
+    updateDateSaveError: "Não foi possível salvar a data da atualização."
   },
 
   tr: {
@@ -460,6 +532,18 @@ const languageOverrides = {
     backgroundSaved: "Arka plan güncellendi!",
     backgroundReset: "Arka plan sıfırlandı!",
     backgroundTooLarge: "Görüntü kaydedilemeyecek kadar büyük"
+  ,
+    updateDateLabel: "Güncelleme tarihi",
+    updateDateTitle: "Sonraki PK XD güncellemesi",
+    updateDateCurrentLabel: "Geçerli tarih",
+    updateDateFieldLabel: "Yeni tarih ve saat",
+    updateDateTimezoneNote: "Saat, bu cihazın saat dilimine göre alınır.",
+    saveUpdateDateBtn: "Tarihi kaydet",
+    resetUpdateDateBtn: "Otomatik tarihe dön",
+    updateDateSaved: "Güncelleme tarihi kaydedildi!",
+    updateDateReset: "Otomatik tarih geri yüklendi!",
+    updateDateInvalid: "Gelecekte bir tarih ve saat seç.",
+    updateDateSaveError: "Güncelleme tarihi kaydedilemedi."
   },
 
   id: {
@@ -523,6 +607,18 @@ const languageOverrides = {
     backgroundSaved: "Latar belakang diperbarui!",
     backgroundReset: "Latar belakang diatur ulang!",
     backgroundTooLarge: "Gambar terlalu besar untuk disimpan"
+  ,
+    updateDateLabel: "Tanggal update",
+    updateDateTitle: "Update PK XD berikutnya",
+    updateDateCurrentLabel: "Tanggal saat ini",
+    updateDateFieldLabel: "Tanggal dan waktu baru",
+    updateDateTimezoneNote: "Waktu mengikuti zona waktu perangkat ini.",
+    saveUpdateDateBtn: "Simpan tanggal",
+    resetUpdateDateBtn: "Kembali ke tanggal otomatis",
+    updateDateSaved: "Tanggal update disimpan!",
+    updateDateReset: "Tanggal otomatis dipulihkan!",
+    updateDateInvalid: "Pilih tanggal dan waktu di masa depan.",
+    updateDateSaveError: "Tanggal update tidak dapat disimpan."
   },
 
   es: {
@@ -586,6 +682,18 @@ const languageOverrides = {
     backgroundSaved: "¡Fondo actualizado!",
     backgroundReset: "¡Fondo restablecido!",
     backgroundTooLarge: "La imagen es demasiado grande para guardarla"
+  ,
+    updateDateLabel: "Fecha de actualización",
+    updateDateTitle: "Próxima actualización de PK XD",
+    updateDateCurrentLabel: "Fecha actual",
+    updateDateFieldLabel: "Nueva fecha y hora",
+    updateDateTimezoneNote: "La hora usa la zona horaria de este dispositivo.",
+    saveUpdateDateBtn: "Guardar fecha",
+    resetUpdateDateBtn: "Volver a la fecha automática",
+    updateDateSaved: "¡Fecha de actualización guardada!",
+    updateDateReset: "¡Fecha automática restaurada!",
+    updateDateInvalid: "Elige una fecha y hora futuras.",
+    updateDateSaveError: "No se pudo guardar la fecha de actualización."
   },
 
   hi: {
@@ -649,6 +757,18 @@ const languageOverrides = {
     backgroundSaved: "बैकग्राउंड अपडेट हो गया!",
     backgroundReset: "बैकग्राउंड रीसेट हो गया!",
     backgroundTooLarge: "इमेज सेव करने के लिए बहुत बड़ी है"
+  ,
+    updateDateLabel: "अपडेट की तारीख",
+    updateDateTitle: "अगला PK XD अपडेट",
+    updateDateCurrentLabel: "मौजूदा तारीख",
+    updateDateFieldLabel: "नई तारीख और समय",
+    updateDateTimezoneNote: "समय इस डिवाइस के समय क्षेत्र के अनुसार लिया जाता है।",
+    saveUpdateDateBtn: "तारीख सेव करें",
+    resetUpdateDateBtn: "ऑटोमैटिक तारीख पर लौटें",
+    updateDateSaved: "अपडेट की तारीख सेव हो गई!",
+    updateDateReset: "ऑटोमैटिक तारीख बहाल हो गई!",
+    updateDateInvalid: "भविष्य की तारीख और समय चुनें।",
+    updateDateSaveError: "अपडेट की तारीख सेव नहीं हो सकी।"
   }
 };
 
