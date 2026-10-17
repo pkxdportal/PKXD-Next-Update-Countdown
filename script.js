@@ -80,6 +80,15 @@ const updateDateCurrent = document.getElementById("updateDateCurrent");
 const saveUpdateDateBtn = document.getElementById("saveUpdateDateBtn");
 const resetUpdateDateBtn = document.getElementById("resetUpdateDateBtn");
 
+const themeToggle = document.getElementById("themeToggle");
+const themeMenu = document.getElementById("themeMenu");
+const themePrimaryInput = document.getElementById("themePrimaryInput");
+const themeSecondaryInput = document.getElementById("themeSecondaryInput");
+const themePrimaryValue = document.getElementById("themePrimaryValue");
+const themeSecondaryValue = document.getElementById("themeSecondaryValue");
+const saveThemeBtn = document.getElementById("saveThemeBtn");
+const resetThemeBtn = document.getElementById("resetThemeBtn");
+
 const shareBtn = document.getElementById("shareBtn");
 
 const portalToggle = document.getElementById("portalToggle");
@@ -111,11 +120,14 @@ const cursorGlow = document.querySelector(".cursor-glow");
 
 const CUSTOM_BACKGROUND_KEY = "portalCustomBackground";
 const COUNTDOWN_CONFIG_CACHE_KEY = "portalCountdownConfig";
+const THEME_CONFIG_CACHE_KEY = "portalThemeConfig";
+const DEFAULT_THEME = { primary: "#ff3f63", secondary: "#8a57ff" };
 const OWNER_MODE_KEY = "pkxdPortalOwnerMode";
 const OWNER_QUERY_PARAM = "ownerKey";
 const OWNER_KEY_HASH = "8a66f2428ac63682e0b48c89e142b7c7a762255823e06c47f8d7591c0d12c649";
 const ownerBackgroundControl = document.getElementById("ownerBackgroundControl");
 const ownerUpdateDateControl = document.getElementById("ownerUpdateDateControl");
+const ownerThemeControl = document.getElementById("ownerThemeControl");
 let isOwnerMode = false;
 const THEORY_REACTIONS_KEY = "portalTheoryReactions";
 const THEORY_REACTION_TYPES = [
@@ -177,6 +189,10 @@ function setOwnerMode(enabled) {
   if (ownerUpdateDateControl) {
     ownerUpdateDateControl.hidden = !isOwnerMode;
   }
+
+  if (ownerThemeControl) {
+    ownerThemeControl.hidden = !isOwnerMode;
+  }
 }
 
 async function initializeOwnerMode() {
@@ -198,6 +214,187 @@ async function initializeOwnerMode() {
   }
 
   setOwnerMode(localStorage.getItem(OWNER_MODE_KEY) === "1");
+}
+
+function normalizeThemeColor(value, fallback) {
+  const color = String(value || "").trim().toLowerCase();
+  return /^#[0-9a-f]{6}$/.test(color) ? color : fallback;
+}
+
+function parseThemeConfig(data) {
+  const primary = normalizeThemeColor(data?.primary, "");
+  const secondary = normalizeThemeColor(data?.secondary, "");
+
+  if (!primary || !secondary) return null;
+
+  return { primary, secondary };
+}
+
+function applyTheme(config) {
+  const theme = config || DEFAULT_THEME;
+  const primary = normalizeThemeColor(theme.primary, DEFAULT_THEME.primary);
+  const secondary = normalizeThemeColor(theme.secondary, DEFAULT_THEME.secondary);
+
+  document.documentElement.style.setProperty("--accent-red", primary);
+  document.documentElement.style.setProperty("--accent-purple", secondary);
+
+  if (themePrimaryInput) themePrimaryInput.value = primary;
+  if (themeSecondaryInput) themeSecondaryInput.value = secondary;
+  if (themePrimaryValue) themePrimaryValue.textContent = primary.toUpperCase();
+  if (themeSecondaryValue) themeSecondaryValue.textContent = secondary.toUpperCase();
+}
+
+function cacheThemeConfig(config) {
+  if (!config) {
+    localStorage.removeItem(THEME_CONFIG_CACHE_KEY);
+    return;
+  }
+
+  try {
+    localStorage.setItem(THEME_CONFIG_CACHE_KEY, JSON.stringify(config));
+  } catch (error) {
+    console.warn("Theme cache could not be saved:", error);
+  }
+}
+
+function getCachedThemeConfig() {
+  try {
+    const raw = localStorage.getItem(THEME_CONFIG_CACHE_KEY);
+    return raw ? parseThemeConfig(JSON.parse(raw)) : null;
+  } catch (error) {
+    return null;
+  }
+}
+
+async function fetchSharedThemeConfig() {
+  const response = await fetch(
+    PORTAL_API_URL + "?action=theme&cache=" + Date.now(),
+    { cache: "no-store" }
+  );
+
+  if (!response.ok) {
+    throw new Error("Could not load shared theme");
+  }
+
+  const data = await response.json();
+  return parseThemeConfig(data);
+}
+
+async function loadSharedThemeConfig() {
+  const cachedTheme = getCachedThemeConfig();
+
+  if (cachedTheme) {
+    applyTheme(cachedTheme);
+  } else {
+    applyTheme(DEFAULT_THEME);
+  }
+
+  try {
+    const sharedTheme = await fetchSharedThemeConfig();
+
+    if (sharedTheme) {
+      cacheThemeConfig(sharedTheme);
+      applyTheme(sharedTheme);
+    } else {
+      cacheThemeConfig(null);
+      applyTheme(DEFAULT_THEME);
+    }
+  } catch (error) {
+    console.warn("Shared theme could not be loaded:", error);
+  }
+}
+
+function previewThemeFromInputs() {
+  applyTheme({
+    primary: themePrimaryInput?.value || DEFAULT_THEME.primary,
+    secondary: themeSecondaryInput?.value || DEFAULT_THEME.secondary
+  });
+}
+
+async function saveThemeConfig() {
+  if (!isOwnerMode) return;
+
+  const candidate = {
+    primary: normalizeThemeColor(themePrimaryInput?.value, DEFAULT_THEME.primary),
+    secondary: normalizeThemeColor(themeSecondaryInput?.value, DEFAULT_THEME.secondary)
+  };
+
+  if (saveThemeBtn) saveThemeBtn.disabled = true;
+
+  try {
+    await fetch(PORTAL_API_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify({
+        action: "setTheme",
+        primary: candidate.primary,
+        secondary: candidate.secondary
+      })
+    });
+
+    await new Promise((resolve) => window.setTimeout(resolve, 900));
+
+    const verifiedTheme = await fetchSharedThemeConfig();
+
+    if (
+      !verifiedTheme ||
+      verifiedTheme.primary !== candidate.primary ||
+      verifiedTheme.secondary !== candidate.secondary
+    ) {
+      throw new Error("Theme was not stored by the backend");
+    }
+
+    cacheThemeConfig(verifiedTheme);
+    applyTheme(verifiedTheme);
+    showToast(getText("themeSaved"));
+    themeMenu?.classList.remove("open");
+  } catch (error) {
+    console.warn("Theme could not be saved:", error);
+    showToast(getText("themeSaveError"));
+    await loadSharedThemeConfig();
+  } finally {
+    if (saveThemeBtn) saveThemeBtn.disabled = false;
+  }
+}
+
+async function resetThemeConfig() {
+  if (!isOwnerMode) return;
+
+  if (resetThemeBtn) resetThemeBtn.disabled = true;
+
+  try {
+    await fetch(PORTAL_API_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify({
+        action: "resetTheme"
+      })
+    });
+
+    await new Promise((resolve) => window.setTimeout(resolve, 700));
+
+    const verifiedTheme = await fetchSharedThemeConfig();
+
+    if (verifiedTheme) {
+      throw new Error("Custom theme is still active");
+    }
+
+    cacheThemeConfig(null);
+    applyTheme(DEFAULT_THEME);
+    showToast(getText("themeReset"));
+    themeMenu?.classList.remove("open");
+  } catch (error) {
+    console.warn("Theme could not be reset:", error);
+    showToast(getText("themeSaveError"));
+  } finally {
+    if (resetThemeBtn) resetThemeBtn.disabled = false;
+  }
 }
 
 function applyCustomBackground(imageUrl) {
@@ -1218,6 +1415,7 @@ if (langToggle) {
     downloadMenu?.classList.remove("open");
     backgroundMenu?.classList.remove("open");
     updateDateMenu?.classList.remove("open");
+    themeMenu?.classList.remove("open");
     portalMenu?.classList.remove("open");
   });
 }
@@ -1241,6 +1439,7 @@ if (backgroundToggle) {
     languageMenu?.classList.remove("open");
     downloadMenu?.classList.remove("open");
     updateDateMenu?.classList.remove("open");
+    themeMenu?.classList.remove("open");
     portalMenu?.classList.remove("open");
   });
 }
@@ -1254,6 +1453,7 @@ if (updateDateToggle) {
     languageMenu?.classList.remove("open");
     downloadMenu?.classList.remove("open");
     backgroundMenu?.classList.remove("open");
+    themeMenu?.classList.remove("open");
     portalMenu?.classList.remove("open");
   });
 }
@@ -1267,6 +1467,34 @@ if (saveUpdateDateBtn) {
 if (resetUpdateDateBtn) {
   resetUpdateDateBtn.addEventListener("click", () => {
     resetManualUpdateDate();
+  });
+}
+
+if (themeToggle) {
+  themeToggle.addEventListener("click", (event) => {
+    if (!isOwnerMode) return;
+    event.stopPropagation();
+    themeMenu?.classList.toggle("open");
+    languageMenu?.classList.remove("open");
+    downloadMenu?.classList.remove("open");
+    backgroundMenu?.classList.remove("open");
+    updateDateMenu?.classList.remove("open");
+    portalMenu?.classList.remove("open");
+  });
+}
+
+themePrimaryInput?.addEventListener("input", previewThemeFromInputs);
+themeSecondaryInput?.addEventListener("input", previewThemeFromInputs);
+
+if (saveThemeBtn) {
+  saveThemeBtn.addEventListener("click", () => {
+    saveThemeConfig();
+  });
+}
+
+if (resetThemeBtn) {
+  resetThemeBtn.addEventListener("click", () => {
+    resetThemeConfig();
   });
 }
 
@@ -1313,6 +1541,7 @@ if (portalToggle) {
     downloadMenu?.classList.remove("open");
     backgroundMenu?.classList.remove("open");
     updateDateMenu?.classList.remove("open");
+    themeMenu?.classList.remove("open");
   });
 }
 
@@ -1462,6 +1691,7 @@ document.addEventListener("click", (event) => {
   const clickedInsideDownload = event.target.closest(".download-wrapper");
   const clickedInsideBackground = event.target.closest(".background-wrapper");
   const clickedInsideUpdateDate = event.target.closest(".update-date-wrapper");
+  const clickedInsideTheme = event.target.closest(".theme-wrapper");
   const clickedInsidePortal = event.target.closest(".portal-wrapper");
 
   if (!clickedInsideLang && languageMenu) {
@@ -1480,6 +1710,10 @@ document.addEventListener("click", (event) => {
     updateDateMenu.classList.remove("open");
   }
 
+  if (!clickedInsideTheme && themeMenu) {
+    themeMenu.classList.remove("open");
+  }
+
   if (!clickedInsidePortal && portalMenu) {
     portalMenu.classList.remove("open");
   }
@@ -1491,6 +1725,7 @@ document.addEventListener("keydown", (event) => {
     if (downloadMenu) downloadMenu.classList.remove("open");
     if (backgroundMenu) backgroundMenu.classList.remove("open");
     if (updateDateMenu) updateDateMenu.classList.remove("open");
+    if (themeMenu) themeMenu.classList.remove("open");
     if (portalMenu) portalMenu.classList.remove("open");
   }
 });
@@ -1500,6 +1735,7 @@ const savedLang = localStorage.getItem("selectedLang") || "en";
 async function bootPortal() {
   await initializeOwnerMode();
   await loadSharedCountdownConfig();
+  await loadSharedThemeConfig();
   loadSavedBackground();
   setLanguage(savedLang);
   renderVideoHub();
